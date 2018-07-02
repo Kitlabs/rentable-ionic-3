@@ -1,0 +1,170 @@
+page-credit {
+
+	$darkgray: #808080;
+	$gray:#B3B2B3;
+	$lightgray: #E5E5E4;
+
+	ion-navbar{
+		height:4rem;
+	}
+	.content-ios{
+    background-color:white;
+  }
+  .item-md {
+  	padding:0;
+  	background-color: white;
+  }
+
+  .selectwidth{
+  	min-width: 90vw !important;
+    color: #000000;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: thin solid gainsboro;
+    border-color: #B3B2B3;
+    margin-bottom: 40px;
+    font-size: 18px;
+    position: relative;
+  }
+
+  .button-md:hover:not(.disable-hover) {
+    background-color:none;
+  }
+
+  .mastersize{
+    width:50px;
+  }
+
+  .selectyear{
+    width:35vw;
+    color: #000000;
+    border:0;
+    font-size: 18px;
+  }
+
+  .helpstr {
+    font-size: 1.1rem;
+    color: gray;
+    margin-top: 23px;
+    margin-bottom: 5px;
+  }
+
+  .borderbottom{
+  	border-top:0;
+  	border-left:0;
+  	border-right:0;
+  	border-bottom: thin solid gainsboro;
+  	border-color: $gray;
+    font-size:18px;
+  }
+
+
+ 	// Toggle Switch
+
+	.checkbox-example {
+	  position: relative;
+	  width: 200px;
+	  background: #EEE;
+	  padding: 20px;
+	  margin:0px;
+	  display: block;
+	}
+
+	input[type="checkbox"].checkbox-toggle {
+	  position: absolute;
+	  left: -9999px;
+	  visibility: hidden;
+
+	}
+
+	ion-label{
+		color: $gray;
+	}
+
+	label.checkbox-toggle-label {
+	  color: $gray;
+	  position: relative;
+	  left:100px;
+	  top:-10px;
+	  span {
+	    z-index: 1;
+	    position: absolute;
+	    display:none;
+	    top: 22px;
+	    right: 38px;
+	    font-size:1.4rem;
+	    display:inline-block;
+	  }
+	}
+
+	label.checkbox-toggle-label:before   {
+    content: '';
+    background: $lightgray;
+    border: 0.5px solid $darkgray;
+    width: 80px;
+    height: 36px;
+    position: absolute;
+    top: 14px;
+    right:30px;
+	}
+
+
+	label.checkbox-toggle-label:after   {
+    content: '';
+    position: absolute;
+    right: 70px;
+    top: 17px;
+    width: 30px;
+    height: 30px;
+    background: #ec1a32;
+    transition: .1s ease-in;
+    border-radius: 30px;
+	}
+
+	input.checkbox-toggle {
+    &:checked + label.checkbox-toggle-label:after {
+      opacity: 1;
+      transform: translateX(32px);
+      background: #feb600;
+    }
+  }
+
+  .wardrobe {
+    z-index: 0;
+    position: relative;
+    padding:0px !important;
+    margin:0px !important;
+    text-align:center;
+  }
+  ion-icon{
+  	font-size:2.7rem;
+  }
+
+  .cover {
+    z-index: 1;
+    position: absolute;
+    text-align:center;
+    top: 1.8rem;
+    padding:0px !important;
+    margin:0px !important;
+    font-size: 2rem;
+    color: white;
+  }
+  .item-md.item-block .item-inner {
+    padding-right: 8px;
+    border-bottom-width:0px;
+  }
+
+  
+
+}
+.savebutton{
+  color: #4e9dda;
+  border:1px solid #4e9dda;
+  margin:auto;
+  width: 70vw;
+  text-align: center;
+  border-radius:22px;
+  background-color: #ffffff;
+}

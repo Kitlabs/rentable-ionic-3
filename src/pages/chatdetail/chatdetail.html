@@ -1,0 +1,201 @@
+<!--
+  Generated template for the ChatdetailPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar  class="profileheader" >
+    <ion-row>
+    	<ion-col col-2>
+    		<img src="{{chatDetail.basePath}}{{chatDetail.itemImage}}" (click)="goToItemDetail()" class="itemimage">
+    	</ion-col>
+    	<ion-col col-8 class="itemimage">
+	    	<ion-label class="itemlabel">
+	    		{{chatDetail.itemTitle}}
+	    	</ion-label>
+	    	<ion-label class="itemlabel">
+	    		${{chatDetail.rentPrice}} per day
+	    	</ion-label>
+	    </ion-col>
+	   <!--  <ion-col col-4>
+	    </ion-col> -->
+	    <ion-col col-2>
+	    	<img  item-right src="{{chatDetail.basePath}}{{chatDetail.reqUserImage}}" (click)="goToUserDetail()" class="profileimage">
+	    </ion-col>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content #content >
+
+  <!-- 
+    1.RENTAL REQUEST
+    rental_request_show : send renter request
+    rental_request_hide : response from owner
+    rental_request_response
+
+    2.PICK UP REQUEST
+    pickup_request_show	: send renter request
+    pickup_request_hide : response from owner
+    pickup_request_response
+
+    3.RETURN REQUEST
+    return_request_show : send renter request
+    return_request_hide : response from owner
+    return_request_response
+
+    4.RENTAL REQUEST CANCELLED BY RENTER
+    cancel_req_by_renter
+    
+    5.RENTAL REQUEST CANCELLED BY OWNER
+    cancel_req_by_owner
+  -->
+    <!-- I OWN-->
+    <div *ngIf="status">
+        <div class="msg-div">
+
+
+          <div *ngFor="let msg of messages" >
+        
+           <div   [class]="msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'" 
+           *ngIf="msg.type == 'normal'" >
+            <!-- normal-->
+              <div class="msg-detail" text-wrap>
+                <div class="msg-content">
+                  <span class="triangle"></span>
+                    <p class="line-breaker ">{{msg.message}}</p>
+                    <p class="line-breaker " >{{msg.ownermsg}}</p>
+                </div>
+                <div class="msg-info">
+                  <p>{{msg.time | date:"h:mm a"}}</p>
+                </div> 
+              </div> 
+            </div>
+            
+
+            <div   [class]=" msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'  "  
+              *ngIf="msg.type== 'cancel_req_by_renter' || msg.type=='cancel_req_by_owner'  || msg.type=='claim_by_owner_show'">
+            <!-- normal-->
+              <div class="msg-detail" text-wrap>
+                <div class="msg-content">
+                  <span class="triangle"></span>
+                    <p class="line-breaker ">{{msg.ownermsg}}</p>
+                </div>
+                <div class="msg-info">
+                  <p>{{msg.time | date:"h:mm a"}}</p>
+                </div>
+              </div>
+            </div> 
+              
+            
+            <!--It will show requested message which has been clicked-->
+            <div   [class]=" msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'  "  
+              *ngIf="msg.type== 'rental_request_hide' || msg.type== 'pickup_request_hide' || msg.type== 'return_request_hide' || msg.type == 'claim_by_owner_hide' || msg.type == 'return_request_response_claim_hide'  ">
+              <div class="msg-detail" text-wrap>
+                <div class="msg-content">
+                  <span class="triangle"></span>
+                    <p class="line-breaker ">{{msg.ownermsg}}</p>
+                </div>
+                <div class="msg-info">
+                  <p>{{msg.time | date:"h:mm a"}}</p>
+                </div>
+              </div>
+            </div> 
+
+            <!--When there is response related to rental process-->
+            <div   [class]=" msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'  "  
+              *ngIf="msg.type== 'rental_request_response' || msg.type== 'pickup_request_response' || msg.type== 'return_request_response' || msg.type == 'claim_by_owner' || msg.type == 'claim_by_owner_response' || msg.type == 'feedback_response' ">
+              <div class="msg-detail" text-wrap>
+                <div class="msg-content">
+                  <span class="triangle"></span>
+                    <p class="line-breaker ">{{msg.ownermsg}}</p>
+                </div>
+                <div class="msg-info">
+                  <p>{{msg.time | date:"h:mm a"}}</p>
+                </div>
+              </div>
+            </div> 
+
+
+            <!-- When renter send a rental request for an item-->
+            <div   [class]=" msg.from == uid ? 'innerMessage messageRight animated shake' : 'innerMessage messageLeft animated shake' " *ngIf="msg.type == 'rental_request_show'">  
+              <div class="msg-detail" text-wrap >
+                <div class="msg-content" (click)="goToAcceptRejectPage(msg.$key,0,msg.ownermsg)" >
+                    <span class="triangle"></span>
+                      <p class="line-breaker "  style="font-weight:bold;color:red;">{{msg.ownermsg}}</p>                   
+                  </div>
+                </div>
+              </div> 
+
+            <!-- When renter send a pickup request for an item -->
+            <div   [class]=" msg.from == uid ? 'innerMessage messageRight animated shake' : 'innerMessage messageLeft animated shake' " *ngIf="msg.type == 'pickup_request_show'">  
+              <div class="msg-detail" text-wrap >
+                <div class="msg-content" (click)="goToAcceptRejectPage(msg.$key,1,msg.ownermsg)" >
+                  <span class="triangle"></span>                           
+                    <p class="line-breaker "  style="font-weight:bold;color:red;">{{msg.ownermsg}}</p>
+                </div>
+              </div>
+            </div>
+
+            <!--  When renter send a return request for an item -->
+            <div   [class]=" msg.from == uid ? 'innerMessage messageRight animated shake' : 'innerMessage messageLeft animated shake' " *ngIf="msg.type == 'return_request_show' || msg.type == 'return_request_response_claim'">  
+              <div class="msg-detail" text-wrap >
+                <div class="msg-content" (click)="goToAcceptRejectPage(msg.$key,2,msg.ownermsg)">
+                    <span class="triangle"></span>
+                      <p class="line-breaker "  style="font-weight:bold;color:red;">{{msg.ownermsg}}</p>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </div>
+
+    <!-- I RENT -->
+    <div *ngIf="!status">
+      <div class="msg-div">
+        <div *ngFor="let msg of messages" >
+          
+          <div [class]="msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'"  >
+            <div class="msg-detail" text-wrap >
+              <div class="msg-content">
+                <span class="triangle"></span>
+                <p class="line-breaker " *ngIf="msg.type == 'normal'">{{msg.message}} </p>
+                <p class="line-breaker " *ngIf="msg.type != 'normal' && msg.type != 'claim_by_owner' && msg.type != 'feedback_show' && msg.type != 'claim_by_owner_show'" >{{msg.rentermsg}} </p>
+                <p class="line-breaker "  style="font-weight:bold;color:red;" *ngIf="msg.type == 'feedback_show'" (click)="goToFeedbackScreen(msg.$key)">{{msg.rentermsg}} </p>
+                <p class="line-breaker " style="font-weight:bold;color:red;" *ngIf="msg.type == 'claim_by_owner_show'" (click)="respondToClaim(msg.$key,0,msg.rentermsg)">{{msg.rentermsg}} </p>
+              </div>
+              <div class="msg-info">
+                <p>{{msg.time | date:"h:mm a"}}</p>
+              </div>
+            </div>
+          </div> 
+           
+        </div>
+      </div>
+    </div>
+
+</ion-content>
+
+
+<ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'" > 
+  <ion-grid class="input-wrap">
+    <ion-row color="secondary">
+      <ion-col col-10>
+        <ion-input type="text" placeholder="Enter message" (ionChange)="number()" [(ngModel)]="message"></ion-input>
+      </ion-col>
+      <ion-col col-2>
+        <button ion-button clear icon-only item-right (click)="sendMessage()">
+            <ion-icon color="secondary" name="md-send"  md="md-send" 
+            [ngClass]="{disabled : !btnSendMessage,
+              'send-msg-on animated fadeIn':btnSendMessage,
+              'send-msg-off animated fadeOut':!btnSendMessage }"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+<!--   <emoji-picker *ngIf="showEmojiPicker" [(ngModel)]="editorMsg"></emoji-picker> -->
+</ion-footer>

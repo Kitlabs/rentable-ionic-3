@@ -1,0 +1,58 @@
+
+
+
+<ion-content  class="appcontent">
+  <div class="signupdiv">
+    <ion-row>
+      <ion-col col-4 >
+        <div class="logoborder">
+          <img class="logoimage" src="assets/icon/security-white.png">
+        </div>
+      </ion-col>
+      <ion-col  col-4>
+        <div class="logoborder">
+          <img class="logoimage" src="assets/icon/padlock.png">
+        </div>
+      </ion-col>
+      <ion-col  col-4>
+        <div class="logoborder">
+          <img class="logoimage" src="assets/icon/man-user.png">
+        </div>
+      </ion-col>
+    </ion-row>
+    <p class="signupfont">Sign Up</p>
+    <p >You will receive a verification code to your phone</p>
+    <form  class="signupform" [formGroup]="formgroup">
+      <ion-list >
+        <p class="helpstring">ENTER YOUR VERIFICATION CODE</p>
+        <ion-item  no-padding>
+          <ion-input 
+          id="code"
+          type="number" 
+          class="inputstyle"
+          pattern="[0-9]*" 
+          formControlName="digitcode"
+          (ionChange)='numberfill()' 
+          ></ion-input>
+        </ion-item>
+        <ion-item *ngIf="digitcode.hasError('required') && digitcode.touched">
+          <p> *Codes should be numbers only</p>
+        </ion-item>
+        
+        <ion-item *ngIf="formgroup.controls['digitcode'].hasError('minlength') && formgroup.controls['digitcode'].touched">
+          <p> *Minimum code length is 4</p>
+        </ion-item>
+
+         <ion-item *ngIf="formgroup.controls['digitcode'].hasError('maxlength') && formgroup.controls['digitcode'].touched">
+          <p> *Maximum code length is 4</p>
+        </ion-item>
+        
+      </ion-list>
+      <button ion-button class="signupbutton" style="width: 100%;" (click)="gosignup()" [disabled]="!formgroup.valid">CONTINUE</button>
+      
+      <p class="resend-code" (click)="sendOtp()">Didn’t receive your code? Resend now</p>
+    </form>
+
+
+  </div>
+</ion-content>

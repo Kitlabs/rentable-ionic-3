@@ -1,0 +1,63 @@
+<ion-content no-padding class="app-content">
+  <ion-row class="profileheader1">
+    <ion-col col-1>
+      <ion-icon class="whiteicon" (click)="gohome()" name="ios-arrow-back-outline"></ion-icon>
+    </ion-col>
+    <ion-col col-10>
+    </ion-col>
+    <ion-col col-1>
+      <ion-icon [navPush]="editprofile" class="whiteicon" name="md-create"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <div  >
+    <ion-list>
+      <div align="center">
+        <img align="center" [navPush]="editprofile" class="profile-img" src="{{profilePic}}" />
+        <ion-label class="label_top font">
+        {{name}}
+        </ion-label>
+        <!-- <ion-label class="label_top color">
+          {{profile.address}}
+        </ion-label> -->
+      </div>
+      <ion-item class="bottomborder subpadding" [navPush]="addpayment">
+        <ion-label style="font-weight: bold" >
+          PAYMENT METHODS
+        </ion-label >
+
+        <ion-icon name="ios-arrow-forward-outline" item-right ></ion-icon>
+      </ion-item>
+      <ion-label class="helpfont padding bottomborder">
+        MORE
+      </ion-label>
+      <ion-item [navPush]="about" class="bottomborder subpadding">
+        <ion-label>About Us</ion-label>
+        <ion-icon name="ios-arrow-forward-outline" item-right ></ion-icon>
+      </ion-item>
+      <ion-item [navPush]="tc" class="bottomborder subpadding">
+        <ion-label>Terms and Conditions</ion-label>
+        <ion-icon name="ios-arrow-forward-outline" item-right ></ion-icon>
+      </ion-item>
+      <ion-item [navPush]="contactPage" class="bottomborder subpadding" >
+        <ion-label>Contact Us</ion-label>
+        <ion-icon name="ios-arrow-forward-outline" item-right ></ion-icon>
+      </ion-item>
+      <ion-item class="bottomborder subpadding" [navPush]="helpSupportPage" >
+        <ion-label>FAQs</ion-label>
+        <ion-icon name="ios-arrow-forward-outline" item-right ></ion-icon>
+      </ion-item>
+     
+      <ion-item class="bottomborder subpadding" (click)="goToWalkThrough()">
+        <ion-label>Walk Through</ion-label>
+        <ion-icon name="ios-arrow-forward-outline" item-right ></ion-icon>
+      </ion-item>
+
+      <ion-item class="bottomborder subpadding">
+        <ion-label>Rate App</ion-label>
+        <ion-icon name="ios-arrow-forward-outline" item-right ></ion-icon>
+      </ion-item>
+      <br>
+      <button ion-button block class="send-button-on" (click)="gologout()">LOGOUT</button>
+    </ion-list>
+ </div>
+</ion-content>

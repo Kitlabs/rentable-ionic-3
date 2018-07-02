@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Stripe Payments
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <form #customForm="ngForm" (ngSubmit)="charge()">
+   
+    <ion-list>
+
+      <ion-item>
+        <ion-label stacked>Card holder</ion-label>
+        <ion-input type="text" [(ngModel)]="inputForm.name" name="name" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Card number</ion-label>
+        <ion-input type="text" pattern="[0-9]{13,16}" [(ngModel)]="inputForm.number" name="number" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Expiry month & year</ion-label>
+        <ion-datetime min="2017" max="2030" displayFormat="MM/YYYY" [(ngModel)]="inputForm.date" name="date" required></ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>CVC</ion-label>
+        <ion-input type="number" [(ngModel)]="inputForm.cvc" name="cvc" required></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <div padding>
+      <button [disabled]="!customForm.form.valid" type="submit" ion-button full color="secondary">Pay {{inputForm.amountCents/100}} {{inputForm.currency}}</button>
+    </div>
+  </form>
+
+
+  <div padding text-center *ngIf="!status.message && status.loading"><ion-spinner></ion-spinner></div>
+
+  <div padding text-center text-wrap *ngIf="status.message">
+    <p>
+      <ion-icon name="information-circle" color="danger" *ngIf="status.success != true"></ion-icon>
+      <ion-icon name="checkmark-circle" color="secondary" *ngIf="status.success == true"></ion-icon>
+    </p>
+
+    <p>
+      {{status.message}}
+    </p>
+  </div>
+
+  <div text-center>
+    <p color="primary" small>Powered by Noodlio Pay (noodliopay.com)</p>
+  </div>
+
+</ion-content>

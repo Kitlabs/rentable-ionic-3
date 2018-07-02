@@ -1,0 +1,180 @@
+  <!--
+  Generated template for the PostcostPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar class="profileheader" >
+    <ion-row >
+
+    <ion-col col-1>   
+      <ion-icon name="md-close" class="white" (click)="closeScreen()" class="btn-close"></ion-icon>
+    </ion-col>
+      
+      <ion-col col-8 >
+      </ion-col>
+      <ion-col col-3 (click)="Postitem()" class="nextbutton" id="next">
+      	<ion-label >
+      		Publish
+      	</ion-label>
+      </ion-col>
+    </ion-row>
+
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content no-padding class="app-content">
+
+<!--   <div  class="profileheader">
+      <ion-row >
+
+      <ion-col col-1>   
+       <ion-icon name="md-close" class="white" (click)="closeScreen()" class="btn-close"></ion-icon>
+      </ion-col>
+      
+      <ion-col col-8 >
+      </ion-col>
+      <ion-col col-3 (click)="Postitem()" class="nextbutton" id="next">
+        <ion-label >
+          Publish
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+  </div> -->
+
+  <div no-padding class="app-content">
+      <div class="postitemdiv">
+    <ion-row>
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-2 >
+        <div class="logoblackborder" >
+          <img (click)="backadd()" class="logoimagephoto" src="assets/icon/photocamera_black.png">
+        </div>
+        <ion-label no-margin class="posttitle graycolor">
+          Photos
+        </ion-label>
+      </ion-col>
+      <ion-col col-2>
+        <div class="logoblackborder">
+          <img (click)="backdetail()" class="logoimage" src="assets/icon/postdetail_black.png">
+        </div>
+        <ion-label no-margin class="posttitle graycolor">
+          Details
+        </ion-label>
+      </ion-col>
+      <ion-col col-2>
+        <div class="logoborder">
+          <img class="logoimage dollar" src="assets/icon/dollar-symbol-white.png">
+        </div>
+        <ion-label no-margin class="posttitle">
+          Costs
+        </ion-label>
+      </ion-col>
+      <ion-col col-3>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="detailscreen">
+    <ion-label class="postcosttitle">
+      Item Rental Cost
+    </ion-label>
+    <ion-label class="labelhelp">
+      DAILY RENTAL PRICE
+    </ion-label>
+    <ion-row class="borderbottom">
+      <ion-col col-1>
+        $
+      </ion-col>
+      <ion-col col-10>
+        <ion-input  [(ngModel)]="dailyprice" id="dailyPrice"  (ionChange)='dailyPriceChange()' min="5" maxlength="4"></ion-input>
+      </ion-col>
+      <ion-col col-1 class="removeicon">
+        <ion-icon name="close" (click)="removedailyprice()"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-label class="labelhelp">
+      WEEKLY VALUE PRICE
+    </ion-label>
+    <ion-row class="borderbottom">
+      <ion-col col-1>
+        $
+      </ion-col>
+      <ion-col col-10>
+        <ion-input type="tel" [(ngModel)]="weeklyprice" placeholder="140" pattern="[0-9]*" id="week" (ionChange)='numberWeekly(0)'  min="25"  maxlength="4"></ion-input>
+      </ion-col>
+      <ion-col col-1 class="removeicon">
+        <ion-icon name="close" (click)="numberWeekly(1)"></ion-icon>
+      </ion-col>
+    </ion-row> -->
+    <ion-label class="labelhelp">
+      SECURITY DEPOSIT
+    </ion-label>
+    <ion-row class="borderbottom">
+      <ion-col col-1>
+        $
+      </ion-col>
+      <ion-col col-10>
+        <ion-input  [(ngModel)]="fairprice"  maxlength="4" (ionChange)='securityDeposit()' id="securityDeposit"></ion-input>
+      </ion-col>
+      <ion-col col-1 class="removeicon">
+        <ion-icon name="close" (click)="removefairprice()"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-label class="labelhelp">
+      DELIVERY & PICKUP
+    </ion-label>
+    
+    <ion-row class="borderbottom">
+      <ion-col col-10>
+        <ion-label text-wrap style="font-size: 1.7rem;" >Do you want to offer delivery and pickup</ion-label>
+      </ion-col>
+      <ion-col col-2 class="removeicon">
+        <ion-checkbox [(ngModel)]="deliver" (ionChange)="number()"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+
+    <div *ngIf="deliver">
+      <ion-label class="labelhelp">
+        ENTER YOUR DELIVERY/PICK UP FEE
+      </ion-label>
+      <ion-row class="borderbottom">
+        <ion-col col-1>
+        $
+      </ion-col>
+        <ion-col col-10>
+          <ion-input type="tel" [(ngModel)]="fee" placeholder="10" pattern="[0-9]*" maxlength="3" (ionChange)='number()'></ion-input>
+        </ion-col>
+        <ion-col col-1 class="removeicon">
+          <ion-icon name="close" (click)="removefee()"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="graycolor">
+        <ion-col col-9  class="labelhelp">
+          SET YOUR MAXIMUM DISTANCE
+        </ion-col>
+        <ion-col col-3 style="text-align: right;" class="labelhelp">
+          {{distance}}km
+        </ion-col>
+      </ion-row>
+      <ion-item>
+        <ion-range min="1" max="30"  [(ngModel)]="distance" step="1" color="element" (ionChange)='number()'>
+          <ion-icon small range-left name="ios-home-outline"></ion-icon>
+          <ion-icon range-right name="ios-car"></ion-icon>
+        </ion-range>
+      </ion-item>
+    </div>
+  </div>
+  </div>
+
+
+</ion-content>
+
+
+
+
+

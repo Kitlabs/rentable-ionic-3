@@ -1,0 +1,470 @@
+page-own-post-detail {
+
+  .label-md {
+    margin: 11px 8px 11px 0;
+  }
+  .item-md{
+    padding-left: 0;
+    font-size: 1.7rem;
+  }
+  .fullwidth{
+    width: 100%;
+  }
+  .slide-zoom{
+      position:relative;
+  }
+  .slide-zoom:after {
+    position: absolute;
+    bottom: 0;
+    content: '';
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(../assets/icon/image-overlay.png);
+    /* IE 9 */
+    -webkit-transform: rotate(180deg);
+    /* Safari 3-8 */
+    transform: rotate(180deg);
+    background-position: 1px -51px;
+    background-size: 100%;
+    left: 0;
+  }
+   .date_select {
+    border-radius: 7px;
+    padding: 5px;
+    border: 1px solid #dcdcdc;
+  }
+  .pickreturndate {
+    font-size: 1.1em;
+    background: transparent;
+    color: #989a9c;
+  }
+
+  .enable-option {
+    // opacity: .4;
+  }
+  .helpiconn {
+    background-color: #f55349;
+    color: white;
+    border-radius: 2rem;
+    width: 2rem;
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .toolbar-background-md{
+    opacity: .3;
+    background-blend-mode: luminosity;
+    transition: all .4s linear;
+    -webkit-transition: all .4s linear;
+  }
+
+  .bar-button-default-md{
+    color: color($colors , light);
+  }
+  
+  #map {
+    width: 100vw;
+    height: 100vw;
+    position: relative;
+  }
+  .content-md{
+  /*         background: url(../assets/img/det-bg.png); */
+  @extend %cover;
+  }
+  .stars{
+    p{
+      margin: 5px 0 4px 7px;
+    }
+  }
+
+  .backoverlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 19vh;
+    width: 100vw;
+    background-image: url(../assets/icon/image-overlay.png);
+    background-size: cover;
+    z-index: 4;
+  }
+
+  .locationstyle{
+    border-bottom: 1px solid #c6c6c7;
+    margin-bottom: 35px;
+  }
+
+  .locationicon{
+    height: 22px;
+    width: auto;
+  }
+
+  .swiper-slide img {
+    width: 100vw;
+    height: 50vh;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .border{
+    border-bottom: thin solid gainsboro;
+    border-top: thin solid gainsboro;
+    margin-top: 10px;
+  }
+
+  .sendbutton{
+    height: 20px;
+    padding: 0px;
+  }
+
+  .defaultbutton.send{
+    background-color: #599edb;
+    margin-top: 33px;
+    margin-bottom: 15px;
+  }
+
+  .bottomborder.padding{
+    padding-bottom:12px;
+    margin: 20px 10px 0 10px;
+  }
+
+  .sendborder-off{
+    border: thin solid gainsboro;
+    padding: 7px;
+    height: 33px;
+    width: 33px;
+    border-radius: 50%;
+  }
+
+  .sendborder-on{
+    border: thin solid #03a9f4;;
+    padding: 7px;
+    height: 33px;
+    width: 33px;
+    border-radius: 50%;
+  }
+
+  .pickborder{
+    border: thin solid gainsboro;
+    padding: 9px 5px;
+    height: 33px;
+    width: 33px;
+    border-radius: 50%;
+  }
+
+   .rightposition{
+    right:-1rem;
+  }
+
+  .middletext{
+    margin-top:6px;
+  }
+  
+  .my-overlay {
+    position: relative;
+    display: inline-block;
+    height: 60vw;
+    width: 70vw;
+    margin: 15vw;
+    background: rgba(0,0,0,0.7);
+    top: 0;
+    left: 0;
+  }
+  .swiper-pagination-bullet-active {
+      background: #ff5247;
+      opacity: 1;
+  }
+
+  .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+      /* margin: 0 5px; */
+      margin-bottom: 40px;
+  }
+
+  .card-md{
+    box-shadow: none;
+  }
+  .card-content-md{
+    border-bottom: 1px solid #bdbdbd;
+    &:last-child{
+      border-bottom: none;
+    }
+  }
+  .grid[no-padding]{
+    .row{
+      .col{
+        padding: 5px;
+      }
+    }
+  }
+  .profileimg{
+    display: inline-block;
+    left:6rem;
+    height: 6rem;
+    object-fit: cover;
+    object-position: center;
+    background-color: #03a9f4;
+    width: 6rem;
+    border-radius: 6rem;
+    box-shadow: -1px 0px 10px rgba(0, 0, 0, 1);
+  }
+  .wardrobe {
+    z-index: 0;
+    position: relative;
+    width:6rem;
+    height:6rem;
+    border-radius:5rem;
+    // padding:0px !important;
+    margin:0px !important;
+    text-align:center;
+  }
+
+  .cover_name{
+    padding: 0px 0 6px 8px !important;
+    margin: 0px !important;
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+    text-shadow:0 0 6px #000;
+  }
+  .cover_1 {
+    z-index: 1;
+    position: absolute;
+    top: 3vh;
+    padding:0px !important;
+    margin:0px !important;
+    font-size: 1.7rem;
+    color: white;
+  }
+  .cover_header0{
+    z-index: 10;
+    position: absolute;
+    top:2.5rem;
+    left:4vw;
+    padding:0px !important;
+    margin:0px !important;
+    font-size:28px;
+    color:white;
+  }
+  .cover_header1 {
+    z-index: 10;
+    position: absolute;
+    top:2.5rem;
+    right:12vw;
+    padding:0px !important;
+    margin:0px !important;
+    font-size: 28px;
+    color:white;
+  }
+  .cover_header2 {
+    z-index: 10;
+    position: absolute;
+    top:2.5rem;
+    right:4vw;
+    padding:0px !important;
+    margin:0px !important;
+    height: 20px;
+    color:white
+  }
+  .cover_2 {
+    z-index: 1;
+    position: absolute;
+    top: 7vh;
+    padding:0px !important;
+    margin:0px !important;
+    font-size: 1rem;
+    color: white;
+    height:2rem;
+  }
+
+  .home{
+    left:0; top:0;
+    width:100%; height:10%;
+    display:inline-block;
+    z-index: 0;
+    position: relative;
+  }
+
+  .content-md,
+    .content-ios{
+    background-color:white;
+  }
+
+  .ion-ios-shareicon-outline,
+  .ion-ios-shareicon,.ion-md-shareicon,.ion-md-shareicon-outline {
+    width: 15px !important;
+    content: url(../assets/icon/Share.png);
+  }
+
+  .add_remove{
+    font-size:1.6rem;
+  }
+
+  .costsize{
+    font-weight: 600;
+    font-size:18px;
+  }
+  .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end]{
+    margin: 8px 16px 8px 0;}
+.item-md [item-right], .item-md [item-end] {
+  margin: 8px;
+}
+.item-md p:last-child{
+  margin-bottom: 0;
+}
+}
+
+.colorOfHeader{ 
+  &::after{
+      display: none;
+  }
+  .toolbar-background-md{
+    opacity: 1 !important;
+    background-blend-mode: normal !important;
+    background: color($colors , dark) !important;
+  }
+}
+
+.activeColor{
+  color: white;
+}
+.icon_size{
+  font-size: 2em;
+  text-align: center;
+  color: black;
+}
+
+.whiteicon{
+  color:white;
+  font-size: 28px;
+  text-align: center;
+}
+
+
+
+
+// Head Of Details
+// --------------------------------------------------
+.det-head{
+  position: relative;
+  height: 100%;
+  h3{
+    font-weight: 400;
+    font-size: 1.8rem;
+  }
+  p{
+    @extend %overflow;
+    font-size: 1.2rem;
+  }
+}
+
+.user-action{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  ion-icon{
+    background: color($colors , danger);
+    width: 30px;
+    height: 30px;
+    line-height: 1.6;
+    text-align: center;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 2rem;
+    display: block;
+  }
+}
+
+.det-info{
+  position: absolute;
+  bottom: 0;
+  background: -webkit-linear-gradient(top, rgba(33,33,33,0) 0%,rgba(33,33,33,1) 58%,rgba(33,33,33,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(33,33,33,0) 0%,rgba(33,33,33,0.98) 58%,rgba(33,33,33,0.98) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#ed000000',GradientType=0 ); /* IE6-9 */
+  .rent-info{
+      margin-top: 50px;
+  }
+}
+
+.grid-info{
+  margin-top: 10px;
+  margin-left: -5px;
+  img{
+    height: 25px;
+    max-width: 25px;
+    object-fit: contain;
+    -o-object-fit: contain;
+    margin: 5px auto;
+  }
+}
+
+.scroll-btn{
+  margin-bottom: 5px;
+  font-size: 2rem;
+  background: transparent;
+}
+
+// More Of Details
+// --------------------------------------------------
+.more-details{
+  background: color($colors , dark);
+  .card-title-md{
+      font-size: 2.1rem;
+  }
+  h3{
+      font-size: 1.6rem;
+      margin: 5px 0 12px 0 !important;
+  }
+  p{
+      font-size: 1.3rem;
+      line-height: 1.3;
+  }
+}
+
+.grid-info{
+  .more-advantage{
+    font-size: 2.6rem;
+    ion-icon{
+        margin-top: 10px;
+    }
+  }
+  p{
+    @extend %overflow;
+    font-size: 1.2rem;
+  }
+}
+
+.images{
+  ion-row{
+    margin-bottom: 6px;
+  }
+  ion-col{
+    padding: 0 8px 0 0 !important;
+  }
+  img{
+    height: 50px;
+    border-radius: 2px;
+    object-fit: cover;
+    -o-object-fit: cover;
+  }
+}
+
+// footer style
+.detFooter{
+  .grid{
+    background: color($colors , primary);
+  }
+  [col-4]{
+    height: 50px;
+    line-height: 47px;
+    font-size: 2.2rem;
+    p{
+        font-size: 1.7rem;
+    }
+  }
+  
+  .min-btn{
+    border-right: 1px solid color($colors , dark);
+    border-left: 1px solid color($colors , dark);
+  }
+         
+}

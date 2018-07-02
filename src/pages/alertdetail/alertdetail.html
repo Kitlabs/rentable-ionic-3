@@ -1,0 +1,159 @@
+<!--
+  Generated template for the AlertdetailPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar class="profileheader" >
+    <h4 class="size">Create Alert</h4>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="app-content paddingbottom" >
+  <ion-item>
+    <p item-left class="helpstr">Alert Name</p>
+    <p item-right class="helpstr">{{titlenumber}}</p>
+  </ion-item>
+  <ion-row class="bottomborder">
+    <ion-col col-11>
+      <ion-input (ionChange)='number()' type="text" value="Predtty cool size" [(ngModel)]="alerttitle"></ion-input>
+    </ion-col>
+    <ion-col col-1>
+      <ion-icon name="md-close" class="graycolor"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <div class="borderstyle datestyle">
+    <ion-label >
+      LOCATION
+    </ion-label>
+  </div>
+  <ion-row class="locationstyle locationstyle_new" (click)="presentModal()">
+    <ion-col col-1 class="locationicon">
+      <img  src="assets/icon/location-place.png">
+    </ion-col>
+    <ion-col col-6 class="middletext">
+      Change Location
+    </ion-col>
+    <ion-col col-4>
+    </ion-col>
+    <ion-col col-1 class="rightposition middletext">
+      <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <ion-label class="categorytitle">
+    CATEGORIES
+  </ion-label>
+  <div>
+    <div class="radio-alertimg grid-list" *ngFor="let item of alertlist" >
+      <input type="radio" name="radio-group" id="{{item.radionumber}}" class="input-hidden" />
+      <label (click)="myFunction($event)" for="{{item.radionumber}}" >
+        <img class="categoryimage" src="{{item.inactive_img}}">
+        <span class="categoryname">{{item.title}}</span>
+      </label>
+    </div>
+  </div>
+  <div class="borderstyle datestyle">
+    <ion-label >
+      DATES
+    </ion-label>
+  </div>
+  <ion-row class="locationstyle">
+    <ion-col col-1 class="locationicon">
+      <img  src="assets/icon/calendar_red.png">
+    </ion-col>
+    <ion-col col-6 class="middletext">
+      Select Dates
+    </ion-col>
+    <ion-col col-4>
+    </ion-col>
+    <ion-col col-1 class="rightposition middletext">
+      <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <!--   <ion-item class="wardrobe">
+      <ion-datetime [(ngModel)]="myDate"></ion-datetime>
+    </ion-item> -->
+  <ion-row >
+    <ion-col col-6>
+       <ion-label no-padding no-margin >
+         DISTANCE
+       </ion-label>
+    </ion-col>
+    <ion-col col-3>
+    </ion-col>
+    <ion-col col-3 style="text-align: right;">
+      {{distance}}km
+    </ion-col>
+  </ion-row>
+  <ion-item class="pricestyle">
+    <ion-range min="0" max="30"  [(ngModel)]="distance" step="1"color="element">
+      <img class="distancesize" range-left src="assets/icon/house.png">
+      <img class="distancesize" range-right src="assets/icon/sports-small.png">
+    </ion-range>
+  </ion-item>
+  <ion-label class="categorytitle">
+    PRICE
+  </ion-label>
+  <ion-row class="pricerange">
+    <ion-col col-6 >
+      <ion-item class="inputborder">
+        <ion-input style="padding:0 0 0 8px;" type="text" placeholder="From" [(ngModel)]="pricefrom"></ion-input>
+      </ion-item>
+    </ion-col>
+
+     <ion-col col-6 >
+      <ion-item class="inputborder">
+        <ion-input  style="padding:0 0 0 8px;" type="text" placeholder="To" [(ngModel)]="priceto" ></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-label class="liststyle">
+    POSTED WITHIN
+  </ion-label>
+  <ion-list radio-group [(ngModel)]="within">
+    <ion-item>
+      <ion-label>The last 24 hrs</ion-label>
+      <ion-radio value="24" ></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>The last 7 days</ion-label>
+      <ion-radio value="7"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>The last 30 days</ion-label>
+      <ion-radio value="30"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Show all</ion-label>
+      <ion-radio value="all" checked="true"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <ion-label class="liststyle">
+    SORT BY
+  </ion-label>
+  <ion-list radio-group [(ngModel)]="sortby">
+    <ion-item>
+      <ion-label>Newest First</ion-label>
+      <ion-radio value="newset" checked="true"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Closest First</ion-label>
+      <ion-radio value="closest"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Delivery First</ion-label>
+      <ion-radio value="delivery"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Price: low to high</ion-label>
+      <ion-radio value="lowtohigh"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Price: high to low</ion-label>
+      <ion-radio value="hightolow"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button block color="primary" class="defaultbutton" (click)="alertsave()">Save Alert</button>
+</ion-content>

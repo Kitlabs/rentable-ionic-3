@@ -1,0 +1,87 @@
+
+page-likes {
+  .grid-list{
+    width: 50%;
+    float: left;
+    padding-bottom: 0;
+    padding:0px !important;
+    margin-top: 0px;
+    margin-bottom: -5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    img{
+        object-fit: cover;
+        -o-object-fit: cover;
+        opacity: .7;
+    }
+    .item-md{
+        .item-inner{
+            padding-right: 0;
+        }
+    }
+    .label-md{
+        text-transform: capitalize;
+        font-weight: 500;
+        padding:0px !important;
+        margin:0px !important;
+    }
+  }
+
+  .image-item{
+    position: relative;
+    display: inline-block;
+    padding:0px !important;
+    margin:0px !important;
+    border:0px;
+  }
+
+  .wardrobe {
+    z-index: 0;
+    position: relative;
+    width:50vw;
+    height:50vw;
+    padding:0px !important;
+    margin:0px !important;
+    border: 1px solid white;
+  }
+
+  .cover_1 {
+    z-index: 1;
+    position: absolute;
+    left:2vw;
+    top: 1vw;
+    padding:0px !important;
+    margin:0px !important;
+    font-size: 1.8rem;
+    color: white;
+  }
+
+  .cover_2 {
+    z-index: 1;
+    position: absolute;
+    right:2vw;
+    top: 1vw;
+    padding:0px !important;
+    margin:0px !important;
+    font-size: 31px;
+    color: white;
+    font-weight: 100;
+  }
+
+  ion-scroll.scroll-x .scroll-content {
+    overflow-x: auto;
+    margin: 5px 0;
+  }
+
+  .cover_image{
+    z-index: 1;
+    position: absolute;
+    right:2vw;
+    top: 1vw;
+    padding:0px !important;
+    margin:0px !important;
+    height: 2.2rem;
+    width:auto;
+  }
+
+}

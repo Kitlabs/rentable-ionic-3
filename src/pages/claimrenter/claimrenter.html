@@ -1,0 +1,120 @@
+<!--
+  Generated template for the ClaimrenterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar class="profileheader"  style="text-align: left;" hideBackButton="true">
+     <ion-icon (click)="back()" class="navetitle" name="md-close"></ion-icon>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding align="center" class="addcontent">
+	<p class="returntitle">
+		RESPONDING TO A CLAIM
+	</p>
+	<!-- <P class="helptext suggest">A claim has been submitted for an item you rented, the full details are below. You may respond to the claim by either accepting or rejecting this claim at the bottom of this screen</P> -->
+  <p class="helptext suggest">Because you and the owner agreed that the condition of the item you rented from them was different when you returned it to when you first rented it, the owner has submitted the claim below.</p>
+  <ion-label class="requesttitle">
+    OWNER SUBMITTING THE CLAIM
+  </ion-label>
+  <ion-row style="text-align: left;">
+    <ion-col col-5>
+      <img src="{{basePath}}{{data.Vendor_photoURL}}"  class="otherphoto">
+    </ion-col>
+    <ion-col col-7 style="padding-top: 30px;" >
+      <h5 style="font-weight: bold;">
+        {{data.Vendor_firstName}} {{data.Vendor_lastName}}
+      </h5>
+      <ion-label style="color: gray; font-size: 12px;">
+        {{data.Vendor_location}}
+      </ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-label class="requesttitle">
+    ITEM THE CLAIM HAS BEEN SUBMITTED AGAINST
+  </ion-label>
+  <ion-row style="text-align: left;">
+    <ion-col col-4 >
+      <img src="{{basePath}}{{data.image_single}}" class="itemphoto">
+    </ion-col>
+    <ion-col col-8 class="itemtext">
+      <ion-label>
+        {{data.title}}
+      </ion-label>
+      <ion-label >
+        <!-- <span style="font-weight: 600;" >Dates:</span>  {{Product.selectdate}} to {{Product.selectdate}} -->
+      </ion-label>
+      <ion-label>
+        <span>Total fee:</span>
+         ${{data.Amount}}
+      </ion-label>
+      <ion-label>
+        <span>Security Deposit:</span>
+        ${{data.TotalAmountBond}}
+      </ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-label class="requesttitle">
+    CLAIM DETAILS SUBMITTED BY THE OWNER
+  </ion-label>
+	<p class="helptext condition">THIS IS THE ITEMS CONDITION WHEN RENTED</p>
+	<ion-label >
+    <img  *ngFor="let item of pickUpRatingPos" class="returnstarsize" src="assets/icon/star-grey.png">
+    <img  *ngFor="let item of pickUpRatingNeg" class="returnstarsize" src="assets/icon/star-grey-outline.png">
+  </ion-label>
+  <p class="goodstyle">{{pickUpRatingTitle}}</p>
+  
+
+  <div  *ngIf="!bothPartyDidntAgreeStatus">
+    <p class="helptext condition">THIS IS THE ITEMS CONDITION WHEN RETURNED</p>
+  <ion-label >
+    <img *ngFor="let item of returnRatingPos" class="returnstarsize" src="assets/icon/star-grey.png">
+    <img *ngFor="let item of returnRatingNeg" class="returnstarsize" src="assets/icon/star-grey-outline.png">
+  </ion-label>
+  <p class="goodstyle">{{returnRatingTitle}}</p>
+  </div>
+  
+  <p class="helptext condition">AMOUNT CLAIMED BY THE OWNER</p>
+  <p class="otherstyle"><b>$</b> {{data.ClaimBondAmount}}</p>
+
+  <div *ngIf="claimOwnerCommentStatus">
+    <ion-label class="requesttitle">
+      OWNERS COMMENTS BELOW
+    </ion-label>
+    <ion-label  type="text" class="feedbackshow" text-wrap>{{data.ClaimComment}}</ion-label >
+  </div>
+
+  
+  <div *ngIf="agreeSectionStatus">    
+    <p class="helptext condition" >DO YOU AGREE WITH THIS CLAIM?</p> 
+    <ion-row radio-group *ngIf="!agreewith" style="margin-bottom: 40px;">
+      <ion-col col-2>
+      </ion-col>
+      <ion-col col-2 >
+        Yes
+      </ion-col>
+      <ion-col col-2 >
+        <img src="{{yesStatus}}" (click)="yesChange()" id="Yes" >
+      </ion-col>
+      <ion-col col-2 >
+        No
+      </ion-col>
+      <ion-col col-2 >
+          <img src="{{noStatus}}" id="No" (click)="noChange()" >
+      </ion-col>
+      <ion-col col-2>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <button ion-button block   
+	[ngClass]="{disabled : !submitBtnStatus,
+	'search-btn-valid':submitBtnStatus,
+	'search-btn-invalid':!submitBtnStatus }"  
+	(click)="submitBtnStatus && submit()"
+>Ok</button>
+</ion-content>

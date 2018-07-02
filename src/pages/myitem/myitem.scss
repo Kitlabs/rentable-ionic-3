@@ -1,0 +1,128 @@
+page-myitem {
+  .label-md {
+    margin: 11px 8px 11px 0;
+  }
+	.segment_info{
+    column-width: 70vw;
+    width: 70vw !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    padding-top: 0 !important;
+  }
+  .toolbar-ios-navbarcolor .segment-ios .segment-button.segment-activated {
+    color: white !important;
+    div{
+    	border-color:white;
+    }
+  }
+  .moneytitle{
+    font-size: 20px !important;
+    padding-bottom: 30px;
+    &.moneyout{
+      max-width: 103px !important;
+      margin-right:10px !important;
+    }
+    &.moneyin{
+      max-width: 86px !important;
+      margin-left:10px !important;
+    }
+  }
+
+  .segment-md .segment-button,
+    .segment-ios .segment-button{
+      border:0;
+    color: graytext;
+    margin:0 10px;
+    ion-icon{
+      margin-top: 8px;
+    }
+  }
+  .segment-md .segment-button{
+    padding: 0;
+  }
+  
+  .segment-md .segment-button.segment-activated{
+    color:#fff;
+  }
+
+  .item-md [item-left], .item-md [item-start],
+  .item-ios [item-left], .item-ios [item-start] {
+    margin: 8px 16px 8px 0;
+  }
+  .item-md [item-right], .item-md [item-end] ,
+  .item-ios [item-right], .item-ios [item-end] {
+      margin: 8px;
+  }
+
+  .itemtext{
+    font-size:15px;
+    color:gray;
+  }
+
+  .categoryimg{
+    height: 29px;
+    margin-top: 5px;
+  }
+
+  .logoblackborder{
+  	border:thin solid gray;
+	  border-radius: 50%;
+	 	width: 27px;
+    height: 27px;
+	  margin:auto;
+  }
+
+  .itemstyle{
+  	color: black;
+    font-size: 21px;
+    line-height: 1.4;
+    font-weight: bold;
+    margin: 11px 0px;
+  }
+
+  .itemimg{
+    margin-left: 7px;
+    margin-top: 8px;
+    height: 19px;
+    width: auto;
+  }
+
+  .bottomborder.bottompadding{
+    padding-bottom: 17px;
+    margin: 0 0 21px;
+  }
+
+  .titlefont {
+    font-size: 1.1rem;
+    margin-top: -14px;
+  }
+  .pricetext{
+  	color:red;
+  	font-size:20px;
+  }
+
+  .segment-ios .segment-button{
+    line-height: 3rem;
+    height: 3.2rem;
+  }
+  .segment-ios .segment-button.segment-activated{
+    color: #fff;
+    background-color: transparent;
+    div{
+    	border-color: white;
+    }
+    ion-icon {
+      p{
+        color:white;
+      }
+      div{
+	    	border-color: white;
+	    }
+    }
+  }
+
+  .segment_info1{
+   	padding-top: 4px;
+  }
+
+}

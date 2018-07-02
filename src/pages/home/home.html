@@ -1,0 +1,48 @@
+
+<ion-header   >
+  <ion-toolbar no-padding   >
+    <ion-row class="profileheader" >
+      <ion-col  col-1 class="icon-col">
+        <img src="assets/icon/avatar.png" (click)="goToProfile()">
+      </ion-col>
+      <ion-col class="icon-col" col-10>
+      <ion-searchbar 
+        class="searchbar" 
+        placeholder="Find items here" 
+        [(ngModel)]="searchtext" 
+        (ionInput)="searchItems()"
+        (ionClear)="onCancel()"
+        debounce="2000">
+     </ion-searchbar>
+      </ion-col>
+      <ion-col class="icon-col" col-1>
+        <img src="assets/icon/filter.png"  (click)="goToFilter()">
+       </ion-col>
+    </ion-row>
+  </ion-toolbar>
+  <p class="tooltip animated  shake" *ngIf="!hideTipMessage">Click here to add the payment method</p>
+</ion-header>
+
+<ion-content no-padding class="app-content" >
+    <ion-scroll  scrollX="true" class="categorystyle">
+      <ion-segment [(ngModel)]="timeline" style="justify-content: left;">
+        <ion-segment-button class="segmenthover" *ngFor="let item of categorylist;let i = index" (click)="myFunction($event)"  value="{{item.value}}" >
+          <img src="{{item.inactive_img}}" id="{{item.value}}" class="categoryimg">
+          <p class="categoryfont" id="{{item.title}}">{{item.title}}</p>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-scroll>
+  
+  <!-- Products -->
+  <ion-card class="grid-list backcolor  animated fadeIn " *ngFor="let item of listOfItems; let i=index">
+    <div class="image-item" no-lines> 
+      <img (click)="godetails(item.id)" class="wardrobe" src="{{item.base_path}}{{item.image_single}}" />
+      <ion-label class="cover_1" >${{item.dailyrentalPrice}}</ion-label>
+      <img *ngIf="!like[item.id]" class="cover_image animated bounceIn" (click)="ActiveFavourite(item.id)" src="assets/icon/like.png">
+      <img *ngIf="like[item.id]" class="cover_image animated bounceIn" (click)="DeactiveFavourite(item.id)" src="assets/icon/like-full.png">
+    </div>
+  </ion-card>
+
+  <!-- <button ion-button color="secondary" (click)="increaseBadge()">Click Me</button> -->
+
+</ion-content>

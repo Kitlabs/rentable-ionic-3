@@ -1,0 +1,52 @@
+<!--
+  Generated template for the FeedbackPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar  class="profileheader">
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="app-content">
+	<div text-center style="margin:4vh 0 8vh;">
+
+		<h3 style="font-weight: bold;" > Rate the owner</h3>
+			<p class="commentstyle">
+				Tell the owner how awesome he/she was
+			</p>
+			<p class="commentstyle">
+				Your feedback helps us and other renters like you build trust and improve to provide a better service
+			</p>
+	
+		<div *ngFor="let i of condition" class="conditionstar"  style="margin:4vh 0 0 0;">
+      <img *ngIf="goodcondition[i]" (click)="changecondition(i)" class="starsize" src="assets/icon/star-red.png">
+      <img *ngIf="!goodcondition[i]" (click)="changecondition(i)" class="starsize" src="assets/icon/star.png">
+    </div>
+	</div>
+
+	<ion-row>
+		<ion-col col-10>
+			<p class="commentstyle">
+				Give a comment below
+			</p>
+		</ion-col>
+		<ion-col col-2>
+			<p  class="commentstyle" style="text-align: right;">
+				{{titlenumber}}
+			</p>
+		</ion-col>
+	</ion-row>
+	<ion-textarea rows="5" (ionChange)='number()' type="tel" class="feedbackinput" [(ngModel)]="feedbacktext"  maxLength="300" text-wrap></ion-textarea >
+
+		<button ion-button block   
+		[ngClass]="{disabled : !submitBtnStatus,
+		'search-btn-valid':submitBtnStatus,
+		'search-btn-invalid':!submitBtnStatus }"  
+		(click)="submitBtnStatus && submit()"
+	>Submit</button>
+</ion-content>

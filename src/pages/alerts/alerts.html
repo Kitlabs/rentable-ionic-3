@@ -1,0 +1,140 @@
+
+<ion-header>
+
+  <ion-navbar class="profileheader"  hideBackButton="true" animation="no-animation">
+    <ion-row >
+      <ion-col col-1 >
+        <ion-icon *ngIf="alertview" class="headertitle" [navPush]="alertdetail" name="md-add"></ion-icon>
+      </ion-col>
+      <ion-col col-10>
+        <ion-segment [(ngModel)]="alert_opportunity"  class="segment_info" >
+          <ion-segment-button (click)="showalert()" class="alerttitle alertwidth" value="alert">
+            Alerts
+          </ion-segment-button>
+          <ion-segment-button (click)="showalert()" class="alerttitle opportunitywidth" value="opportunity">
+            Opportunities
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+       <ion-col col-1>
+        <ion-checkbox  [(ngModel)]="itemdelete"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="app-content" no-padding [ngSwitch]="alert_opportunity">
+  <ion-card *ngSwitchCase="'alert'" style="background-color: white;" no-margin>
+  	<ion-list>
+      <ion-item-sliding *ngFor="let item of list" class="alertstyle">
+        <ion-item>
+          <p class="alertname">Alert Name</p>
+          <div class="grid-list" >
+            <ion-item>
+              <div item-left class="imageblackborder">
+                <img class="categoryimage data" src="assets/icon/post-it.png">
+              </div>
+              <div >
+                <p class="helpfont">POSTED WITHIN</p>
+                <p class="blackcolor">Last {{item.history}}hours</p>
+              </div>
+            </ion-item>
+            <ion-item>
+              <div item-left class="imageblackborder">
+                <img class="categoryimage " src="assets/icon/sports-black.png">
+              </div>
+              <div>
+                <p class="helpfont">DISTANCE</p>
+                <p class="blackcolor">{{item.distance}}km</p>
+              </div>
+            </ion-item>
+          </div>
+
+          <div class="grid-list">
+            <ion-item>
+              <div item-left class="imageblackborder">
+                <img class="categoryimage dollar" src="assets/icon/dollar-symbol.png">
+              </div>
+              <div>
+                <p class="helpfont">PRICE RANGE</p>
+                <p class="blackcolor">${{item.startprice}}-${{item.lastprice}}</p>
+              </div>
+            </ion-item>
+            <ion-item>
+              <div item-left class="imageblackborder">
+                <img class="categoryimage data" src="assets/icon/calendar.png">
+              </div>
+              <div>
+                <p class="helpfont">DATE RANGE</p>
+                <p class="blackcolor">{{item.startduration}}-{{item.lastduration}}</p>
+              </div>
+          </ion-item>
+          </div>
+          <button class="defaultbutton" [navPush]="alertdetail">VIEW ALERT</button>
+        </ion-item>
+        <ion-item-options *ngIf="itemdelete"  side="right" class="optionbutton">
+          <button color="secondary" (click)="deletealert(item)"><ion-icon trash></ion-icon>Delete</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-card>
+  <ion-card *ngSwitchCase="'opportunity'" style="background-color: white;" no-margin>
+    <ion-list>
+      <ion-item-sliding *ngFor="let item of categorylist" class="alertstyle">
+        <ion-item>
+          <p class="alertname">You have an opportunity</p>
+          <div class="grid-list" >
+            <ion-item>
+              <div item-left class="imageblackborder">
+                <img class="categoryimage data" src="assets/icon/post-it.png">
+              </div>
+              <div >
+                <p class="helpfont">POSTED WITHIN</p>
+                <p class="blackcolor">Last {{item.history}}hours</p>
+              </div>
+            </ion-item>
+            <ion-item>
+              <div item-left class="imageblackborder">
+                <img class="categoryimage" src="assets/icon/sports-black.png">
+              </div>
+              <div>
+                <p class="helpfont">DISTANCE</p>
+                <p class="blackcolor">{{item.distance}}km</p>
+              </div>
+            </ion-item>
+          </div>
+
+          <div class="grid-list">
+            <ion-item>
+              <div item-left class="imageblackborder">
+                <img class="categoryimage dollar" src="assets/icon/dollar-symbol.png">
+              </div>
+              <div>
+                <p class="helpfont">PRICE RANGE</p>
+                <p class="blackcolor">${{item.startprice}}-${{item.lastprice}}</p>
+              </div>
+            </ion-item>
+            <ion-item>
+              <div item-left class="imageblackborder">
+                <img class="categoryimage data" src="assets/icon/calendar.png">
+              </div>
+              <div>
+                <p class="helpfont">DATE RANGE</p>
+                <p class="blackcolor">{{item.startduration}}-{{item.lastduration}}</p>
+              </div>
+          </ion-item>
+          </div>
+          <button class="defaultbutton" [navPush]="opportunity">VIEW OPPORTUNITY</button>
+        </ion-item>
+        <ion-item-options *ngIf="itemdelete"  side="right" class="optionbutton">
+          <button color="secondary" (click)="deletecategory(item)"><ion-icon trash></ion-icon>Delete</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-card>
+</ion-content>
+
+
+

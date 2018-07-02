@@ -1,0 +1,112 @@
+<ion-header>
+
+  <ion-navbar class="profileheader" style="padding:0!important" hideBackButton="true" >
+    <ion-row >
+      <ion-col col-2 >
+      </ion-col>
+      <ion-col col-8>
+        <ion-segment [(ngModel)]="own_rent"  class="segment_info" >
+          <ion-segment-button class="itemtitle" value="own">
+            I Own
+          </ion-segment-button>
+          <ion-segment-button class="itemtitle" value="rent">
+            I Rent
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col col-1>
+      </ion-col>
+      <ion-col col-1>
+        <!-- <ion-checkbox  [(ngModel)]="itemdelete"></ion-checkbox> -->
+<!--         <ion-icon class="headertitle" (click)="delete()" name="ios-trash-outline"></ion-icon>
+ -->      
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+
+<!-- <ion-content [ngSwitch]="own_rent" class="app-content">
+  <ion-list *ngSwitchCase="'own'">
+    <ion-item-sliding  class="like-list bottomborder" *ngFor="let item of chatlist" no-margin >
+      <ion-item (click)="chatdetail(item)" no-lines paddings>
+        <ion-thumbnail  item-left>
+          <img class="itemimage" src="assets/img/11.png" />
+        </ion-thumbnail>
+        <h2 style="color: black;" class="itemtext">{{item.title}}</h2>
+        <h2 class="itemtext">{{item.item_title}}</h2>
+        <p class="itemtext">{{item.history}}</p>
+        <ion-icon  class="itemtext"  item-right name="ios-arrow-forward-outline" ></ion-icon>
+      </ion-item>
+      <ion-item-options *ngIf="itemdelete" side="right" class="optionbutton">
+        <button color="secondary" (click)="deleteown(item)"><ion-icon trash></ion-icon>Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <div *ngSwitchCase="'rent'">
+    <ion-item-sliding  class="like-list bottomborder" *ngFor="let item of rentlist" no-margin >
+      <ion-item (click)="chatdetail(item)" no-lines paddings>
+        <ion-thumbnail  item-left>
+          <img class="itemimage" src="{{item.img}}" />
+        </ion-thumbnail>
+        <h2 style="color: black;" class="itemtext">{{item.title}}</h2>
+        <h2 class="itemtext">{{item.item_title}}</h2>
+        <p class="itemtext">{{item.history}}</p>
+        <ion-icon  class="itemtext"  item-right name="ios-arrow-forward-outline" ></ion-icon>
+      </ion-item>
+      <ion-item-options *ngIf="itemdelete" side="right" class="optionbutton">
+        <button (click)="deleterent(item)"><ion-icon trash></ion-icon>Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </div> -->
+
+<ion-content [ngSwitch]="own_rent" class="app-content">
+  
+  <div *ngSwitchCase="'own'">
+
+    <div  *ngFor="let item of ownlist;let i = index" style="position: relative;">
+    <ion-item-sliding   class="like-list bottomborder" 
+      no-margin 
+      (click)="goToIOwnChatDetails(item.User_Id,item.PostId,item.title,item.image_single,item.User_photoURL,item.dailyrentalPrice,item.Poststatus,item.pl_status,item.FromDate,item.ToDate,item.Amount,item.itemOwnerFee,item.AdminFee,item.rentableServiceFee,item.rentalCostWithoutFee,item.needDelivery)" (press)="deleteIownChatList(item.User_Id,item.pl_status,item.PostId)" >
+        <ion-item  no-lines paddings>
+          <ion-thumbnail  item-left>
+            <img class="itemimage" src="{{basePath}}{{item.image_single}}" />
+          </ion-thumbnail>
+          <h2 style="color: black;" class="itemtext">{{item.User_firstName}} {{item.User_lastName}}</h2>
+          <h4 class="itemtext">{{item.title}}</h4>
+          <!-- <p class="itemtext">{{item.FromDate | amTimeAgo}} </p> -->
+          <ion-icon  class="itemtext"  item-right name="ios-arrow-forward-outline" ></ion-icon>
+        </ion-item>
+        <!-- <ion-item-options *ngIf="itemdelete" side="right" class="optionbutton"> -->
+        <!-- <ion-item-options  side="right" class="optionbutton">
+          <button ion-button expandable  color="primary" (click)="deleteown(item.PostId)"><ion-icon name="trash"></ion-icon></button>
+          <button color="secondary" (click)="chatdetail(item.UserId)"><ion-icon name="trash"></ion-icon>Chat Detail</button>
+        </ion-item-options> --> 
+     </ion-item-sliding>
+     <p class="counter" *ngIf=" item.IsRead == 'true' ">1+</p>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'rent'" >
+    <div  *ngFor="let item of rentlist" style="position: relative;"  >
+        <ion-item-sliding class="like-list bottomborder animated fadeIn" no-margin>
+            <ion-item (click)="goToIRentChatDetails(item.User_Id,item.PostId,item.title,item.image_single,item.User_photoURL,item.dailyrentalPrice,item.Poststatus,item.pl_status,item.FromDate,item.ToDate,item.Amount,item.itemOwnerFee,item.AdminFee,item.rentableServiceFee,item.rentalCostWithoutFee,item.needDelivery)" (press)="deleteIrentChatList(item.User_Id,item.pl_status,item.PostId)">
+              <ion-thumbnail  item-left>
+                <img class="itemimage" src="{{basePath}}{{item.image_single}}" imageViewer />
+              </ion-thumbnail>
+              <h2 style="color: black;" class="itemtext">{{item.User_firstName}} {{item.User_lastName}}</h2>
+              <h2 class="itemtext">{{item.title}}</h2>
+              <!-- <p class="itemtext">{{item.history}}</p> -->
+              <ion-icon  class="itemtext"  item-right name="ios-arrow-forward-outline" ></ion-icon>
+            </ion-item>
+            <ion-item-options *ngIf="itemdelete" side="right" class="optionbutton">
+              <button (click)="deleterent(item)" ><ion-icon trash></ion-icon>Delete</button>
+            </ion-item-options>
+          
+        </ion-item-sliding>
+        <p class="counter" *ngIf=" item.IsRead == 'true' ">1+</p>
+    </div>
+  </div>
+
+</ion-content>

@@ -1,0 +1,102 @@
+<ion-header>
+
+    <ion-navbar class="profileheader">
+      <ion-row >
+        <ion-col col-1>
+          
+        </ion-col>
+        <ion-col col-10>
+          <h4  style="text-align: center;">PAYOUT DETAILS</h4>
+        </ion-col>
+        <ion-col col-1>
+        </ion-col>
+      </ion-row>
+    </ion-navbar>
+  
+  </ion-header>
+
+
+<ion-content class="app-content">
+  
+  <!-- <ion-item (click)="addBankNew()" *ngIf="status">
+      <ion-label>New Payment Method</ion-label>
+      <ion-icon  class="addbtn" name="add" item-right ></ion-icon>
+    </ion-item>' -->
+
+  <ion-label class="text_title">How do you prefer to get paid?</ion-label>
+  <ion-label class="text_title">We will transfer your earnings into your bank account</ion-label>
+
+
+  <div *ngIf="bankAttachedStatus">
+  <ion-card class="card-info animated slideInUp fadeIn" >
+      <ion-list style="padding: 20px" >
+        <ion-item >
+          <ion-label >{{bankSavedData.AccHolderName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <p item-left>{{bankSavedData.BankName}}</p>
+          <p item-right >{{bankSavedData.AccountNumber}}</p>
+        </ion-item>
+        <ion-item>
+          <ion-icon item-right name="trash" (click)="deleteBankAccount(bankSavedData.SbankId)" class="delete-icon" ></ion-icon>
+        </ion-item>
+      </ion-list>
+  </ion-card>
+  </div>
+
+    
+  <div *ngIf="!bankAttachedStatus">
+
+  <ion-label class="helpstr">Account Holder Name</ion-label>
+  <ion-row class="borderbottom">
+    <ion-col col-11>
+      <ion-input class="inputtext" type="text" [(ngModel)]="accountHolderName" (ionChange)="change()" placeholder="Enter name" pattern="^[a-zA-Z]$" maxLength="25"></ion-input>
+    </ion-col>
+    <ion-col col-1 style="text-align: center; font-size:3rem;">
+      <ion-icon name="close" (click)="removeAccountHolderName()"></ion-icon>
+    </ion-col>
+  </ion-row> 
+
+  <ion-label class="helpstr">BSB</ion-label>
+  <ion-row class="borderbottom">
+    <ion-col col-11>
+      <ion-input class="inputtext" type="tel" [(ngModel)]="accountBsb" (ionChange)="change()" id="bsb" placeholder="Enter Bsb" pattern="[0-9]*"  maxLength="6"></ion-input>
+    </ion-col>
+    <ion-col col-1 style="text-align: center; font-size:3rem;">
+      <ion-icon name="close" (click)="removeBsb()"></ion-icon>
+    </ion-col>
+  </ion-row> 
+
+  <ion-label class="helpstr">Account Number</ion-label>
+  <ion-row class="borderbottom">
+    <ion-col col-11>
+      <ion-input type="tel" class="inputtext" [(ngModel)]="accountNumber" id="accno" (ionChange)="change()" placeholder="Enter account number" pattern="[0-9]*" maxLength="10" minLength="6"></ion-input>
+    </ion-col>
+    <ion-col col-1 style="text-align: center; font-size:3rem;">
+      <ion-icon name="close" (click)="removeAccountNumber()"></ion-icon>
+    </ion-col>
+  </ion-row> 
+
+
+  <ion-label class="helpstr">Account Type</ion-label>  
+  <ion-row class="borderbottom bottom">
+    <ion-col col-10>
+      <ion-item>
+          <ion-select [(ngModel)]="account_type">
+            <ion-option value="individual">Individual</ion-option>
+            <ion-option value="company">Company</ion-option>
+          </ion-select>
+        </ion-item>
+    </ion-col>
+  </ion-row> 
+	<button ion-button block   
+	[ngClass]="{disabled : !searchStatus,
+	'search-btn-valid':searchStatus,
+	'search-btn-invalid':!searchStatus }"  
+	(click)="searchStatus && addBank()"
+ >SAVE</button>
+ 
+</div>
+
+
+</ion-content>

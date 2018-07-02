@@ -1,0 +1,248 @@
+{
+    "items": [
+        {
+            "name": "What is Rentable?",
+            "children": [
+                {
+                    "information": "Rentable is a mobile app for renting out stuff, it connects stuff Owners with Renters looking for short term rentals. At Rentable, you’ll be renting stuff to and from people living nearby who are willing to have that product, but not necessarily want to buy it."
+                },
+                {
+                    "information":"Renters use the app to search for stuff they’d like to rent and book on the go. Owners can offer delivery and pick up on certain items, and are protected by a security deposit."
+                },
+                {
+                    "information":"Trust is built upon members and is vital to maintain the app working and growing. Every rental end with a review that allows renters and owners gain reputation and build trust within their community."
+                }
+            ]
+        },
+        {
+            "name": "What is my relationship with Rentable?",
+            "children": [
+                {
+                    "information":"Rentable provides the technology platform and marketplace for Owners and Renters to transact but does not supply the primary service, being the items rented. As an Owner, you have a direct relationship with the Renter, and a separate independent relationship with Rentable."
+                }
+            ]
+        },
+        {
+            "name":"What are my rights from using Rentable?",
+            "children":[
+                {
+                    "information":"You can expect that pictures and item descriptions on the app are genuine and booking requests are made in good faith. For owners, payments will be paid within 72hs of commencing the rental period. For renters, no payment is deducted until the item has been exchanged or unless you cancel the booking incurring a penalty fee."
+                },  
+                {
+                    "information":"When both parties are meeting to have, the item exchanged, we recommend checking rental conditions by checking rental expire dates, product condition and any requirements stated in the item description."
+                },
+                {
+                    "information":"If by any chance you decide to go ahead with a rental outside of Rentable’s app, then we cannot act on your support for any problems that may arise, and this nullifies any protections you are provided by us. The app serves as proof that the two parties have entered an item rental contract, and can be used if necessary."
+                }
+            ]
+        },
+        {
+            "name":"If I have a dispute with the other party, how do I solve it?",
+            "children":[
+                {
+                    "information":"In this case, the best way is to try and solve the problem with the other party before getting into a real dispute. Many times, just talking with the other person can solve problems and we strongly recommend you do this. If things are going nowhere, please follow our Dispute Resolution Process or contact us contact@rentableapp.com so we can help solve the dispute."
+                }
+            ]
+        },
+        {
+            "name":"What does it cost to post an item?",
+            "children":[
+                {
+                    "information":"Rentable is FREE to download and use! You can post as many items as you want for free, you only pay once an item is rented. This fee paid is used to run the app and improve the service offered."
+                }
+            ]
+        }, {
+            "name":"How do I set the rental price?",
+            "children":[
+                {
+                    "information":"Every product category is different, and so rental costs. You might want to search for similar products on the app, and have an idea of what other people are renting for. Otherwise, we recommend finding an attractive yet workable price for you to have the product rented. The minimum rental fee is $5."
+                }
+            ]
+        }, {
+            "name":"Is it hard to post an item?",
+            "children":[
+                {
+                    "information":"The app was thought and designed to make it as easy as possible for users to upload, rent or search for products. First take some pictures of the products, provide details to engage some renters, decide the rental price and post it! Does it, nothing else! In the case, you’re stuck with some doubts, feel free to send us an email to: contact@rentableapp.com one of our team members will contact you asap."
+                }
+            ]
+        }, {
+            "name":"How am I protected as an owner?",
+            "children":[
+                {
+                    "information":"As an item Owner, you are protected by a security deposit. Every rental item has a value, which is used to calculate and suggest the security deposit payable by the renter in case the product is damage, broken or lost. A member of our team will be in contact with you in case there is an unsolved dispute."
+                }
+            ]
+        }, {
+            "name":"Is it safe to rent my private stuff?",
+            "children":[
+                {
+                    "information":"As mentioned before, we build trust and encourage our users to be as transparent as possible. The security deposit covers the items being damage, but we also suggest our users to do their own research and find appropriate insurance covers if necessary."
+                }
+            ]
+        }, 
+        {
+            "name":"When and how can I claim the security deposit?",
+            "children":[
+                {
+                    "information":"The process for claiming the security deposit starts when an item is returned in a different condition to the one rented. This discrepancy can either be agreed between owner and renter or disagreed. If its agreed, then the claim is straight forward, by lodging a claim through the app. If its disagreed, then you’ll need to lodge a claim, and wait until the dispute is solved. This could take up to 1 week."
+                }
+            ]
+        }, 
+        {
+            "name":"What happens if don’t want to accept a rental request?",
+            "children":[
+                {
+                    "information":"Nothing! You just need to reject that rental request, and the app will give you a bunch of reasons for you to choose from."
+                }
+            ]
+        }, 
+        {
+            "name":"What happens if I want to cancel a rental request?",
+            "children":[
+                {
+                    "information":"You can cancel the rental request before the item exchange takes place, you’ll need to cancel the request through the cancel button on the app."
+                }
+            ]
+        }, 
+        {
+            "name":"Can I get an item rented back if I need it?",
+            "children":[
+                {
+                    "information":"We suggest our users to honour their item rental contract for the time it lasts. In the case you need to have an item back before the returning date, you could communicate with the renter and sort things out."
+                }
+            ]
+        }, 
+        {
+            "name":"How do I get paid?",
+            "children":[
+                {
+                    "information":"Payments are made instantly when the item exchange has been confirmed by both owner and renter. In some cases, it can take up to 72hs (depending on your transaction account) to have the funds available. Money is transferred into your nominated Australian banking account."
+                }
+            ]
+        },
+        {
+            "name":"How much do I get charged for renting?",
+            "children":[
+                {
+                    "information":"A minor 10% is deducted from your rental price. Which means, if you a renting an item for $10 – (less)10% fee = $9 are deposited in your account. Delivery and pick-up services are free of any fee."
+                }
+            ]
+        }, 
+        {
+            "name":"Do I need to pay tax for the rentals?",
+            "children":[
+                {
+                    "information":"Any income that you earn by renting stuff through Rentable should be declared on your annual tax return, as is the case with all income whether that be from Uber, AirBnB or eBay. We recommend that you consult with your accountant or tax advisor to understand your personal tax obligations, and any tax deductions that you may be eligible to claim."
+                }
+            ]
+        }, 
+        {
+            "name":"Do I need to have insurance for the items I list?",
+            "children":[
+                {
+                    "information":"At the moment, we are working on providing insurance for your rental items, but it will take some time to see this happening. To get things done faster, try an encourage everyone to use the app, upload products and start renting instead of buying."
+                },
+                {
+                    "information":"Whenever is possible, we strongly recommend everyone to have their products insured. From content insurance to car or home, it will increase your trust on the app and the will to get your items rented, and so, the opportunity to get money in return for owning stuff."
+                }
+            ]
+        }, 
+        {
+            "name":"What type of items can I rent?",
+            "children":[
+                {
+                    "information":"At Rentable app you’ll find all sort of items. From a surfboard to the latest Play station. Imagine something you’d like to do, but can’t because you don’t have the appropriate gear, or necessary instruments or tools, but don’t worry, we’ve got you covered. If you’re looking for something that is not listed on the app, you can create an alert, which will notify owners living around you, that there’s someone looking for a particular product. If someone has the item, they’ll let you know asap so you can rent it."
+                }
+            ]
+        }, 
+        {
+            "name":"How do I pay?",
+            "children":[
+                {
+                    "information":"Once you open an account with Rentable, you’ll have the choice to add payment methods. A credit or debit card is accepted, and can be recorded for future uses."
+                }
+            ]
+        },
+         {
+            "name":"Who do I pay?",
+            "children":[
+                {
+                    "information":"Rentable works as a service, it charges you for using the service and transfers the money directly to item owners for the rental. You only pay, for the products you rent. Nothing else nothing more!"
+                }
+            ]
+        }, 
+        {
+            "name":"What is a service fee?",
+            "children":[
+                {
+                    "information":"Renters are charged 10% on every rental they make. Let’s say you are willing to rent a product for $10 + 10% Service Fee = $11 payable. This service fee allows Rentable to run the service, offer assistance and expand so this service can be found everywhere you go."
+                }
+            ]
+        },
+         {
+            "name":"Why do I have to pay a security deposit and when is it given back?",
+            "children":[
+                {
+                    "information":"The security deposit is not money you pay, but instead is a confirmation that you have available funds to cover any damage or loss that could occur during the rental period. You only pay if there’s any claim from the owner, previously being discussed with you."
+                },
+                {
+                    "information":"To minimize the chances of having to pay for any damage or loss, we suggest our users to take care of the products as if they were yours."
+                },
+                {
+                    "information":"Once the item rental contract has finished, or in other words, when the item is back with the owner, and both agree that the item condition is the same, the security deposit is then terminated."
+                }
+            ]
+        },
+         {
+            "name":"What happens if I damage, lose or break the item rented?",
+            "children":[
+                {
+                    "information":"When this happens, we encourage our users to be as honest as they can. This will help avoiding any conflict with the owner. When the item is being returned, you’ll have the chance to discuss with the owner, the condition in which you’re returning that item. If the item is in a different condition (Star rating 1 to 5) than when it was given to you, then, the owner has the option to use part or the full security deposit."
+                }
+            ]
+        },
+         {
+            "name":"Can I cancel a booking?",
+            "children":[
+                {
+                    "information":"Yes, you can! Although it could incur an extra cost, or even the full rental cost. It will depend on the proximity to the rental Less than 48hs to rental date, there is a penalty fee of ONE (1) day rental, although the item exchange will not occur. commencement date. Before 48hs to rental date, no extra charge, cancellation is free."
+                },
+                {
+                    "information":"To cancel a booking, you’ll need to access the item details screen on the app, and press cancel booking. The app will guide you through the process."
+                }
+            ]
+        },
+         {
+            "name":"Can I rent more than one item at the same time?",
+            "children":[
+                {
+                    "information":"Yes, of course! You can rent as many items as you want at the same time. For example, you’re going away camping, you might need to rent a tent and sleeping bags from someone, a car from someone else and a surfboard from another person."
+                }
+            ]
+        },
+         {
+            "name":"What if the item I’m renting doesn’t look like the one in the picture?",
+            "children":[
+                {
+                    "information":"Before accepting the item, once you meet with the item owner, you’ll be asked if the item is in the same condition as mentioned in the post. In this scenario, you’ll be able to go ahead with the rental contract by “correcting” the item condition once you’ve discussed with the owner, or cancel the transaction."
+                }
+            ]
+        },
+         {
+            "name":"How do I arrange delivery with the Owner?",
+            "children":[
+                {
+                    "information":"Once the rental booking is confirmed, you should communicate with the item owner to arrange delivery and pick-up details. The app has a chat for this purpose."
+                }
+            ]
+        },
+         {
+            "name":"Is it safe to rent from someone I don’t know?",
+            "children":[
+                {
+                    "information":"It’s all about trust! The Owner is trusting you with their products, while you would be trusting him! If you have any doubt about the legitimacy of the Owner, you can always ask them questions through the chat functionality on the app. Or, just check its rating on their Rentable’s profile. If you’re still not 100% sure, send us an email to contact@rentableapp.com and we will be in touch soon."
+                }
+            ]
+        }
+    ]
+}

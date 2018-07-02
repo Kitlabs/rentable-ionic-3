@@ -1,0 +1,24 @@
+page-payment-setting {
+   
+    .payment_title {
+        text-align: center;
+        font-size: 1.2em;
+    }
+
+    .payment_des{
+        text-align: center;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px dotted #00223c;
+        color: #fff;
+        background-color: #fff;
+        margin-top: 20px;
+      }
+
+    .button_text{
+        text-transform: uppercase;
+        background-color: #003449 !important;
+    }
+}

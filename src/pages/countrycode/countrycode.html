@@ -1,0 +1,13 @@
+<ion-content padding class="animated fadeIn">
+	   <ion-item *ngFor="let key of countries">
+	   <!-- {{key.dial_code}}: {{key.name}} -->
+	     <ion-label (click)="countryCode(key.dial_code)">{{key.dial_code}} : {{key.name}}</ion-label>
+	     <!-- <ion-checkbox 
+	     item-right 
+	     [(ngModel)]="code" 
+	     (ionChange)="countryCode(key.dial_code)"
+	     ()></ion-checkbox> -->
+	   </ion-item>
+
+ 	
+</ion-content>

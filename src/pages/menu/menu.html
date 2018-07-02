@@ -1,0 +1,45 @@
+<ion-menu [content]="content">
+
+	<ion-header >
+
+	  <ion-navbar color="navbarcolor">
+	    <ion-title>Rental</ion-title>
+	  </ion-navbar>
+
+	</ion-header>
+
+
+	<ion-content class="menu_content">
+		<ion-list>
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon item-start md="{{p.icon}}" [color]="isActive(p)" ></ion-icon>
+        {{p.title}}
+      </button>
+ <!-- <button menuClose ion-item  [navPush]="home">
+        <ion-icon md="md-help-circle" color="primary" item-left></ion-icon>
+        Home
+      </button>
+      <button ion-item menuClose  [navPush]="profile">
+          Profile
+      </button>
+       <button ion-item menuClose  [navPush]="payments">
+          Payments
+      </button>
+      <button ion-item menuClose  [navPush]="about">
+          about
+      </button>
+       <button ion-item menuClose  [navPush]="tc">
+          T&C
+      </button>
+      <button ion-item menuClose  [navPush]="contact">
+          Contact US
+      </button> -->
+    </ion-list>
+	</ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false">
+
+</ion-nav>
+

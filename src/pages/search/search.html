@@ -1,0 +1,194 @@
+<!--
+  Generated template for the SearchPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+  <ion-navbar class="profileheader" color="navbarcolor">
+    <ion-row >
+      <ion-col col-1>
+        <ion-icon class="whiteicon" (click)="gohome()" name="ios-arrow-back-outline"></ion-icon>
+      </ion-col>
+      <ion-col col-8 style="text-align: center;">
+        <h4 class="size">FILTER</h4>
+      </ion-col>
+      <ion-col col-3 (click)="reset()">
+        <p class="size">Reset</p>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="app-content paddingbottom animated " >
+
+
+ <div class="locationborder">
+    <ion-label class="categorytitle " >
+      LOCATION
+    </ion-label>
+  </div>
+  <ion-row class=" locationstyle_new" (click)="presentModal()">
+    <ion-col col-1 class="locationicon">
+      <img  src="assets/icon/location-place.png">
+    </ion-col>
+    <ion-col col-10 style="padding:0 !important">
+        <p>{{location}}</p>
+
+      <!-- <input id="pac-input" class="controls" type="text" [(ngModel)]="location" placeholder="Search Box"> -->
+      
+   <!--    <ion-searchbar 
+      [(ngModel)]="autocomplete.query" 
+      [showCancelButton]="true" 
+      (ionInput)="updateSearch()" 
+      (ionCancel)="dismiss()"
+      placeholder="Start typing and select ...">
+      </ion-searchbar> -->
+
+       
+
+    </ion-col>
+    <ion-col col-1 class="rightposition middletext">
+      <ion-icon name="ios-arrow-forward-outline"></ion-icon>
+      <!-- <ion-icon item-right class="graytext" name="arrow-forward"></ion-icon> -->
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="bottom-border">
+    <ion-label class="categorytitle">
+      CATEGORIES
+    </ion-label>
+    
+    <div style="display: flow-root;">
+      <div  class="radio-img grid-list" *ngFor="let item of categorylist"  >
+        <input type="radio" name="radio-group" id="{{item.radionumber}}" class="input-hidden" />
+        <label  for="{{item.radionumber}}" (click)="myFunction($event)" >
+          <img class="categoryimage" id="{{item.value}}" src="{{item.inactive_img}}">
+          <span class="categoryname" id="{{item.title}}">{{item.title}}</span>
+        </label>
+      </div>
+    </div>
+  </ion-row>
+
+
+
+  <!-- DISTANCE -->
+  <ion-row class="locationstyle mb-2">
+    <ion-col col-6>
+       <ion-label class="categorytitle">
+         DISTANCE
+       </ion-label>
+    </ion-col>
+    <ion-col col-3>
+    </ion-col>
+    <ion-col col-3 style="text-align: right;" class="price_dollar">
+      {{distance}}km
+    </ion-col>
+  </ion-row>
+
+	<ion-item class="pricestyle">
+    <ion-range min="0" max="30"  [(ngModel)]="distance" step="1" color="element" (ionChange)="distanceChange()">
+      <img class="distancesize" range-left src="assets/icon/house.png">
+      <img class="distancesize" range-right src="assets/icon/sports-small.png">
+    </ion-range>
+  </ion-item>
+
+  <!-- PRICE -->
+  <ion-label class="pricetitle">
+    DAILY PRICE
+  </ion-label>
+  <ion-row class="pricerange">
+
+    <!-- <ion-col col-1>
+      <p class="price_dollar">$</p>
+    </ion-col>
+    <ion-col col-5 >
+      <ion-item class="inputborder" >
+        <ion-input style="padding:0 0 0 8px;" type="number" pattern="[0-9]*"  id="from-price" (ionChange)="fromPriceChange()" placeholder="From" [(ngModel)]="fromprice"></ion-input>
+        <ion-icon item-right class="graytext" name="arrow-forward"></ion-icon>
+      </ion-item>
+    </ion-col>
+
+     <ion-col col-1>
+        <p class="price_dollar">$</p>
+     </ion-col>
+     <ion-col col-5 >
+      <ion-item class="inputborder">
+        <ion-input  style="padding:0 0 0 8px;" type="number" pattern="[0-9]*"  id="to-price" (ionChange)="toPriceChange()" placeholder="To" [(ngModel)]="toprice"></ion-input>
+        <ion-icon item-right class="graytext" name="arrow-forward"></ion-icon>
+      </ion-item>
+    </ion-col> -->
+    
+    <ion-col col-12>
+        <ion-range  dualKnobs="true"  [min]=timeMin [max]=timeMax   [(ngModel)]="time"  color="element" (ionChange)="setBadge(time)">
+            <ion-label range-left class="price_dollar">${{this.timeMin2}}</ion-label>
+            <ion-label range-right class="price_dollar">${{this.timeMax2}}</ion-label>
+      </ion-range> 
+    </ion-col>
+
+
+
+
+  </ion-row>
+
+
+  <!-- POSTED WITHIN -->
+	<ion-label class="liststyle">
+		POSTED WITHIN
+	</ion-label>
+    <ion-list radio-group [(ngModel)]="within" (ionChange)="postedWithinChange()" >
+      <ion-item>
+        <ion-label>The last 24 hrs</ion-label>
+        <ion-radio value="The last 24 hrs" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>The last 7 days</ion-label>
+        <ion-radio value="The last 7 days"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>The last 30 days</ion-label>
+        <ion-radio value="The last 30 days"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Show all</ion-label>
+        <ion-radio value="Show All" ></ion-radio>
+      </ion-item>
+    </ion-list>
+
+
+    <!-- SORT BY -->
+  <ion-label class="liststyle">
+    SORT BY
+  </ion-label>
+    <ion-list radio-group [(ngModel)]="sortBy" (ionChange)="sortByChange()">
+      <ion-item>
+        <ion-label>Newest First</ion-label>
+        <ion-radio value="Newest first" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Closest First</ion-label>
+        <ion-radio value="Closest first"></ion-radio>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-label>Delivery First</ion-label>
+        <ion-radio value="delivery"></ion-radio>
+      </ion-item> -->
+      <ion-item>
+        <ion-label>Price: low to high</ion-label>
+        <ion-radio value="Price:low to high"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Price: high to low</ion-label>
+        <ion-radio value="Price:high to low"></ion-radio>
+      </ion-item>
+    </ion-list>
+    
+    <button ion-button block   
+      [ngClass]="{disabled : !searchStatus,
+      'search-btn-valid':searchStatus,
+      'search-btn-invalid':!searchStatus }"  
+      (click)="searchStatus && searchsave()"
+     >Show Items</button>
+
+  
+</ion-content>

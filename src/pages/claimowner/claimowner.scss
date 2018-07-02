@@ -1,0 +1,85 @@
+page-claimowner {
+
+	.addcontent{
+		background-color:white;
+	}
+
+
+	.returntitle{
+		margin-top: 6vw;
+    font-size: 23px;
+    font-weight: 600;
+	}
+
+	.helptext{
+		padding-top: 3px;
+    padding-bottom: 5px;
+		&.condition{
+			font-size:11px;
+	    opacity: 0.6;
+		}
+		&.suggest{
+			color: #009fde;
+			font-size:13px;
+			opacity: 0.8;
+		}
+		&.agree{
+			font-size:11px;
+		}
+	}
+
+	.dollar{
+		font-weight: bold;
+    color: gray;
+    text-align: right;
+	}
+	.defaultbutton.paddingbottom{
+		margin-bottom:40px;
+	}
+
+	.goodstyle{
+		color:red;
+		font-size: 16px;
+    opacity: 0.7;
+    font-weight: bold;
+	}
+
+	.commentstyle{
+		color: gray;
+    text-align: left;
+    font-size: 10px;
+	}
+
+	.search-btn-valid{
+    margin: auto;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    height: 5rem;
+    border-radius: 27px;
+    margin-bottom:80px !important;
+    background-color: #03a9f4;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+
+  .search-btn-invalid{
+    margin: auto;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    height: 5rem;
+    border-radius: 27px;
+    opacity: 0.4;
+    margin-bottom:80px !important;
+    background-color: #03a9f4;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    pointer-events: none;
+	}
+	
+}

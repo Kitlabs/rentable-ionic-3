@@ -1,0 +1,162 @@
+page-login{
+  text-align:center;
+  color:white;
+  .Loginpage{
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    .formContainer{
+        display: flex;
+        height: calc(100% - 89px);
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+  }
+
+  .welcometitle{
+    text-align:center;
+    margin-top:30vw;
+    color:white;
+    font-size:2.5rem;
+    display:inline-block;
+  }
+
+  .loginform{
+    width: 80%;
+    color: white;
+    margin: 11vw auto;
+    padding: 5px;
+  }
+
+  .loginbutton{
+    border-radius: 25px;
+    background-color: #03a9f4;;
+    color: white;
+    width: 100%;
+    margin: 20px auto;
+    display: block;
+    height: 5rem;
+    font-size: 2rem;
+  }
+
+  .forgotpassword{
+    font-size: 20px;
+    color: white;
+    opacity: 0.7;
+  }
+
+  h4{
+    margin-top:9vw;
+  }
+
+  .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border-bottom: 0.55px solid gray;
+  }
+}
+
+.inputborder {
+    border-bottom: thin solid gray;
+    color: white;
+    font-size: 21px;
+}
+
+
+.loginFooter{
+  align-self: flex-end;
+  min-width: 100%;
+  flex: 1;
+  display: flex;
+}
+.app-form{
+    max-width: calc(100% - 32px);
+    width: calc(100% - 32px);
+    flex: 1;
+     h4{
+        font-size: 1.2rem;
+    }
+    .item-md{
+        background-color: transparent;
+        margin-bottom: 10px;
+        ion-icon{
+            font-size: 2.2rem;
+            min-height: 2.2rem;
+            &[item-left]{
+                margin: 20px 15px 0 0;
+                + .item-inner{
+                    margin-left: 0;
+                }
+            }
+        }
+        &.item-input.input-has-focus{
+            .item-inner{
+                border-bottom: 0.55px solid gray;
+                box-shadow: inset 0 -1px 0 color($colors , secondary);
+            }
+        }
+    }
+    .list-md{
+        .item-input{
+            &:last-child{
+                padding-left: 0;
+                width: auto;
+                border-bottom: none !important;
+            }
+            &.input-has-focus{
+                &:last-child{
+                    box-shadow: none;
+                    border: none;
+                }
+            }
+        }
+        .item-block{
+            .item-inner{
+                border-bottom: 0.55px solid gray;
+            }
+        }
+    }
+    .item-block:first-child{
+        border-top: 0;
+    }
+    .text-input-md{
+        margin-bottom: 0px;
+        margin-left: 0px;
+        color: white;
+    }
+    input::-webkit-input-placeholder {
+        color: rgba(255,255,255,.7);
+        font-size: 1.4rem;
+    }
+    input:-moz-placeholder {
+        color: rgba(255,255,255,.7);
+        font-size: 1.4rem;
+    }
+    .button-md{
+        width:100% !important;
+    }
+}
+
+.option-sign{
+    color: white;
+    margin: 0 auto;
+    p{
+        color: rgba(255,255,255,.7);
+        margin-bottom: 10px;
+    }
+    ion-grid{
+        width: 160px;
+        margin: 0 auto;
+        color: white;
+        font-size: 25px;
+    }
+}
+
+
+.item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner{
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    
+}

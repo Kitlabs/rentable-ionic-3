@@ -1,0 +1,216 @@
+
+<ion-header >
+
+  <ion-navbar class="profileheader "  hideBackButton="true" >
+    <ion-row >
+      <ion-col col-1 >
+        <img [navPush]="favourites" class="headertitle" src="assets/icon/like.png">
+      </ion-col>
+       <ion-col col-1>
+      </ion-col>
+      <ion-col col-8>
+        <ion-segment [(ngModel)]="own_rent"  class="segment_info " >
+          <ion-segment-button (click)="showdelete()" class="itemtitle" value="own" >
+            I Own
+          </ion-segment-button>
+          <ion-segment-button (click)="showdelete()" class="itemtitle" value="rent" >
+            I Rent
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col col-1>
+      </ion-col>
+       <ion-col col-1>
+        <!-- <ion-icon *ngIf="showdeleteicon"  class="headertitle" name="ios-trash-outline"></ion-icon> -->
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding class="app-content " [ngSwitch]="own_rent">
+
+  <ion-card *ngSwitchCase="'own'" >
+    <ion-row class="postitemdiv ">
+      <ion-col col-4>
+      </ion-col>
+      <ion-col col-4 no-padding>
+        <ion-segment [(ngModel)]="isavailable" color="secondary" class="segment_info1 animated fadeIn">
+          <ion-segment-button (click)="showdelete()" value="available" style="height: 5rem;">
+            <ion-icon name="ios-checkmark-circle-outline" class=""><p class="titlefont">Available</p></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button (click)="showdelete()" value="rented" style="height: 5rem;">
+            <ion-icon name="ios-close-circle-outline" ><p class="titlefont">Rented</p></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col col-4>
+      </ion-col>
+    </ion-row>
+    
+    
+    <!--I OWN -> AVAILABLE -->
+    <ion-card-content [ngSwitch]="isavailable" style="color: white;">
+      <div  *ngSwitchCase="'available'" style="color: white;" >
+        <ion-card class="grid-list backcolor" *ngFor="let item of own_avaiablelist;let i = index "    >
+          <div class="image-item" no-lines>
+            <img  class="wardrobe" src="{{item.base_path}}{{item.image_single}}" (click)="goToDetailsOwnAvailable(item.id)" (press)="presentConfirm(item.id,i,'IOwnAvailable')" />
+            <img src="assets/icon/eye-white.png" class="cover_1"><p class="info">{{item.views}}</p>
+            <!-- <img  class="cover_4" (click)="ownshowheart(item.id)" src="assets/icon/like.png"> -->
+            <p class="info_1">{{item.likes}}</p>
+          </div>
+        </ion-card>
+      </div>
+
+      <!-- I Own -> RENTED -->
+      <div  *ngSwitchCase="'rented'">
+        <ion-card class="grid-list backcolor" *ngFor="let item of own_rentedlist" >
+          <div class="image-item"  no-lines>
+            <img class="wardrobe" src="{{item.base_path}}{{item.image_single}}" (click)="goToDetailsOwnRented(item.PostId,item.Amount,item.FromDate,item.ToDate,item.Status,item.RenterId,item.rentalCostWithoutFee,item.rentableServiceFee,item.itemOwnerFee)"/>
+           <img class="cover_img" src="{{item.base_path}}{{item.photoURL}}" (click)="goToOtherProfile(item.RenterId)" >
+            <!-- <div class="cover_2">
+              <img class="carheight" src="assets/icon/sports-car.png">
+            </div> -->
+            <div ngSwitch="{{item.Status}}">
+
+              <div *ngSwitchCase="'Pending'" class="cover_3">
+                <img class="carheight" src="assets/icon/pending.png" tooltip="Request Pending" positionV="bottom" positionH="right" duration="5000">
+              </div>
+
+              <div *ngSwitchCase="'Rented'" class="cover_3">
+                <img class="carheight" src="assets/icon/rented.png" tooltip="Item is to be picked up" positionV="bottom" positionH="right" duration="5000" arrrow='true'>
+              </div>
+
+              <div *ngSwitchCase="'PickedUpPending'" class="cover_3" tooltip="PickUp to be confirmed" positionV="bottom" positionH="right" duration="5000" arrrow='true'>
+                <img class="carheight" src="assets/icon/rented.png">
+              </div>
+
+              <div *ngSwitchCase="'PickedUp'" class="cover_3">
+                <img class="carheight" src="assets/icon/sports-car.png">
+              </div>
+
+              <div *ngSwitchCase="'ReturnedPending'" class="cover_3" tooltip="Returned to be confirmed" positionV="bottom" positionH="right" duration="5000" arrrow='true'>
+                <img class="carheight" src="assets/icon/sports-car.png">
+              </div>
+              
+              <div *ngSwitchCase="'Returned'" class="cover_3">
+                <img class="carheight" src="assets/icon/sports-car.png">
+              </div>
+
+            </div>
+
+            <!-- <div class="cover_3">
+              {{item.rentday}}
+              <p class="info2">days</p>
+            </div> -->
+
+          </div>
+        </ion-card>
+       
+      </div>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card *ngSwitchCase="'rent'">
+    <ion-row class="postitemdiv">
+      <ion-col col-4>
+      </ion-col>
+      <ion-col col-4 no-padding>
+        <ion-segment [(ngModel)]="date" color="secondary" class="segment_info1">
+          <ion-segment-button (click)="showdelete()" value="current" style="height: 5rem;">
+            <ion-icon name="ios-checkmark-circle-outline" class=""><p class="titlefont">Current</p></ion-icon>
+          </ion-segment-button>
+          <ion-segment-button (click)="showdelete()" value="history" style="height: 5rem;">
+            <ion-icon name="ios-close-circle-outline" ><p class="titlefont">History</p></ion-icon>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col col-4>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-card-content [ngSwitch]="date">
+
+      <!--I RENT-HISTORY -->
+      <div  *ngSwitchCase="'history'">
+       <ion-card class="grid-list backcolor" *ngFor="let item of rent_historylist ;let i = index" >
+        <div class="image-item"  no-lines>
+          <img class="wardrobe" src="{{basePath}}{{item.image_single}}" (click)="gotToDetails(item.PostId,item.Amount,item.FromDate,item.ToDate,item.Status)" (press)="presentConfirm(item.PostId,deleteIndex,'IRentHistory')" />
+          <img class="cover_img" src="{{basePath}}{{item.photoURL}}" (click)="goToOtherProfile(item.UserId)" >
+
+          <div ngSwitch="{{item.Status}}">
+
+            <div *ngSwitchCase="'Returned'" class="cover_3">
+                <img class="carheight" src="assets/icon/sports-car.png">
+            </div>
+
+          </div>
+
+          <!-- <div class="cover_2">
+            <img class="carheight" src="assets/icon/sports-car.png">
+          </div>
+          
+          <div class="cover_3">
+            {{item.rentday}}2 
+            <p class="info2">days</p>
+          </div> -->
+        </div>
+        </ion-card>
+      </div>
+
+
+      <!--  I RENT - CURRENT -->
+      <div  *ngSwitchCase="'current'">
+         <ion-card class="grid-list backcolor" *ngFor="let item of rent_currentlist">
+          
+          <div class="image-item"  no-lines>
+            <img class="wardrobe" src="{{basePath}}{{item.image_single}}" (click)="gotToDetails(item.PostId,item.Amount,item.FromDate,item.ToDate,item.Status,item.rentalCostWithoutFee,item.rentableServiceFee,item.itemOwnerFee)" />
+            <img class="cover_img" src="{{basePath}}{{item.User_photoURL}}" (click)="goToOtherProfile(item.User_Id)" >
+
+            <div ngSwitch="{{item.Status}}">
+
+              <div *ngSwitchCase="'Pending'" class="cover_3">
+                <img class="carheight" src="assets/icon/pending.png" tooltip="Request pending" positionV="bottom" positionH="center" duration="2000">
+              </div>
+
+              <div *ngSwitchCase="'Rented'" class="cover_3">
+                <img class="carheight" src="assets/icon/rented.png" tooltip="Item is to be picked up" positionV="bottom" positionH="center" duration="2000" arrrow='true'>
+              </div>
+
+              <div *ngSwitchCase="'PickedUpPending'" class="cover_3">
+                <img class="carheight" src="assets/icon/rented.png" tooltip="PickUp to be confirmed" positionV="bottom" positionH="center" duration="2000">
+              </div>
+                
+              <div *ngSwitchCase="'PickedUp'" class="cover_3">
+                <img class="carheight" src="assets/icon/sports-car.png">
+              </div>
+
+              <div *ngSwitchCase="'ReturnedPending'" class="cover_3">
+                <img class="carheight" src="assets/icon/sports-car.png" tooltip="Return to be confirmed" positionV="bottom" positionH="center" duration="2000">
+              </div>
+
+              <div *ngSwitchCase="'Returned'" class="cover_3">
+                <img class="carheight" src="assets/icon/sports-car.png">
+              </div>
+              
+            </div>
+
+            <!-- <div class="cover_2">
+              <img class="carheight" src="assets/icon/sports-car.png">
+            </div>
+            
+            <div class="cover_3">
+              {{item.rentday}}2 
+              <p class="info2">days</p>
+            </div> -->
+          </div>
+        </ion-card>
+      </div>
+    </ion-card-content>
+    
+  </ion-card>
+
+</ion-content>

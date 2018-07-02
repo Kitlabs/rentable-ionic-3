@@ -1,0 +1,253 @@
+<ion-content >
+
+    <div class="home " >
+      <div class="backoverlay">
+    </div>
+
+    <ion-slides 
+      style="display: inline-block; height: 50vh; margin-bottom: -4px;border: 0;"  
+      speed="300" pager   effect='coverflow'  
+      >
+      <ion-slide *ngFor="let img of sliderImages" imageViewer="{{basePath}}{{img}}">
+          <img src="{{basePath}}{{img}}" class="slider-image"    />
+      </ion-slide>
+    </ion-slides>
+    
+    <!-- imageViewer="{{basePath}}{{img}}"-->
+
+    <div class="slider-image" >
+    </div>
+
+    <ion-icon name="ios-arrow-back" class="cover_header0" (click)="backicon()"></ion-icon>
+    <!-- <ion-icon name="shareicon" class="cover_header1" (click)="presentShare()"></ion-icon> -->
+    <img *ngIf="!favourite" class="cover_header2 animated bounceIn" (click)="ActiveFavourite()" src="assets/icon/like.png" >
+    <img *ngIf="favourite" class="cover_header2 animated bounceIn" (click)="DeactiveFavourite()" src="assets/icon/like-full.png">
+
+  </div>
+
+
+  <ion-row style="margin-top: -4rem;" no-padding>
+
+    <ion-col col-3 align="right">
+      <img (click)="goToOtherProfile()" src="{{profilePic}}" class="profileimg" >
+      <!-- <img  src="{{profilePic}}" class="profileimg" imageViewer> -->
+      <!-- <img  src="assets/img/profile-img.png" class="profileimg"> -->
+    </ion-col>
+    <ion-col col-6 style="padding-top: 10px;">
+      <p class="cover_name">
+        {{fullname}}
+      </p>
+      <div >
+        <img *ngFor="let item of userRatingPos" class="returnstarsize" src="assets/icon/star-red.png" >
+        <img *ngFor="let item of userRatingNeg" class="returnstarsize" src="assets/icon/star.png">
+      </div>
+    </ion-col>
+
+    <ion-col col-2 class="wardrobe" align="left">
+      
+        <!-- <img src="assets/icon/CTA-bounds.png" style="width:10rem;left: 1.4rem;">
+        <ion-label class="cover_1" style="left: 0;width: 100%;">
+          ${{dailyPrice}}
+        </ion-label>
+        <ion-label class="cover_2" style="left: 8vw;">
+          Per day
+        </ion-label>  -->
+
+    <div class="circle">
+      <div class="circle__inner">
+        <div class="circle__wrapper">
+          <div class="circle_center_text">
+            <div class="circle__content_price">${{dailyPrice}}</div>
+            <div class="circle__content_text">Per day</div>  
+         </div>
+        </div>
+      </div>
+    </div>
+    
+    </ion-col>
+
+    <ion-col col-1></ion-col>
+  </ion-row>
+
+  <div style="padding-bottom: 5rem;" padding>
+    <h4 >
+      {{Product.title}}
+    </h4>
+    <div style="opacity: 0.7;" >
+      <img *ngFor="let item of itemgoodcondition" class="returnstarsize" src="assets/icon/star-red.png">
+      <img *ngFor="let item of itembadcondition" class="returnstarsize" src="assets/icon/star.png">      
+    </div>
+    <ion-row class="border" >
+      <ion-col class="graycolor" col-6>
+        <ion-label>
+          DESCRIPTION
+        </ion-label>
+      </ion-col>
+      <ion-col col-5>
+
+      </ion-col>
+      <ion-col col-1 class="add_remove">
+        <ion-icon *ngIf="!descriptionstatus" name="md-add" (click)="stopPlayback()"></ion-icon>
+        <ion-icon *ngIf="descriptionstatus"  name="md-remove" (click)="itemSelected()"></ion-icon>
+      </ion-col>
+      <ion-row>
+        <ion-item *ngIf="descriptionstatus">
+          <ion-label class="graycolor"  text-wrap>
+            {{Product.details}}
+          </ion-label>
+        </ion-item>
+      </ion-row>
+    </ion-row>
+    <ion-row class="bottomborder">
+      <ion-col class="graycolor" col-6>
+        <ion-label>
+          RENTAL DETAILS
+        </ion-label>
+      </ion-col>
+      <ion-col col-5>
+      </ion-col>
+      <ion-col col-1 class="add_remove">
+        <ion-icon *ngIf="!rentalstatus" name="md-add" (click)="rentalshow()"></ion-icon>
+        <ion-icon *ngIf="rentalstatus"  name="md-remove" (click)="rentalhide()"></ion-icon>
+      </ion-col>
+          <div class="fullwidth" *ngIf="rentalstatus" >
+      <ion-label>
+        DATES
+      </ion-label>
+
+      <!-- <ion-row  class="date_select" (click)='openCalendar()'> -->
+      <ion-row  class="date_select" (click)="externalRange.instance.show()"  mbsc-range [mbsc-options]="daterangeSettings"  #externalRange="mobiscroll">
+        <ion-col col-1 >
+          <img  src="assets/icon/calendar_red.png">
+        </ion-col>
+        <ion-col col-10 style="display: flex;"  >
+          <button  class="pickreturndate" >Select Dates </button>  
+        </ion-col>
+        <ion-col col-1>
+          <ion-icon name="ios-arrow-forward-outline" item-right style="font-size: 1.8em;color: #a4a6a8"></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <!-- display pick and return date-->
+      <ion-row *ngIf="pickReturnDateStatus" class="bottomborder">
+        <ion-col col-2  >
+          <p class="locationicon">From</p>
+        </ion-col>        
+        <ion-col col-4  >
+        <p class="locationicon">  {{pickUpDateUi}} </p>
+      </ion-col>
+        <!-- <ion-col col-2 class="middletext" >To</ion-col> -->
+        <ion-col col-2>
+          <p class="locationicon">To</p>
+        </ion-col>
+        <ion-col col-4>
+        <p>  {{returnDateUi}} </p>
+      </ion-col>
+      </ion-row>
+
+      <!--checkbox for delivery and pick up -->
+      <ion-row class="bottomborder" style="padding-top: 10px;padding-bottom:10px;text-align: center;" *ngIf="deliveryStatus && pickReturnDateStatus">
+      
+        <ion-col col-5 style="text-align: left;">
+          <span>Delivery & pick up</span>
+        </ion-col>
+        
+        <ion-col col-6 style="text-align: center;">
+            <span class="costsize"> $ {{deliveryFee}}</span>
+        </ion-col>
+        
+        <ion-col col-1 >
+          <ion-checkbox [(ngModel)]="isDelivery" (ionChange)="needDelivery()"></ion-checkbox>
+        </ion-col>
+      
+      </ion-row>
+
+  
+
+        
+      <ion-row  style="padding-bottom: 10px;padding-top: 10px;text-align: center;" class="bottomborder" *ngIf="pickReturnDateStatus"> 
+        <ion-col col-5 style="text-align: left;">
+          <span > Total Rental Cost:</span>
+        </ion-col>
+        <ion-col col-6 style="text-align: center;">
+          <span class="costsize"> $ {{productDailyRentalCost}}</span>
+        </ion-col>
+        <ion-col col-1>
+           <ion-icon name="ios-help-outline" class="helpiconn" tooltip={{toolTip}} positionV="bottom" positionH="right" duration="5000"></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <ion-row  style="padding-bottom: 10px;padding-top: 10px;text-align: center;" class="bottomborder" *ngIf="pickReturnDateStatus"> 
+        <ion-col col-2 style="text-align: left;">
+          <span > Note:</span>
+        </ion-col>
+        <ion-col col-10 style="text-align: left;">
+          <span>{{securityDepositText}}<br></span>
+          <span> {{securityDepositText2}}</span> 
+         
+        </ion-col>
+      </ion-row>
+
+      
+
+      <button ion-button block   
+      [ngClass]="{disabled : !btnSendRentalReq,
+      'send-button-on animated zoomIn':btnSendRentalReq,
+      'send-button-off':!btnSendRentalReq }"  
+      (click)="btnSendRentalReq && sendrental()"
+     >Send Rental Request</button>
+      
+     
+      <ion-item style="color: black;">
+        <ion-row align="center">
+          <ion-col col-4 class="rental-option" >
+            <img  class="pickborder" src="assets/icon/pickup.png">
+            <p>Pick Up</p>
+          </ion-col>
+          <ion-col col-4 class="rental-option">
+            <img  class="sendborder" src="assets/icon/back-arrow.png">
+            <p>Return</p>
+          </ion-col>
+          <ion-col col-4 class="rental-option">
+            <img  class="sendborder" src="assets/icon/cancel.png">
+            <p>Cancel</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item class="bottomborder">
+        <p item-left class="helpstr">SEND MESSAGE</p>
+        <p item-right class="helpstr">{{messagenumber}}</p>
+      </ion-item>
+      <ion-item >
+        <ion-input  style="width: 80vw;" [(ngModel)]="messagetext" (ionChange)="number()" type="text" placeholder="send message..." maxlength='350'></ion-input>
+        <img item-right class="sendbutton" (click)="sendCommonMessage()" src="assets/icon/ico_send.png" 
+        [ngClass]="{disabled : !btnSendMessage,
+          'send-msg-on':btnSendMessage,
+          'send-msg-off':!btnSendMessage }" >
+      </ion-item>
+    </div>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="graycolor" col-4>
+        <ion-label>
+          LOCATION
+        </ion-label>
+      </ion-col>
+      <ion-col col-7>
+      </ion-col>
+      <ion-col col-1 class="add_remove">
+        <ion-icon *ngIf="!locationstatus" name="md-add" (click)="locationshow()"></ion-icon>
+        <ion-icon *ngIf="locationstatus"  name="md-remove" (click)="locationhide()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div *ngIf="locationstatus">
+    <div class="map-content" >
+      <div #map id="map" data-tap-disabled="true"></div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="detFooter">
+</ion-footer>

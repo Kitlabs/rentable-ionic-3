@@ -1,0 +1,28 @@
+<ion-content padding class="appcontent animated fadeIn">
+
+  <p class="welcometitle">Welcome back {{name}}</p>
+  <form  class="loginform" [formGroup]="loginForm">
+    
+    <p class="helpstring">ENTER YOUR PASSWORD</p>
+      <ion-item no-padding>
+        <ion-input 
+        type="password"
+        formControlName="password"
+        (ionChange)='numberfill()' 
+        class="inputborder" ></ion-input>
+      </ion-item>
+
+      <ion-item class="error-message" *ngIf="lengthExceed">
+          <p> *Maximum password length is 20</p>
+      </ion-item>
+      
+    
+    <button ion-button 
+    class="loginbutton" 
+    style="width: 100%;" 
+    (click)="login()" 
+    [disabled]="!loginForm.valid">LOGIN</button>
+    <p text-center class="forgotpassword" (click)="forgotPassword()">Forgot Password</p>
+
+  </form>
+</ion-content>

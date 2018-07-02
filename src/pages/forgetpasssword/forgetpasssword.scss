@@ -1,0 +1,40 @@
+page-forgetpasssword {
+	
+	
+.submit-btn	 {
+    border-radius: 25px;
+    background-color: #03a9f4;
+    color: white;
+    width: 100%;
+    margin: auto;
+    display: block;
+    height: 5rem;
+    font-size: 2rem;
+}
+
+.appcontent{
+  background-image: url(../assets/icon/bg.png);
+  background-size: 100% 100%;
+}
+
+form.landingformm {
+    width: 80%;
+    margin: 11vw auto;
+    /* position: absolute; */
+    padding-top: 25%;
+}
+
+//remove the top border
+.list-ios > .item-block:first-child {
+    border-top: none;
+}
+
+//remove the bottom border
+.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border-bottom:none;
+}
+
+p.error-message {
+    white-space: initial;
+}
+}

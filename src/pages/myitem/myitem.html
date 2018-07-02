@@ -1,0 +1,190 @@
+<!--
+  Generated template for the MyitemPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+  <ion-navbar class="profileheader" hideBackButton="true">
+    <ion-row >
+      <ion-col col-1 >
+        <ion-icon  [navPush]="profile" class="navetitle" name="md-close"></ion-icon>
+      </ion-col>
+      <ion-col col-1>
+      </ion-col>
+      <ion-col col-8>
+        <ion-segment [(ngModel)]="money"  class="segment_info" >
+          <ion-segment-button class="moneytitle moneyout" value="out">
+            Money Out
+          </ion-segment-button>
+          <ion-segment-button class="moneytitle moneyin" value="in">
+            Money In
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col col-2>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding class="app-content" [ngSwitch]="money">
+  <div *ngSwitchCase="'out'" style="height:60px;background-color: #2e343e">
+    <ion-segment [(ngModel)]="outtimeline" class="segment_info1">
+      <ion-segment-button (click)="myFunction($event)"  value="individual" style="height: 5rem;">
+        <img src="assets/icon/stats-individual.png" data-active="assets/icon/stats-individual.png" data-inactive="assets/icon/stats-individual-grey.png" class="categoryimg">
+        <p class="titlefont">Individual</p>
+      </ion-segment-button>
+      <ion-segment-button (click)="myFunction($event)"  value="monthly" style="height: 5rem;">
+        <img src="assets/icon/stats-monthly-grey.png" data-active="assets/icon/stats-monthly.png" data-inactive="assets/icon/stats-monthly-grey.png" class="categoryimg">
+        <p class="titlefont">Monthly</p>
+      </ion-segment-button>
+      <ion-segment-button (click)="myFunction($event)" value="quartly" style="height: 5rem;">
+        <img src="assets/icon/stats-quartlery-grey.png" data-active="assets/icon/stats-quarterly.png" data-inactive="assets/icon/stats-quartlery-grey.png" class="categoryimg">
+        <p class="titlefont">Quarterly</p>
+      </ion-segment-button>
+      <ion-segment-button (click)="myFunction($event)" value="yearly" style="height: 5rem;">
+        <img src="assets/icon/stats-timeline-grey.png" data-active="assets/icon/stats-timeline.png" data-inactive="assets/icon/stats-timeline-grey.png" class="categoryimg">
+        <p class="titlefont">Yearly</p>
+      </ion-segment-button>
+    </ion-segment>
+    <ion-card-content [ngSwitch]="outtimeline" padding>
+      <div  *ngSwitchCase="'individual'" >
+        <ion-list class="bottomborder bottompadding" *ngFor="let item of individlist">
+          <p class="itemstyle">{{item.title}}</p>
+          <ion-item no-lines paddings>
+            <div class="imageblackborder" item-left >
+              <img class="itemimg" src="assets/icon/calendar.png" />
+            </div>
+            <p class="itemtext">DATE RANGE</p>
+            <p class="itemtext">{{item.history}}</p>
+            <p item-right class="pricetext"  item-right>${{item.price}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div  *ngSwitchCase="'monthly'">
+        <ion-list class="bottomborder bottompadding" *ngFor="let item of monthlylsit">
+          <p class="itemstyle">{{item.month}},{{item.year}}</p>
+          <ion-item no-lines paddings>
+            <div class="imageblackborder" item-left >
+              <img class="itemimg" src="assets/icon/calendar.png" />
+            </div>
+            <p class="itemtext">DATE RANGE</p>
+            <p class="itemtext">{{item.month}} 1- {{item.month}} {{item.enddate}} </p>
+            <p item-right class="pricetext"  item-right>${{item.price}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div  *ngSwitchCase="'quartly'">
+        <ion-list class="bottomborder bottompadding" *ngFor="let item of quarterlylsit">
+          <p class="itemstyle">{{item.quarterstart}} - {{item.quarterend}} , {{item.year}}</p>
+          <ion-item no-lines paddings>
+            <div class="imageblackborder" item-left >
+              <img class="itemimg" src="assets/icon/calendar.png" />
+            </div>
+            <p class="itemtext">DATE RANGE</p>
+            <p class="itemtext">{{item.quarterstart}} 1 - {{item.quarterend}} {{item.enddate}}</p>
+            <p item-right class="pricetext"  item-right>${{item.price}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div  *ngSwitchCase="'yearly'">
+        <ion-list class="bottomborder bottompadding" *ngFor="let item of yearlylsit">
+          <p class="itemstyle">{{item.year}}</p>
+          <ion-item no-lines paddings>
+            <div class="imageblackborder" item-left >
+              <img class="itemimg" src="assets/icon/calendar.png" />
+            </div>
+            <p class="itemtext">DATE RANGE</p>
+            <p class="itemtext">January 1 - December 31</p>
+            <p item-right class="pricetext"  item-right>${{item.price}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+
+    </ion-card-content>
+  </div>
+  <div *ngSwitchCase="'in'" style="height:60px;background-color: #2e343e">
+     <ion-segment [(ngModel)]="intimeline" class="segment_info1">
+      <ion-segment-button (click)="myFunction($event)"  value="individual" style="height: 5rem;">
+        <img src="assets/icon/stats-individual.png" data-active="assets/icon/stats-individual.png" data-inactive="assets/icon/stats-individual-grey.png" class="categoryimg">
+        <p class="titlefont">Individual</p>
+      </ion-segment-button>
+      <ion-segment-button (click)="myFunction($event)"  value="monthly" style="height: 5rem;">
+        <img src="assets/icon/stats-monthly-grey.png" data-active="assets/icon/stats-monthly.png" data-inactive="assets/icon/stats-monthly-grey.png" class="categoryimg">
+        <p class="titlefont">Monthly</p>
+      </ion-segment-button>
+      <ion-segment-button (click)="myFunction($event)" value="quartly" style="height: 5rem;">
+        <img src="assets/icon/stats-quartlery-grey.png" data-active="assets/icon/stats-quarterly.png" data-inactive="assets/icon/stats-quartlery-grey.png" class="categoryimg">
+        <p class="titlefont">Quarterly</p>
+      </ion-segment-button>
+      <ion-segment-button (click)="myFunction($event)" value="yearly" style="height: 5rem;">
+        <img src="assets/icon/stats-timeline-grey.png" data-active="assets/icon/stats-timeline.png" data-inactive="assets/icon/stats-timeline-grey.png" class="categoryimg">
+        <p class="titlefont">Yearly</p>
+      </ion-segment-button>
+    </ion-segment>
+   <ion-card-content [ngSwitch]="intimeline" padding>
+      <div  *ngSwitchCase="'individual'" >
+        <ion-list class="bottomborder bottompadding" *ngFor="let item of individlist">
+          <p class="itemstyle">{{item.title}}</p>
+          <ion-item no-lines paddings>
+            <div class="imageblackborder" item-left >
+              <img class="itemimg" src="assets/icon/calendar.png" />
+            </div>
+            <p class="itemtext">DATE RANGE</p>
+            <p class="itemtext">{{item.history}}</p>
+            <p item-right class="pricetext"  item-right>${{item.price}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div  *ngSwitchCase="'monthly'">
+        <ion-list class="bottomborder bottompadding" *ngFor="let item of monthlylsit">
+          <p class="itemstyle">{{item.month}},{{item.year}}</p>
+          <ion-item no-lines paddings>
+            <div class="imageblackborder" item-left >
+              <img class="itemimg" src="assets/icon/calendar.png" />
+            </div>
+            <p class="itemtext">DATE RANGE</p>
+            <p class="itemtext">{{item.month}} 1 - {{item.month}} {{item.enddate}} </p>
+            <p item-right class="pricetext"  item-right>${{item.price}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div  *ngSwitchCase="'quartly'">
+        <ion-list class="bottomborder bottompadding" *ngFor="let item of quarterlylsit">
+          <p class="itemstyle">{{item.quarterstart}}-{{item.quarterend}},{{item.year}}</p>
+          <ion-item no-lines paddings>
+            <div class="imageblackborder" item-left >
+              <img class="itemimg" src="assets/icon/calendar.png" />
+            </div>
+            <p class="itemtext">DATE RANGE</p>
+            <p class="itemtext">{{item.quarterstart}} 1 - {{item.quarterend}} {{item.enddate}}</p>
+            <p item-right class="pricetext"  item-right>${{item.price}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div  *ngSwitchCase="'yearly'">
+        <ion-list class="bottomborder bottompadding" *ngFor="let item of yearlylsit">
+          <p class="itemstyle">{{item.year}}</p>
+          <ion-item no-lines paddings>
+            <div class="imageblackborder" item-left >
+              <img class="itemimg" src="assets/icon/calendar.png" />
+            </div>
+            <p class="itemtext">DATE RANGE</p>
+            <p class="itemtext">January 1 - December 31</p>
+            <p item-right class="pricetext"  item-right>${{item.price}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card-content>
+  </div>
+</ion-content>
+

@@ -1,0 +1,142 @@
+page-rent {
+
+  .label-md {
+    margin: 11px 8px 11px 0;
+  }
+  .button-md{
+    height: 2.8em;
+    font-size: 1.6rem;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+  h3{
+      margin: 7px 0;
+  }
+  .stars{
+      margin-bottom: 10px;
+  }
+  .select-icon-inner{
+      color: #999 !important;
+  }
+  .item-inner{
+      padding: 0;
+  }
+  .select-text{
+      color: color($colors , darken);
+      font-size: 1.3rem;
+  }
+  .row{
+      margin-bottom: 10px;
+  }
+
+  ion-fab[bottom]{
+      bottom: 30px;
+  }
+
+  .otherphoto{
+    display: inline-block;
+    height: 11.5rem;
+    object-fit: cover;
+    object-position: center;
+    width: 11.5rem;
+    border-radius: 12rem;
+  }
+
+  .otherphotodiv{
+    display: inline-block;
+    height: 11.5rem;
+    width: 11.5rem;
+  }
+
+ .itemphoto{
+    display: inline-block;
+    height: 10rem;
+    width: 10rem;
+    object-fit: cover;
+    object-position: center;
+  }
+
+
+  .rejectbutton{
+    background-color:#f55349;
+    height: 50px !important;
+  }
+
+  .acceptbutton{
+    height: 50px !important;
+  }
+
+  .rentalreview{
+    font-weight: 600 !important;
+    margin-bottom:30px;
+    margin-top:30px;
+  }
+
+  .requesttitle{
+    color: gray;
+    border-bottom: thin solid gainsboro;
+    padding-bottom: 13px;
+    font-size: 11px;
+    padding-top: 11px;
+  }
+
+  .itemtext{
+    font-size: 19px;
+  }
+}
+
+.graytext{
+  color:gray;
+  font-size:18px;
+}
+
+.icon-col{
+    font-size: 3vm;
+    color:white;
+    ion-icon{
+        line-height: 2;
+    }
+}
+
+.datetime-md{
+    color: color($colors , darken);
+    padding: 10px 5px 5px 5px;
+    font-size: 1.3rem;
+    width: 100%;
+}
+
+.picker-md{
+    .picker-toolbar, .picker-wrapper{
+        background: white;
+    }
+}
+
+.rent-det{
+    border-bottom: 1px solid color($colors , graylight);
+    h4{
+        font-size: 1.2rem;
+        font-weight: normal;
+        padding-left: 5px;
+    }
+}
+
+.price-list{
+    h4{
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+    }
+    .item-md{
+        background: none;
+        min-height: 3.5rem;
+        font-weight: 500;
+        .label-md{
+            margin: 0;
+        }
+        p{
+            font-size: 1.6rem;
+        }
+    }
+}
+.label_top{
+  margin: 1vw;
+}

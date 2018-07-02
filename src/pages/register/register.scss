@@ -1,0 +1,114 @@
+page-register {
+  .toolbar-md{
+    min-height: 100px;
+  }
+
+  .signupform{
+    color: white;
+    margin: 11vw auto;
+    padding: 5px;
+    font-size: 2.3rem;
+    &>button:disabled{
+    	background-color:gray;
+    	color:white;
+    }
+  }
+
+  .signupfont{
+    font-size:3.3rem;
+  }
+
+	.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border-bottom: 0px;
+	}
+
+}
+
+.signupdiv{
+  text-align: center;
+  margin: 16vw auto 0;
+  color: white;
+  width: 80%;
+  font-size: 2rem;
+}
+
+
+.signupbutton{
+  border-radius: 25px;
+  background-color: #03a9f4;;
+  color: white;
+  width: 100%;
+  font-size: 2rem;
+  margin: auto;
+  display: block;
+  height: 5rem;
+}
+
+
+
+#progressbar {
+	margin-bottom: 10vw;
+	margin-top: 10vw;
+	align:center;
+	/*CSS counters to number the steps*/
+	counter-reset: step;
+}
+#progressbar li {
+	list-style-type: none;
+	color: white;
+	text-transform: uppercase;
+	font-size: 4vw;
+	width: 30%;
+	float: left;
+	position: relative;
+}
+#progressbar li:before {
+	content: counter(step);
+	counter-increment: step;
+	width: 10vw;
+	line-height: 10vw;
+	display: block;
+	font-size: 10px;
+	color: #333;
+	background: white;
+	border-radius: 10vw;
+	margin: -2.5vw auto 5vw auto;
+}
+/*progressbar connectors*/
+#progressbar li:after {
+	content: '';
+	width: 100%;
+	height: 2px;
+	background: white;
+	position: absolute;
+	left: -50%;
+	top: 9px;
+	z-index: -1; /*put it behind the numbers*/
+}
+#progressbar li:first-child:after {
+	/*connector not needed before the first step*/
+	content: none;
+}
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before,  #progressbar li.active:after{
+	background: #000;
+	color: white;
+}
+
+.logoimage{
+  margin-top: 6px;
+  width: 17px;
+}
+
+.logoborder{
+	border:1px solid white;
+	border-radius: 50%;
+	width: 35px;
+	height:35px;
+	margin:auto;
+}
+.resend-code {
+    	font-size: 1.5rem;	
+	}
+	

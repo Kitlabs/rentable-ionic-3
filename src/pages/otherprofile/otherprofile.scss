@@ -1,0 +1,192 @@
+page-otherprofile {
+
+  
+  .card-md p{
+    line-height: inherit;
+    color: #666;
+  }
+  .label-md ,
+  .label-ios {
+    margin: 0px;
+  }
+	.wardrobe {
+		z-index: 1;
+		position: relative;
+		width:50vw;
+		height:50vw;
+    border: thin white groove;
+	}
+
+  .list-md .item[no-lines] .item-inner ,
+  .list-ios .item[no-lines] .item-inner {
+    border-width: 0;
+    padding: 0px;
+  }
+
+  .segment-md .segment-button.segment-activated ,
+  .segment-ios .segment-button.segment-activated {
+    color:white;
+    background-color: transparent;
+    ion-icon {
+      p{
+        color:white;
+      }
+    }
+  }
+
+  .cover_image{
+    z-index: 1;
+    position: absolute;
+    right:2vw;
+    top: 3.5vw;
+    padding:0px !important;
+    margin:0px !important;
+    height: 2.2rem;
+    width:auto;
+  }
+  .segment-md .segment-button,
+  .segment-ios .segment-button{
+    border:0px;
+    background-color: transparent;
+    color:gray;
+  }
+
+	.image-item{
+		position: relative;
+		display: inline-block;
+		padding:0px;
+	}
+	.cover_1 {
+		z-index: 10;
+		right: 3vw;
+		position: absolute;
+		margin-top:0.5vw;
+		font-weight: bold !important;
+		font-size: 4vw;
+	}
+
+  .cover_2 {
+    z-index: 1;
+    position: absolute;
+    left:2vw;
+    top: 1rem;
+    padding:0px !important;
+    margin:0px !important;
+    font-size:2.5rem;
+    color: white;
+  }
+
+	.grid-list{
+    width: 50%;
+    float: left;
+    padding-bottom: 0;
+    margin-top: 0px;
+    margin-bottom: -5px;
+
+    &:last-child , &:nth-last-child(2){
+    }
+    img{
+        object-fit: cover;
+        -o-object-fit: cover;
+        opacity: .7;
+    }
+    .item-md{
+        .item-inner{
+            padding-right: 0;
+        }
+    }
+    .label-md{
+        text-transform: capitalize;
+        font-weight: 500;
+        font-size: 1.5rem;
+    }
+  }
+  .segment-md .segment-button{
+    opacity: 1;
+  }
+  .segment-md .segment-button ion-icon{
+    line-height: 2.8rem;
+  }
+
+  .card-ios{
+    margin:0px;
+    width: calc(100% );
+  }
+
+
+  .card-md{
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);}
+
+  .profileimg{
+    width: 120px;
+    height: 120px;
+    border-radius: 120px;
+    border: 6px solid white;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    align: center;
+    object-fit: cover;
+    -o-object-fit: cover;
+    margin-top: -25px;
+    margin-bottom: 10px;
+  }
+
+  .card-header-md ,
+  .card-header-ios {
+      padding: 0px;
+    font-size: 1rem;
+    font-weight: 500;
+    height: 50px;
+  }
+
+  .info{
+    white-space: normal;
+    height: 28px;
+    color:white !important;
+  }
+  .segment_info{
+    column-width: 30vw;
+    width: 30vw !important;
+  }
+
+  .titleheight {
+    margin-top: 0.5rem;
+    font-size: 3rem !important;
+  }
+
+  .titlefont {
+    font-size: 1rem;
+    margin-top: -0.5rem;
+  }
+
+  .profilebody{
+    margin-bottom: 20px
+  }
+
+  .profilename{
+    font-weight:600;
+    margin: 5px;
+    font-size:2.3rem;
+  }
+
+  .profileaddress{
+    color: gray;
+    margin-bottom:10px;
+  }
+
+  .cover_4 {
+    z-index: 1;
+    position: absolute;
+    right:2vw;
+    top: 1rem;
+    padding:0px !important;
+    margin:0px !important;
+    font-size:2.5rem;
+    color: white;
+  }
+
+
+}
+

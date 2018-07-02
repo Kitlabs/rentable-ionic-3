@@ -1,0 +1,144 @@
+page-chat {
+
+  .list-md {
+    margin: -1px 0 32px;
+  }
+  .item-md{
+    padding: 0;
+  }
+  .label-md {
+    margin: 11px 8px 11px 0;
+  }
+
+  .item-md ion-thumbnail ,
+  .item-ios ion-thumbnail {
+      min-width: 56px;
+      min-height: 56px;
+  }
+
+  .segment_info{
+    column-width: 60vw;
+    width: 60vw !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    padding-top: 0 !important;
+  }
+  .more-det{
+    .label-md{
+        margin: 0 !important;
+    }
+	}
+
+.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border-bottom: none;
+}
+.toolbar .segment-md{
+  margin:  0;
+}
+.checkbox-md .checkbox-checked .checkbox-inner {
+  left: 7px;
+  top: 4px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+
+.segment-md .segment-button{
+  padding:0 0 30px;
+  text-transform: inherit;  
+  height: 2.6rem;
+  line-height: 2.5rem;
+  opacity: 1;
+}
+.segment-md .segment-button,
+.segment-ios .segment-button{
+    border:0;
+    color: graytext;
+  }
+
+  .segment-md .segment-button.segment-activated,
+    .segment-ios .segment-button.segment-activated{
+    color: #fff;
+    background-color: transparent;
+    ion-icon {
+      p{
+        color:white;
+      }
+    }
+  }
+
+  .itemimage{
+  	height:10rem !important;
+    width:10rem !important;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .optionbutton{
+    color: red;
+  }
+
+  .itemtext{
+  	margin:0 0 3px;
+  	font-size: 1.6rem;
+  	color:gray;
+  }
+
+  .like-list.bottomborder{
+    border-bottom: thin solid gainsboro;
+  }
+
+  .checkbox-md .checkbox-icon {
+    border-radius: 50%;
+    position: relative;
+    width: 21px;
+    height: 21px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #c8c7cc;
+    background-color: #fbf8fc;
+}
+.checkbox-md .checkbox-checked {
+  border-color: #f55349;
+  background-color: #f55349;
+}
+
+.counter {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  color: #fff;
+  background-color: #001e38;
+  padding: 4px 0 0;
+  border-radius: 50%;
+  height: 22px;
+  width: 22px;
+  font-size: 12px;
+  text-align: center;
+  font-style: normal;
+}
+
+.badge1 {
+  position:relative;
+}
+.badge1[data-badge]:after {
+  content:attr(data-badge);
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  font-size:.7em;
+  background:green;
+  color:white;
+  width:18px;height:18px;
+  text-align:center;
+  line-height:18px;
+  border-radius:50%;
+  box-shadow:0 0 1px #333;
+}
+
+}
+
+.toolbar-ios-navbarcolor .segment-ios .segment-button.segment-activated {
+  color: white !important;
+  border-bottom:solid #0cb5f3;
+}

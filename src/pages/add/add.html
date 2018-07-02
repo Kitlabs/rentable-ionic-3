@@ -1,0 +1,105 @@
+
+<ion-header>
+
+  <ion-navbar class="profileheader"  hideBackButton="true" >
+    <ion-row >
+      <ion-col col-1>
+        <ion-icon name="md-close" class="white  animated fadeIn" (click)="closeScreen()" class="btn-close"></ion-icon>
+      </ion-col>
+      <ion-col col-8 style="color: white;">
+        {{photourlname}}
+      </ion-col>
+      <ion-col col-3 class="nextbutton  animated fadeIn" id="next">
+      	<ion-label  (click)="gopostdetail()">
+      		Next
+      	</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding class="app-content">
+  <ion-label style="color: black;">{{thumname}}</ion-label>
+  <div class="postitemdiv">
+    <ion-row>
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-2 >
+        <div class="logoborder animated fadeIn">
+          <img class="logoimagephoto"  src="assets/icon/photocamera_white.png">
+        </div>
+        <ion-label class="posttitle">
+          Photos
+        </ion-label>
+      </ion-col>
+      <ion-col  col-2>
+        <div class="logoblackborder animated fadeIn">
+          <img class="logoimage" src="assets/icon/postdetail_black.png">
+        </div>
+        <ion-label class="posttitle graycolor">
+          Details
+        </ion-label>
+      </ion-col>
+      <ion-col  col-2>
+        <div class="logoblackborder animated fadeIn">
+          <img class="logoimage dollar" src="assets/icon/dollar-symbol.png" >
+        </div>
+        <ion-label class="posttitle graycolor">
+          Costs
+        </ion-label>
+      </ion-col>
+      <ion-col col-3>
+      </ion-col>
+    </ion-row>
+  </div>
+  
+  <!-- Take Image From Camera-->  
+  <ion-card class="grid-list-image" style="text-align: center;">
+    <div class="image-item" no-lines>
+      <img (click)="takephoto()" class="imagecamera  animated fadeIn" style="background-color: white" src="assets/icon/camera.png" />
+    </div>
+    <label class="imagetext">Take a Photo</label>
+  </ion-card>
+  
+  <!-- Take Image From Gallery-->
+  <ion-card class="grid-list-image" style="text-align: center;">
+    <div class="image-item" no-lines>
+      <!-- getimage()  | openImagePicker()-->
+      <img (click)="getImageFromGalleryUsingCamera()" class="imagephoto  animated fadeIn" style="background-color: white" src="assets/icon/film.png" />
+    </div>
+    <label class="imagetext">Select a Photo</label>
+  </ion-card>
+  
+  <!-- Display selected Image-->
+<!--   <ion-card class="grid-list " *ngFor="let item of imagelist; let i=index; ">
+  <div class="image-item" no-lines>
+    <img (click)="deleteImage(i)" class="imageborder" style="background-color: white" src="{{item}}" />
+  </div>
+</ion-card> -->
+
+  <ion-card class="grid-list-image" *ngFor="let item of imagelist; let i=index; " >
+    <div class="image-item" no-lines>
+      <img (click)="deleteImage(i)"  style="background-color: white" src="{{item}}"  />
+    </div>
+  </ion-card>
+
+<!--   <ion-grid>
+  <ion-row>
+    <ion-col col-6 *ngFor="let photo of imagelist; let id = index">
+      <ion-card class="block">
+        <ion-icon name="trash" class="deleteIcon" (click)="deleteImage(id)"></ion-icon>
+        <img [src]="photo" *ngIf="photo"  class="post-image" />
+        <img src="https://i.ytimg.com/vi/X3bqe3Q21zY/maxresdefault.jpg">
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid> -->
+
+  <ion-label style="color: black;">{{filename}}</ion-label>
+	
+</ion-content>
+
+
+

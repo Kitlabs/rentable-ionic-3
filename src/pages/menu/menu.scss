@@ -1,0 +1,149 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+.toolbar-background-md{
+    @extend %main-bg;
+    @extend %cover;
+}
+.toolbar-title-md{
+    font-weight: normal;
+}
+.searchbar-md{
+    .searchbar-input{
+        border-bottom: 1px solid color($colors , light);
+    }
+    .searchbar-search-icon{
+        left: 2px;
+    }
+    .searchbar-input{
+        padding-left: 35px;
+        padding-bottom: 0;
+    }
+    input::-webkit-input-placeholder {
+        font-size: 1.2rem;
+    }
+}
+.back-button-icon-md{
+    font-size: 2.1rem;
+}
+ion-app{
+    [no-padding]{
+        padding: 0 !important; 
+    }
+    [no-margin]{
+        margin: 0 !important;
+    }
+}
+.alert-input{
+    border-radius: 0 !important;
+}
+
+.bold{
+    font-weight: 500 !important;
+}
+
+@media only screen and (max-width: 767px){
+    .md .modal-wrapper > .ion-page > ion-header > .toolbar.statusbar-padding:first-child{
+        padding-top: 4px;
+        min-height: 56px;
+    }
+    .md .modal-wrapper > .ion-page > ion-header > .search-head.toolbar.statusbar-padding:first-child{
+        padding-top: 20px;
+    }
+}
+
+
+// App fab button
+// --------------------------------------------------
+ion-fab[bottom]{
+    bottom: 15px;
+}
+.fab{
+    .map-icon{
+        font-size: 2.9rem;
+    }
+}
+
+
+// .expanded classes
+// --------------------------------------------------
+.expanded{
+    .toolbar-title {
+        white-space: initial;
+    }
+    .toolbar-md{
+        padding-top: 10px;
+        min-height: 150px;
+        height: 150px;
+    }
+    .toolbar{
+        -webkit-align-items: baseline;
+        -ms-flex-align: baseline;
+        align-items: baseline;
+    }
+    .searchbar-md{
+        width: 90%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 50px;
+        margin: 0 auto;
+    }
+    .cart-btn{
+        margin-top: -15px;
+    }
+}
+// App Menu
+// --------------------------------------------------
+ion-menu{
+    .header-md{
+        &::after{
+            display: none;
+        }
+    }
+    .toolbar-background-md{
+        background-image: none !important;
+        background-color: color($colors , dark);
+    }
+}
+.menu_content{
+    .list-md{
+        padding: 0 10px;   
+    }
+    .item-md{
+        border-bottom: 1px solid #dedede;
+        padding-left: 6px;
+        ion-icon[item-left]{
+            + .item-inner{
+                margin-left: 15px;
+            }
+        }
+        ion-icon[item-left]{
+            font-size: 2.5rem;
+            min-height: 2.5rem;
+        }
+        &.activated{
+            background-color: transparent;
+        }
+    }
+    .item-block{
+        .item-inner{
+            border: none !important;
+        }
+    }
+    .label-md{
+        color: color($colors , light);
+    }
+    .log-out{
+        &.bar-buttons-md{
+            position: absolute;
+            right: 0;
+            bottom: 10px;
+        }
+        .button-md{
+            box-shadow: none;
+        }
+    }
+}

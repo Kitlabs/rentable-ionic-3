@@ -1,0 +1,111 @@
+page-share-modal {
+
+    .item-md{
+        font-size: 1.7rem;
+    }
+    .shareDialog{
+        padding: 30px;
+        background: rgba(0,0,0,0.7);
+        height: -webkit-fill-available;
+    }
+    .shareDiv{    
+        position: absolute;
+        top: 50%;
+        left: 0%;
+        right: 0;
+        width: 70%;
+        background: #fbf8fc;
+        margin: 0px auto 0;
+        transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);    
+    }
+    .shareLogo .icon {
+        font-size:2.2em;
+        margin-left:30%;
+    }
+    .shareLogo .ion-logo-facebook{
+        color:#3b5998 ;
+    }
+    .shareLogo .ion-logo-twitter{
+        color:#00aced;
+    }
+    .shareLogo .close {
+        display: inline-block;
+        font-size: 1.2em;
+        position: absolute;
+        left: auto;
+        top: -6px;
+        background-color:#fff;
+        border: 1px solid #000;
+        border-radius: 50%;
+        right: -6px;
+        height:16px;
+        width:16px;
+        text-align:center;
+        padding:0;
+    }
+    .label-md {
+        margin: 11px 8px 11px 0;
+    }
+    .item-md{
+        padding: 0;
+    }
+    .item-md ion-avatar{        
+        min-width: 36px;
+        min-height: 36px;
+    }
+    .item-md h2 {
+        margin: 0;
+        font-size: 1.7rem;
+        font-weight: normal;
+    }
+    .item-ios h2:last-child{
+        margin-bottom: 0;
+    }
+    // height: 145px !important;
+    // width: 75% !important;
+    // top: calc(50% - (145px/2)) !important;
+    // left: calc(50% - (75%/2)) !important;
+    
+    // @extend %box-shadow;
+    // ion-header{
+    //     &::after{
+    //         display: none;
+    //     }
+    // }
+    // .toolbar-background{
+    //     background: none;
+    //     background-color: white;
+    // }
+    // .toolbar-title-md{
+    //     color: color($colors , primary);
+    // }
+    // .bar-buttons-md[end]{
+    //     text-align: right;
+    // }
+    // .content-md{
+    //     color: color($colors , light);
+    //     background: color($colors , light);
+    // }
+    // .item-md{
+    //     background: none;
+    //     padding-top: 5px;
+    //     padding-bottom: 5px;
+    //     border-bottom: 1px solid #dedede;
+    //     ion-avatar{
+    //         display: flex;
+    //         align-items: center;
+    //         img{
+    //             width: 35px;
+    //             height: 35px;
+    //             border-radius: 0;
+    //             overflow: visible;
+    //             object-fit: contain;
+    //         }
+    //     }
+    //     .item-inner{
+    //         border: none !important;
+    //     }
+    // }
+}

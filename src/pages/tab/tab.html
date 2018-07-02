@@ -1,0 +1,10 @@
+<ion-tabs class="tabs-positive" [selectedIndex]="myIndex" #tabs (ionChange)="tabChanged($event)">
+  <ion-tab [root]="tab1Root" tabTitle="HOME" tabIcon="customicon"   ></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="ITEMS" tabIcon="customicon1"  enabled="{{tabStatus}}"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="POST" tabIcon="customicon2"   enabled="{{tabStatus}}" ></ion-tab>
+  <ion-tab [root]="tab4Root" tabTitle="CHAT" tabIcon="customicon3"  [tabBadge]=" countCarItem!=0 ? countCarItem : null"  enabled="{{tabStatus}}"></ion-tab>
+  <!-- <ion-tab [root]="tab5Root" tabTitle="ALERTS" tabIcon="customicon4" (ionSelect)="myMethod('alert')"  ></ion-tab> -->
+</ion-tabs>
+
+
+

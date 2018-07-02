@@ -1,0 +1,39 @@
+
+<ion-content class="appcontent animated fadeIn">
+
+  <div class="Landingpage">
+    <div id="recaptcha-container"></div>
+    <!-- <p class="apptitle">RENTABLE</p> -->
+    <img src="assets/img/logo.png">
+
+    <div class="landingform">
+
+
+    <p class="helpstring">ENTER YOUR MOBILE NUMBER</p>
+        
+         <button ion-button
+            class="grayborderr widthh" 
+            text-center 
+            (click)="takeMe()" 
+            >{{countrycode}}</button>
+            
+      <form [formGroup]="landingForm">      
+        <ion-list >
+          <ion-item no-padding style="border: 0px;">
+            <ion-input 
+              id="code"
+              type="number" 
+              class="inputstyle"
+              pattern="[0-9]*" 
+              placeholder="123456789"
+              formControlName="phonenumber"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+        <button ion-button id="button" class="continubutton" (click)="dolanding()" [disabled]="!landingForm.valid">CONTINUE</button>
+      </form>
+
+    </div>
+
+  </div>
+</ion-content>

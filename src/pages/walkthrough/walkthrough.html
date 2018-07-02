@@ -1,0 +1,66 @@
+
+<ion-header *ngIf="status" >
+    <ion-navbar  class="profileheader" >
+      <ion-row >
+        <ion-col col-1>
+        </ion-col>
+        <ion-col col-10 class="nextbutton"  style="text-align: center;">
+          <ion-label  >
+           Walk Through
+          </ion-label>
+        </ion-col>
+        <ion-col col-1 >
+        </ion-col>
+      </ion-row>
+    </ion-navbar>
+  
+  </ion-header>
+<ion-content >
+  <ion-slides pager (ionSlideDidChange)="slideChanged()">
+    <ion-slide >
+       <div class="diag" >
+         <!-- <ion-icon ios="ios-chatboxes" md="md-chatboxes" color="primary"></ion-icon> -->
+         <img class="imageicon" src="assets/icon/dollar_box.png">
+       </div>
+       <div>
+         <h2> Earn extra money by renting out your stuff to people in your community.</h2>
+       </div>
+     </ion-slide>
+ 
+     <ion-slide>
+       <div  class="diag" >
+         <!-- <ion-icon ios="ios-analytics" md="md-analytics" color="primary"></ion-icon> -->
+         <img class="imageicon" src="assets/icon/search.png">
+       </div>
+       <div>
+         <h2>Find what you need</h2>
+         <p>Easily browse items by categories, select dates and send rental requests.</p>
+       </div>
+     </ion-slide>
+ 
+     <ion-slide >
+       <div  class="diag" > 
+        <img class="imageicon" src="assets/icon/message.png">
+       </div>
+       <div>
+         <h2>You are almost there</h2>
+         <p>Once the request is accepted, chat with the owner to arrange pick up or delivery.</p>
+       </div>
+     </ion-slide>
+
+     <ion-slide >
+        <div class="diag" > 
+         <img class="imageicon" src="assets/icon/mind.png">
+        </div>
+        <div>
+          <h2> Peace of mind</h2>
+          <p>Set up your payment methods once and forget it. Also, your items are protected by a security deposit.</p>
+        </div>
+      </ion-slide>
+    </ion-slides>
+
+      <div class="skipSlide" (click)="skip()" *ngIf="!status">
+          <button  id="skip">{{skipMsg}}</button>
+      </div>
+
+</ion-content>

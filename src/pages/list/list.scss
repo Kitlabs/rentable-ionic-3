@@ -1,0 +1,57 @@
+
+.app-list{
+    .item-md{
+        background: transparent;
+        padding: 20px 10px 0px 10px !important;
+        &:last-child{
+            margin-bottom: 10px;
+        }
+        ion-thumbnail{
+            margin-top: -10px !important;
+            img{
+                object-fit: cover;
+                -o-object-fit: cover;
+            }
+        }
+        h2{
+            font-size: 2rem;
+        }
+        p{
+            font-size: 1.2rem;
+        }
+    }
+    .item-inner{
+        overflow: visible;
+        padding: 0 13px !important;
+        min-width: 100px;
+        background: white;
+    }
+    .input-wrapper{
+        align-items: flex-start;
+    }
+    .label-md{
+        margin: 5px 8px 5px 0;
+    }
+}
+
+.stars{
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    ion-icon{
+        font-size: 1.45rem;
+        color: #faca43;
+        margin-right: 2px;
+    }
+    p{
+        display: inline-block;
+        margin-left: 7px;
+    }
+}
+
+.price{
+    margin-top: 5px;
+    span{
+        font-size: 1.5rem;
+    }
+}

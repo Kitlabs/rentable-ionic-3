@@ -1,0 +1,120 @@
+<!--
+  Generated template for the PostdetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar class="profileheader" >
+    <ion-row >
+
+     <ion-col col-1>   
+      <ion-icon name="md-close" class="white" (click)="closeScreen()" class="btn-close"></ion-icon>
+     </ion-col>
+
+      <ion-col col-8 >
+      </ion-col>
+      <ion-col col-3 (click)="gopostcost()" class="nextbutton" id="next">
+      	<ion-label >
+      		Next
+      	</ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding class="app-content" >
+  <div class="postitemdiv">
+    <ion-row>
+    	<ion-col co-3>
+    	</ion-col>
+      <ion-col col-2 >
+        <div class="logoblackborder"  >
+          <img (click)="goaddpage()" class="logoimagephoto" src="assets/icon/photocamera_black.png">
+        </div>
+        <ion-label class="posttitle-inactive ">
+          Photos
+        </ion-label>
+      </ion-col>
+      <ion-col  col-2>
+        <div class="logoborder">
+          <img class="logoimage" src="assets/icon/postdetail_white.png">
+        </div>
+        <ion-label class="posttitle">
+          Details
+        </ion-label>
+      </ion-col>
+      <ion-col  col-2>
+        <div class="logoblackborder">
+          <img class="logoimage dollar" src="assets/icon/dollar-symbol.png">
+        </div>
+        <ion-label class="posttitle-inactive">
+          Costs
+        </ion-label>
+      </ion-col>
+      <ion-col col-3>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="detailscreen">
+  	<p class="centeralign">Item Details</p>
+    <ion-item>
+      <p item-left class="helpstr">ITEM TITLE</p>
+      <p item-right class="helpstr">{{titlenumber}}</p>
+    </ion-item>
+  	<ion-row class="bottomborder">
+      <ion-col col-11>
+        <ion-input
+        (ionChange)='number()' 
+        type="text" 
+        value="Predtty cool size" 
+        [(ngModel)]="itemtitle"
+        maxlength="25"></ion-input>
+      </ion-col>
+      <ion-col col-1>
+        <ion-icon name="md-close" class="graycolor" (click)="removeItemItems()"></ion-icon>
+      </ion-col>
+    </ion-row>
+	  <ion-label class="helpstr">
+			CATEGORY
+		</ion-label>
+    
+
+    <div>
+      <div  radio-group [(ngModel)]="category" class="radio-postimg grid-list" *ngFor="let item of categorylist; let i = index; " >
+        <input type="radio" name="radio-group"   id="{{item.radionumber}}" class="input-hidden" />
+        <label (click)="myFunction($event)" for="{{item.radionumber}}" >
+          <img  id="{{item.value}}" src="{{item.inactive_img}}"  class="categoryimage" > 
+          <span id="{{item.titleSecond}}" class="categoryname" >{{item.title}}</span>
+        </label>
+      </div>
+    </div>
+
+    <ion-item>
+      <p item-left class="helpstr">ITEMS CURRENT CONDITION</p>  
+    </ion-item>
+
+	  <div *ngFor="let i of condition" class="conditionstar">
+      <img *ngIf="goodcondition[i]" (click)="changecondition(i)" class="starsize" src="assets/icon/star-red.png">
+      <img *ngIf="!goodcondition[i]" (click)="changecondition(i)" class="starsize" src="assets/icon/star.png">
+    </div>
+    
+    <ion-item>
+      <p item-left class="helpstr">ITEM DETAILS</p>
+      <p item-right class="helpstr">{{conditionnumber}}</p>
+    </ion-item>
+
+	  <ion-row class="detailstyle">
+	  	<ion-col col-11>
+	  		<ion-textarea  #textarea id="conditiontitle" (ionFocus)='myFocus(0)' (ionBlur)='myFocus(1)' (click)="focus()" (ionChange)='conditionnum()' style="margin-bottom:50px; font-size: 1em" rows="5" type="text"  placeholder="I have only worn these shoes for a total of 3 days..." [(ngModel)]="conditiontitle" maxlength="200"></ion-textarea >
+	  	</ion-col>
+	  	<ion-col col-1>
+	  		<ion-icon name="md-close" class="graycolor" (click)="removeItemDetails()"></ion-icon>
+	  	</ion-col>
+	  </ion-row>
+  
+  </div>
+</ion-content>

@@ -1,0 +1,28 @@
+page-modal-placeautocomplete {
+
+    // top: 66px !important;
+    // left: 0 !important;
+    // width: 100% !important;
+    // height: 90% !important;
+
+    .searchbar-ios ,.searchbar-md {
+        padding: 0 8px;
+        min-height: 44px;
+        border-top: 0.55px solid transparent;
+        border-bottom: 0.55px solid rgb(0, 43, 66);
+        background: rgb(0, 43, 66);
+    }
+
+    .search-result{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    ion-icon {
+        display: inline-block;
+        font-size: 1.9em;
+        left: 3px;
+        position: absolute;
+        content: ""
+    }
+}

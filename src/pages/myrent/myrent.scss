@@ -1,0 +1,252 @@
+page-myrent {
+  .fab-md{
+      color: white !important;
+      box-shadow: 0 9px 3px 0 rgba(0, 0, 0, 0.001), 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  ion-fab[bottom]{
+      bottom: -2px;
+  }
+  .app-list{
+    .item-md{
+      &:last-child{
+        padding-bottom: 10px !important;
+      }
+    }
+  }
+  .segment_info{
+    min-height: 44px !important;
+    height: 44px !important;
+    padding-top: 0 !important;
+    width: 70vw !important;
+  }
+  .segment_info1{
+    column-width: 30vw;
+    width: 30vw !important;
+  }
+   .grid-list{
+    width: 50%;
+    float: left;
+    padding-bottom: 0;
+    padding:0px !important;
+    margin-top: 0px;
+    margin-bottom: -5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    img{
+        object-fit: cover;
+        -o-object-fit: cover;
+        opacity: .7;
+    }
+    .item-md{
+        .item-inner{
+            padding-right: 0;
+        }
+    }
+    .label-md{
+        text-transform: capitalize;
+        font-weight: 500;
+        padding:0px !important;
+        margin:0px !important;
+    }
+  }
+
+
+  ion-card{
+    display:inline;
+  }
+  .card-md ,
+    .card-ios {
+    margin:0px 0px -5px 0px;
+  }
+  .card-content-md,
+  .card-content-ios {
+      padding:0px;
+  }
+
+
+
+  .info_1{
+    z-index: 1;
+    position: absolute;
+    right:3.7vw;
+    top: 2.7rem;
+    padding:0px !important;
+    margin:0px !important;
+    white-space: normal;
+    height: 27px;
+    color:white;
+  }
+
+  .info{
+    z-index: 1;
+    position: absolute;
+    left:3.5vw;
+    top: 2.7rem;
+    padding:0px !important;
+    margin:0px !important;
+    white-space: normal;
+    height: 28px;
+    color:white;
+  }
+
+  .info2{
+    white-space: normal;
+    height: 28px;
+    color:white;
+  }
+
+  .card-header-ios {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #333;
+    padding: 0 !important;
+    height: 15vw;
+  }
+  .segment-md .segment-button,
+    .segment-ios .segment-button{
+    border:0;
+    color: graytext;
+    ion-icon{
+      margin-top: 8px;
+      font-size: 3.5rem;
+    }
+  }
+  .segment-md .segment-button.segment-activated,
+    .segment-ios .segment-button.segment-activated{
+    color: #fff;
+    background-color: transparent;
+    ion-icon {
+      p{
+        color:white;
+      }
+    }
+  }
+  .segment-md .segment-button{
+    padding: 0 0 30px;    
+    text-transform: capitalize;    
+    height: 2.6rem;
+    line-height: 2.5rem;
+    opacity: 1;
+  }
+  
+  .wardrobe {
+    z-index: 0;
+    position: relative;
+    width:50vw;
+    height:50vw;
+    padding:0px !important;
+    margin:0px !important;
+    border: 1px solid white;
+  }
+  .image-item{
+    position: relative;
+    display: inline-block;
+    padding:0px !important;
+    margin:0px !important;
+    border:0px;
+  }
+  .cover_1 {
+    z-index: 1;
+    position: absolute;
+    left:2vw;
+    top: 0.5rem;
+    padding:0px !important;
+    margin:0px !important;
+    width:2.2rem;
+  }
+  .cover_img {
+    z-index: 1;
+    position: absolute;
+    left:1vw;
+    top: 1rem;
+    padding:0px !important;
+    margin:0px !important;
+    border:1px solid black;
+    height:3.7rem;
+    width:3.7rem;
+    border-radius: 3.7rem;
+  }
+  .cover_4 {
+    z-index: 1;
+    position: absolute;
+    right:2vw;
+    top: 0.5rem;
+    padding:0px !important;
+    margin:0px !important;
+    height: 2.2rem;
+    width:auto;
+  }
+
+  .cover_2 {
+    z-index: 1;
+    position: absolute;
+    right:3.5rem;
+    top: 1.3rem;
+    padding:0px !important;
+    margin:0px !important;
+    font-size:2.5rem;
+    color: white;
+  }
+  .cover_3 {
+    z-index: 1;
+    position: absolute;
+    right:0.5rem;
+    top: 0.8rem;
+    text-align:center;
+    padding:0px !important;
+    margin:0px !important;
+    font-size:2rem;
+    color: white;
+  }
+  
+  .titlefont {
+    font-size: 1.1rem;;
+    margin-top: -0.5rem;
+    color: #666;
+  }
+
+
+
+  .carheight{
+    height: 1.7rem;
+    width: auto;
+  }
+
+  .checkfont{
+    font-size: 32px;
+  }
+
+
+  .segment-md .segment-button ion-icon{
+    line-height: 2.8rem;
+  }
+  .card-md p{
+    line-height: inherit;
+  }
+
+}
+
+.headerheight{
+  color: white;
+  font-size: 2.5rem;
+}
+
+.toolbar.statusbar-padding:first-child ion-title {
+    padding-top: 20px;
+    height: calc(44px + 20px);
+    min-height: calc(44px + 20px);
+}
+
+.itemtitle{
+  font-size: 20px !important;
+  max-width: 67px !important;
+  margin: 0 18px !important;
+  padding-bottom: 30px;
+}
+
+ion-navbar .segment-md .segment-button.segment-activated ,
+  ion-navbar .segment-ios .segment-button.segment-activated {
+    color: white !important;
+    border-bottom:solid #0cb5f3;
+
+  }

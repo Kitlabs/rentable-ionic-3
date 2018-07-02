@@ -1,0 +1,38 @@
+page-setting{
+
+
+  .setting-list{
+      .list-header-md{
+          border-top: 0px;
+          border-bottom: 1px solid color($colors , graytext);
+          .label-md{
+              margin-bottom: 5px;
+              font-weight: 500;
+              font-size: 1.7rem;
+          }
+      }
+      .label-md{
+          color: color($colors , dark);
+          font-size: 1.4rem;
+      }
+      .checkbox-md{
+          .checkbox-icon{
+              background-color: transparent;
+          }
+          .checkbox-checked{
+              background-color: color($colors , primary);
+          }
+      }
+  }
+
+  .check-list{
+      .label-md{
+          margin-bottom: 0;
+          font-size: 1.4rem;
+          p{
+              font-size: 1.3rem;
+          }
+      }
+  }
+
+}

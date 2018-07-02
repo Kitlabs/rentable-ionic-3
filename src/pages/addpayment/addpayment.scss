@@ -1,0 +1,39 @@
+page-addpayment {
+	.addcontent{
+		background-color:white
+	}
+
+	.card-info{
+		padding: 14px!important;
+		margin: 0!important;
+	}
+
+	.card_name_holder{
+		margin-left: 150px;
+	}
+
+	.card-info{
+		margin-top: 15px!important;
+	}
+
+	.card-ios{
+		border-color: green!important;
+	
+	}
+	
+	.delete-icon{
+		color: gray;
+	}
+	.list-ios > .item-block:first-child{
+		border-top:none !important;
+	}
+	.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+		border-bottom: none !important;
+	}
+	.radio-ios .radio-checked .radio-inner{
+		border-color: green !important;
+	}
+	.item-radio-checked.item-ios ion-label{
+		color: black;
+	}
+}

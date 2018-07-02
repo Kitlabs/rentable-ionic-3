@@ -1,0 +1,215 @@
+page-alerts {
+
+
+	.segment_info{
+    width: 100% !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    padding-top: 0 !important;
+  }
+  .more-det{
+    .label-md{
+        margin: 0 !important;
+    }
+	}
+
+	.toolbar-ios-navbarcolor .segment-ios .segment-button.segment-activated {
+    color: white !important;
+  }
+
+  .segment-md .segment-button,
+  .segment-ios .segment-button{
+      border:0;
+    color: graytext;
+  }
+  .toolbar-md .segment-button ,
+  .toolbar-ios .segment-button {
+      max-width: 100%;
+    height: 2.6rem;
+    line-height: 2.5rem;
+    font-size: 1.9rem;
+    column-width: 50vw;
+  }
+
+  
+.segment-md .segment-button{
+  padding:0 0 30px;
+  text-transform: inherit;  
+  height: 2.6rem;
+  line-height: 2.5rem;
+  opacity: 1;
+}
+
+  .segment-md .segment-button.segment-activated,
+  .segment-ios .segment-button.segment-activated{
+    color: #fff;
+    background-color: transparent;
+    ion-icon {
+      p{
+        color:white;
+      }
+    }
+  }
+
+  .itemimage{
+  	height:10rem !important;
+  	width:10rem !important;
+  }
+
+  .itemtext{
+  	margin-bottom:3px;
+  	font-size: 2.3rem;
+  	color:gray;
+  }
+
+  .alerttitle{
+    font-size:20px !important;
+    padding-bottom: 30px;
+    &.alertwidth{
+      max-width: 80px;
+      margin: 0 20px !important;
+    }
+     &.opportunitywidth{
+      max-width: 130px;
+    }
+  }
+
+  .card-md ,
+  .card-ios {
+      padding: 5vw;
+    border-radius: 2px;
+    width: calc(100% );
+    background: #2e343e;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+	}
+
+  .grid-list{
+    width: 41vw;
+    float: left;
+    padding-bottom: 0;
+    padding:0px !important;
+    margin:10px 0 !important;
+    border:0;
+    img{
+        object-fit: cover;
+        -o-object-fit: cover;
+        opacity: .7;
+    }
+    .item-md{
+    	padding-right: 0;
+      padding-left:0;
+      .item-inner{
+          padding-right: 0;
+          padding-left:0;
+      }
+    }
+
+    .label-md{
+      text-transform: capitalize;
+      font-weight: 500;
+      padding:0px !important;
+      margin:0px !important;
+    }
+  }
+
+  .item-md ,
+  .item-ios {
+      padding-left: 0px;
+    padding-right:0px;
+    p {
+      font-size:1.2rem
+    }
+  }
+
+  .label-md ,
+  .label-ios {
+      margin: 11px 0;
+  }
+
+  .blackcolor{
+  	color: black;
+  	font-size: 1.5rem;
+  }
+
+  .alertstyle{
+    border-bottom: thin solid gainsboro;
+    padding: 3vw 0 5vw 0;
+    margin: 0;
+  }
+
+  .alertname{
+  	color: black;
+    font-size: 2rem !important;
+    padding-top: 15px;
+    font-weight:600;
+    padding-bottom: 4px;
+  }
+
+  .item-md ion-icon[item-left], .item-md ion-icon[item-right], 
+  .item-md ion-icon[item-start], .item-md ion-icon[item-end] ,
+  .item-ios ion-icon[item-left], .item-ios ion-icon[item-right], 
+  .item-ios ion-icon[item-start], .item-ios ion-icon[item-end] {
+    margin-left: 0;
+    margin-top: 9px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+  }
+  .categoryimage{
+    margin: 7px 0 0 5px;
+    height: 17px;
+    width: auto;
+    &.data{
+      margin: 7px 0 0 8px;
+    }
+    &.dollar{
+      margin:7px 0 0 12px
+    }
+  }
+  .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border-bottom: 0;
+  }
+  .checkbox-md .checkbox-icon {
+    border-radius: 50%;
+    position: relative;
+    width: 21px;
+    height: 21px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #c8c7cc;
+    background-color: #fbf8fc;
+  }
+  .checkbox-md .checkbox-checked {
+    border-color: #f55349;
+    background-color: #f55349;
+  }  
+  .checkbox-md .checkbox-checked .checkbox-inner {
+    left: 7px;
+    top: 4px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+  }
+
+  .item-md [item-left], .item-md [item-start] {
+    margin: 8px 16px 8px 0; 
+  }
+
+}
+
+.helpfont{
+  font-size: 1.2rem;
+}
+
+
+
+.imageblackborder{
+  border:1px solid gainsboro;
+  border-radius: 50%;
+  width: 35px;
+  height:35px;
+  margin:auto;
+}
+
+ion-backdrop{
+  opacity: 0.3 !important;
+}

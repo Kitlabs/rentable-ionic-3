@@ -1,0 +1,126 @@
+page-claimrenter {
+
+	.addcontent{
+		background-color:white;
+	}
+
+  .radio-inner{
+    top: 1px !important;
+  }
+
+	.returntitle{
+		margin-top: 6vw;
+    font-size: 23px;
+    font-weight: 600;
+	}
+
+	.helptext{
+		padding-top: 3px;
+    padding-bottom: 5px;
+		&.condition{
+			font-size:11px;
+	    opacity: 0.6;
+		}
+		&.suggest{
+			color: #009fde;
+			font-size:13px;
+			opacity: 0.8;
+		}
+		&.agree{
+			font-size:11px;
+		}
+	}
+
+	.defaultbutton.paddingbottom{
+		margin-bottom:40px;
+    width:50%;
+    margin-top:20px;
+	}
+
+
+
+	.goodstyle{
+		color:red;
+		font-size: 16px;
+    opacity: 0.7;
+    font-weight: bold;
+	}
+
+	.otherstyle{
+		color:black;
+		font-size: 16px;
+    opacity: 0.7;
+    font-weight: bold;
+	}
+
+  .feedbackshow{
+    margin-bottom: 3rem;
+    font-size: 13px;
+    text-align:left;
+  }
+
+	.commentstyle{
+		color: gray;
+    text-align: left;
+    opacity: 0.9;
+    font-size: 13px;
+	}
+
+	  .otherphoto{
+    display: inline-block;
+    height: 9.5rem;
+    width: 9.5rem;
+    border-radius: 12rem;
+  }
+
+ .itemphoto{
+    display: inline-block;
+    height: 9.5rem;
+    width: 9.5rem;
+  }
+
+
+  .rejectbutton{
+    background-color:#f55349;
+    height: 50px !important;
+  }
+
+  .acceptbutton{
+    height: 50px !important;
+  }
+
+  .rentalreview{
+    font-weight: 600 !important;
+    margin-bottom:30px;
+    margin-top:30px;
+  }
+
+  .requesttitle{
+    color: gray;
+    border-bottom: thin solid gainsboro;
+    padding-bottom: 13px;
+    font-size: 11px;
+    padding-top: 11px;
+    text-align:left;
+  }
+
+  .itemtext{
+    font-size: 13px;
+  }
+
+  .radio-checked .radio-inner {
+    border-color: #ffffff;
+    width: 4px !important;
+    padding-bottom: 8px;
+    height: 4px !important;
+  }
+
+
+}
+
+
+.returnstarsize{
+  height: 22px;
+  margin: 2px;
+}
+

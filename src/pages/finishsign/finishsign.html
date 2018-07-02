@@ -1,0 +1,111 @@
+
+<ion-content class="appcontent animated fadeIn">
+	<div class="signupdiv">
+    <ion-row>
+      <ion-col  col-4 >
+        <div  class="logoborder">
+          <img class="logoimage" src="assets/icon/security.png">
+        </div>
+      </ion-col>
+      <ion-col col-4>
+        <div (click)="goToSignUp()" class="logoborder">
+          <img class="logoimage" src="assets/icon/padlock.png">
+        </div>
+      </ion-col>
+      <ion-col col-4>
+        <div class="logoborder">
+          <img class="logoimage" src="assets/icon/man-user-white.png">
+        </div>
+      </ion-col>
+    </ion-row>
+    <form class="signupform" [formGroup]="finishsignupform">
+      <ion-list>
+        <ion-label class="helpstring" >
+          ENTER YOUR FIRST NAME
+        </ion-label>
+        <ion-item class="inputmagin" no-padding >
+          <ion-input 
+          class="inputstyle" 
+          type="text" 
+          formControlName="firstname"></ion-input>
+        </ion-item>
+      
+        <ion-item class="error-message" *ngIf="finishsignupform.controls['firstname'].hasError('required') && finishsignupform.controls['firstname'].touched">
+          <p>* firstname is required</p>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="finishsignupform.controls['firstname'].hasError('maxlength') && finishsignupform.controls['firstname'].touched">
+            <p> *Maximum firstname length is 20</p>
+        </ion-item>
+      
+        <ion-label class="helpstring" >
+          ENTER YOUR LAST NAME
+        </ion-label>
+        <ion-item class="inputmagin" no-padding >
+          <ion-input 
+          class="inputstyle" 
+          type="text" 
+          formControlName="lastname" 
+          [(ngModel)]="fbLastName"></ion-input>
+        </ion-item>
+      
+        <ion-item class="error-message" *ngIf="finishsignupform.controls['lastname'].hasError('required') && finishsignupform.controls['lastname'].touched">
+          <p>* lastname is required</p>
+        </ion-item>
+
+        <ion-item class="error-message" *ngIf="finishsignupform.controls['lastname'].hasError('maxlength') && finishsignupform.controls['lastname'].touched">
+            <p> *Maximum lastname length is 20</p>
+        </ion-item>
+      
+        <ion-label class="helpstring">
+          ENTER YOUR POSTAL CODE
+        </ion-label>
+        <ion-item class="inputmagin" no-padding>
+          <ion-input 
+          class="inputstyle" 
+          type="number" 
+          formControlName="postalcode"
+          pattern="[0-9]*"
+           ></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="finishsignupform.controls['postalcode'].hasError('required') && finishsignupform.controls['postalcode'].touched">
+          <p>* postcode is required</p>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="finishsignupform.controls['postalcode'].hasError('maxlength') && finishsignupform.controls['postalcode'].touched">
+            <p> *Postcode should consist of 4 numbers</p>
+        </ion-item>
+        
+        <!-- Postal code patter-->
+        <ion-item class="error-message" *ngIf="finishsignupform.controls['postalcode'].hasError('pattern') && finishsignupform.controls['postalcode'].touched">
+            <p> *Postcode must be in number</p>
+        </ion-item>
+
+         <ion-item class="error-message" *ngIf="finishsignupform.controls['postalcode'].hasError('minlength') && finishsignupform.controls['postalcode'].touched">
+            <p> *Postcode should consist of 4 numbers</p>
+        </ion-item>
+
+        <ion-item class="inputmagin inputstyle" no-padding>
+            <ion-label class="helpstring">DOB</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" formControlName="dob" ></ion-datetime>
+        </ion-item>
+
+        <ion-row>
+          <ion-col col-10>
+            <ion-label style="text-align: left;">
+              <a style="color: white;font-size: 2rem" href="#" onclick="window.open('http://rentable2.jadecreative.co.nz/terms-and-conditions/', '_system', 'location=yes'); return false;">
+                  Agree to our terms
+              </a>
+            </ion-label>
+          </ion-col>
+          <ion-col col-2 class="checkstyle">
+            <ion-checkbox  
+            color="secondary"
+            formControlName="termaccepted"></ion-checkbox>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+      <button ion-button class="signupbutton" 
+      (click)="finishsignup()"
+      [disabled]="!finishsignupform.valid">REGISTER</button>
+    </form>
+  </div>
+</ion-content>

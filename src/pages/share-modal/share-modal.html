@@ -1,0 +1,42 @@
+
+
+
+
+  <ion-list no-margin  class="shareDialog">
+
+    <div class="shareDiv shareLogo">
+
+      <ion-item  (click)="shareViaFacebook();close()">
+        <ion-avatar item-left>
+          <ion-icon name="logo-facebook"></ion-icon>
+        </ion-avatar>
+        <h2>Facebook</h2>
+      </ion-item>
+
+      <ion-item (click)="shareViaTwitter();close()">
+        <ion-avatar item-left>
+         <ion-icon name="logo-twitter"></ion-icon>
+        </ion-avatar>
+        <h2>Twitter</h2>
+      </ion-item>
+
+      <ion-item (click)=" bnlhvk ();close()">
+        <ion-avatar item-left>
+          <ion-icon name="logo-whatsapp" style="color:#25D366"></ion-icon>
+        </ion-avatar>
+        <h2>WhatsApp</h2>
+      </ion-item>
+
+      <ion-item (click)="shareViaEmail();close()">
+        <ion-avatar item-left>
+          <ion-icon name="mail" style="color:#efb42c"></ion-icon>
+        </ion-avatar>
+        <h2>Email</h2>
+      </ion-item>
+
+      <ion-icon name="close" class="close" (click)="closeShareDialog()"></ion-icon>
+
+    </div>
+
+  </ion-list>
+

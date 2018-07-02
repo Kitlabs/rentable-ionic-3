@@ -1,0 +1,303 @@
+page-search {
+
+
+  .label-md {
+    margin: 11px 8px 11px 0;
+  }
+  .rightposition{
+    right:-1rem;
+  }
+  .middletext{
+    margin-top:6px
+  }
+  .pricestyle{
+    padding-bottom:1rem;
+    border-bottom: 1px solid #c6c6c7;
+  }
+  .pricerange{
+    // padding-top: 20px;
+    // padding-bottom: 24px;
+  }
+
+  .bottom-border{
+    border-bottom: 1px solid #c6c6c7;
+    border-top: 1px solid #c6c6c7;
+    padding-top: 2rem;
+  }
+  .liststyle{
+    font-weight: bold;
+    border-top: thin solid gainsboro;
+    font-size:15px;
+    padding-top: 2rem;
+  }
+
+  
+  .list-md,
+  .list-ios{
+    margin: -1px 0 22px;
+    &> .item-block:first-child {
+      border:0;
+    }
+    &> .item-block:last-child {
+      border:0;
+    }
+  }
+  .inputborder{
+    border: thin solid gainsboro;
+    color:black;
+    border-radius: 5px; 
+  }
+
+  .price-valid{
+    color: black !important; 
+  }
+  .price-invalid{
+    color: red !important;
+  }
+  
+
+  .search-btn-valid{
+    margin: auto;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    height: 5rem;
+    border-radius: 27px;
+    margin-bottom:80px !important;
+    background-color: #03a9f4;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+
+  .search-btn-invalid{
+    margin: auto;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    height: 5rem;
+    border-radius: 27px;
+    opacity: 0.4;
+    margin-bottom:80px !important;
+    background-color: #03a9f4;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    pointer-events: none;
+  }
+
+  .locationborder{
+    font-weight: bold;
+    width: 100%;
+    font-size: 17px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+  }
+  .borderstyle{
+    font-weight: bold;
+    border-top: thin solid gainsboro;
+    width: 100%;
+    font-size: 17px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    &.datestyle{
+      display: inline-grid;
+    }
+  }
+  .dateimage{
+    border: 1px solid #c6c6c7;
+    height: 3.5rem;
+  }
+  .wardrobe {
+    z-index: 0;
+    position: relative;
+    padding:0px !important;
+    margin:0px !important;
+  }
+  .cover {
+    z-index: 1;
+    position: absolute;
+    left:23vw;
+    top: 1.8rem;
+    padding:0px !important;
+    margin:0px !important;
+    font-size: 2rem;
+    color: white;
+  }
+  ion-app.ios [padding], ion-app.ios [padding] .scroll-content {
+    padding: 0px;
+  }
+  .select-ios {
+    padding: 13px 3px 7px 6px;
+    border: thin solid gainsboro;
+    min-height: 4.5rem;
+    min-width: 40vw !important;
+  }
+  .distancesize{
+    height:15px;
+    width:auto;
+  }
+  .categorytitle{
+    font-weight: bold;
+    font-size:15px;
+    margin: 0;
+    padding-bottom: 1rem;
+  }
+  .pricetitle{
+    font-weight: bold;
+    font-size:15px;
+    margin: 0;
+    padding-bottom: 1rem;
+    padding-top:2rem;
+  }
+  .locationicon{
+    height: 22px;
+    width: auto;
+  }
+  .locationimage{
+    height: 22px;
+    padding-left: 5px;
+    padding-top: 2px;
+  }
+  .app-content.paddingbottom{
+    margin-bottom:40px;
+  }
+  .radio-img {
+    margin: 10px 0;
+    input[type=radio] {
+      &:checked {
+        color: #f55349;
+        & + label {
+          color: #f55349;
+        }
+      }
+    }
+  }
+  .radio-img.grid-list{
+    float: left;
+    padding-bottom: 0;
+    border:0;
+    width: calc(43vw);
+    font-size: 11px;
+    img{
+        object-fit: cover;
+        -o-object-fit: cover;
+        opacity: .7;
+    }
+    .item-md{
+        .item-inner{
+            padding-right: 0;
+        }
+    }
+    .label-md{
+        text-transform: capitalize;
+        font-weight: 500;
+        padding:0px !important;
+        margin:0px !important;
+    }
+  }
+  .back-button-md{
+    margin: 0;
+    padding: 0 4px 0 0 ;
+    min-width: 8px;
+  }
+  .back-button-icon-md {
+    margin: 0;
+    display: inherit;
+    min-width: 18px;
+    font-size: 28px;
+  }
+  .ion-md-arrow-back:before {
+    content: "\f3cf";
+  }
+  .ion-md-arrow-forward:before {
+    content: "\f3d1";
+  }
+  .item-md .radio-md {
+    margin: 8px 11px 8px 8px;
+  }
+  .radio-md .radio-icon{
+    border-color: transparent;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-style: solid;
+    border-radius: 0;
+  }
+  .radio-md .radio-checked .radio-inner {
+    left: 7px;
+    top: 4px;
+    position: absolute;
+    width: 5px;
+    height: 12px;
+    border-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-style: solid;
+    border-radius: 0;
+    border-color: #f55349;
+    background-color: transparent;
+  }
+  .item-radio .label-md{
+    font-size: 1.7rem;
+  }
+  .mb-2{
+    border:none;
+    margin-bottom: -6px;
+    padding-bottom: 0;
+  }
+
+
+  .locationstyle {
+    padding-bottom: 1rem;
+    padding-top:2rem;
+  }
+}
+.categoryname{
+  display: inline-block;
+  margin: 0 0;
+  vertical-align: middle;
+  width: auto;
+  height: 35px;
+  padding-bottom:12px;
+}
+.item-md,  .item-ios {
+    background-color:transparent;
+  padding:0px;
+}
+.input-hidden {
+    position: absolute;
+    left: -9999px;
+}
+.categoryimage{
+    margin-right: 2px;
+    margin-top: auto;
+    height: 30px;
+    width: auto;
+}
+.toolbar .searchbar-md{  
+  min-height: 44px;
+}
+.segment-md .segment-button{
+  opacity: 1;  
+  height: 3.2rem;
+  line-height: 2.8rem;
+  text-transform: inherit;
+}
+
+.locationstyle_new{
+  border: 1px solid #c6c6c7;
+  margin-bottom: 1.5rem;
+  padding-top: .5rem;
+  border-radius: 5px; 
+}
+.price_dollar {
+  text-align: right ;
+  font-size: 1.18em;
+  font-weight: bold;
+  color: #999;
+}

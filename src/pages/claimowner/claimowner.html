@@ -1,0 +1,100 @@
+<!--
+  Generated template for the ClaimownerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar class="profileheader"  style="text-align: left;" hideBackButton="true">
+  	 <ion-icon (click)="back()" class="navetitle" name="md-close"></ion-icon>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding align="center" class="addcontent">
+	<p class="returntitle">
+		ENTERING YOUR CLAIM
+	</p>
+	
+	<p class="helptext condition">THIS IS THE ITEMS CONDITION WHEN RENTED</p>
+	<ion-label >
+    <img *ngFor="let item of pickUpRatingPos" class="returnstarsize" src="assets/icon/star-grey.png">
+    <img *ngFor="let item of pickUpRatingNeg" class="returnstarsize" src="assets/icon/star-grey-outline.png">
+	</ion-label>
+	
+	<p class="goodstyle">{{pickUpRatingTitle}}</p>
+
+	<div *ngIf="!bothPartyDidntAgreeStatus">
+		<p class="helptext condition">THIS IS THE ITEMS CONDITION WHEN RETURNED</p>
+			<ion-label >
+    		<img *ngFor="let item of returnRatingPos" class="returnstarsize" src="assets/icon/star-grey.png">
+    		<img  *ngFor="let item of returnRatingNeg" class="returnstarsize" src="assets/icon/star-grey-outline.png">
+  		</ion-label>
+  	<p class="goodstyle">{{returnRatingTitle}}</p>
+	</div>
+  <ion-item class="commentstyle" no-margin >
+		<ion-label item-left >
+			AMOUNT TO CLAIM
+		</ion-label>
+		<ion-label item-right >
+			SECURITY DEPOSIT
+		</ion-label>
+	</ion-item>
+	<ion-row >
+		<ion-col col-1>
+				<p class="dollar">$</p>
+		</ion-col>
+		<ion-col col-4 class="borderbottom">
+				<ion-input 
+					id="claimamount"
+					type="tel" 
+					maxlength="4"
+					min="1"
+					(ionChange)="checker()"
+					[(ngModel)]="bondToClaimAmount"
+			></ion-input>
+
+		</ion-col>
+		<ion-col col-2 style="text-align: center; font-size:3rem;">
+			<ion-icon name="close" ></ion-icon>
+		</ion-col>
+		<ion-col col-1>
+				<p class="dollar">$</p>
+		</ion-col>
+		<ion-col col-4 style="text-align: right;" class="borderbottom">
+				<ion-input 
+					id="code"
+					type="number" 
+					pattern="[0-9]*" 
+					disabled="true" 
+					[(ngModel)]="securityDeposit"
+		></ion-input>
+	  </ion-col>
+	</ion-row>
+
+	<ion-item *ngIf="bothPartyDidntAgreeStatus">
+		<p class="commentstyle" >
+			NOTE:	BOTH PARTIES DID NOT AGREE
+		</p>
+	</ion-item>
+
+	<ion-item>
+		<ion-label item-left class="commentstyle">
+			ADDITIONAL COMMENTS
+		</ion-label>
+		<ion-label item-right class="commentstyle" style="text-align: right;">
+			{{titlenumber}}
+		</ion-label>
+	</ion-item>
+	<ion-textarea rows="5" (ionChange)='number()' type="text" class="feedbackinput" [(ngModel)]="comment" text-wrap maxlength='350'></ion-textarea >
+
+	<!-- <button [navPush]="claimrenter" ion-button block color="secondary" class="defaultbutton paddingbottom" >SUBMIT</button> -->
+	<button ion-button block   
+    [ngClass]="{disabled : !submitBtnStatus,
+    'search-btn-valid':submitBtnStatus,
+    'search-btn-invalid':!submitBtnStatus }"  
+    (click)="submitBtnStatus && sendData()"
+	>Submit</button>
+	
+</ion-content>

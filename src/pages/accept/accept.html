@@ -1,0 +1,101 @@
+<!--
+  Generated template for the AcceptPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar class="profileheader"  hideBackButton="true" style="text-align: left;" >
+  	 <ion-icon (click)="godetail()"  class="headertitle" name="md-close"></ion-icon>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding align="center" class="addcontent">
+	<p class="returntitle">
+		Returning your Item
+	</p>
+	<P class="helptext suggest">We suggest you and the owner agree on the condition of the item being returned before completing the below</P>
+	<p class="helptext condition">{{message}}</p>
+
+	<div *ngIf="agree=='yes'" class="conditionstar">
+			<img *ngFor="let item of itemRatingPos" class="returnstarsize" src="assets/icon/star-red.png">
+			<img *ngFor="let item of itemRatingNeg" class="returnstarsize" src="assets/icon/star.png">
+	</div>
+
+<ion-label *ngIf="agree=='no'" >
+	<div *ngFor="let i of condition" class="conditionstar">
+		<img *ngIf="goodcondition[i]" (click)="changecondition(i)" class="returnstarsize" src="assets/icon/star-grey.png">
+		<img *ngIf="!goodcondition[i]" (click)="changecondition(i)" class="returnstarsize" src="assets/icon/star-grey-outline.png">
+	</div>
+
+</ion-label>
+
+	
+	<p class="goodstyle" *ngIf="agree=='yes'">{{preRatingCondtion}}</p>
+  <p class="goodstyle" *ngIf="agree=='no'">{{newRatingCondition}}</p>
+
+	<!-- <ion-row radio-group *ngIf="!agreewith" [(ngModel)]="agree">
+		<ion-col col-2>
+		</ion-col>
+		<ion-col col-2 >
+			Yes
+		</ion-col>
+  		<ion-col col-2 >
+			<ion-radio (ionSelect)="radioChecked()" color="backwhite" value="yes" [ngClass]="(active_flag==false)?'radioclass1':'radioclass'" checked="true"></ion-radio>
+		</ion-col>
+		<ion-col col-2 >
+			No
+		</ion-col>
+		<ion-col col-2 >
+			<ion-radio (ionSelect)="radioChecked()" color="backwhite"  value="no" [ngClass]="(active_flag==false)?'radioclass':'radioclass1'"></ion-radio>
+		</ion-col>
+		<ion-col col-2>
+		</ion-col>
+	</ion-row> -->
+
+	<ion-row radio-group *ngIf="!agreewith">
+
+      <ion-col col-2>
+      </ion-col>
+      <ion-col col-2 >
+        Yes
+      </ion-col>
+  
+        <ion-col col-2 >
+            <img src="{{yesStatus}}" (click)="yesChange()" id="yes" >
+        </ion-col>
+  
+      <ion-col col-2 >
+        No
+      </ion-col>
+  
+      <ion-col col-2 >
+          <img src="{{noStatus}}" id="no" (click)="noChange()" >
+      </ion-col>
+  
+      <ion-col col-2>
+      </ion-col>
+  
+		</ion-row>
+		
+	<ion-label class="commentstyle">
+		LEAVE A COMMENT BELOW
+	</ion-label>
+	<ion-textarea rows="5" type="text" [(ngModel)]="comment" class="feedbackinput" text-wrap></ion-textarea >
+
+	<ion-item class="toggleheight">
+		<ion-toggle item-left [(ngModel)]="agreewith" color="secondary" (ionChange)="toggleChange()"> </ion-toggle>
+		<p item-right class="helptext agree">BOTH PARTIES WERE UNABLE TO AGREE ON THE ITEM CONDITION</p>
+	</ion-item>
+	
+	<button ion-button block   
+	[ngClass]="{disabled : !submitBtnStatus,
+	'search-btn-valid':submitBtnStatus,
+	'search-btn-invalid':!submitBtnStatus }"  
+	(click)="submitBtnStatus && submit()"
+>Submit</button>
+
+</ion-content>

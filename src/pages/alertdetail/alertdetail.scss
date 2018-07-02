@@ -1,0 +1,316 @@
+page-alertdetail {
+  .item-md{
+    padding-left: 0;
+  }
+  .item-md [item-right], .item-md [item-end] {
+    margin: 8px;
+  } 
+  .item-md p:last-child{
+    margin-bottom: 0;
+  }
+  .label-md {
+    margin: 11px 8px 11px 0;  
+  }
+
+  .rightposition{
+    right:-1rem;
+  }
+
+  .middletext{
+    margin-top:6px
+  }
+
+  .pricestyle{
+    margin-bottom:16px;
+  }
+
+  .pricerange{
+    padding-top: 20px;
+    padding-bottom: 24px;
+  }
+
+  .radio-alertimg {
+    margin: 10px 0;
+    input[type=radio] {
+      &:checked {
+        color: #f55349;
+        & + label {
+          color: #f55349;
+          &+ span{
+            color: #f55349;
+          }
+
+        }
+      }
+    }
+  }
+  .radio-alertimg input[type=radio]:checked + label {
+    color: #f55349;
+  }
+
+  .radio-alertimg input[type=radio].testclass + label {
+    color: #f55349;
+  }
+  .radio-alertimg.grid-list{
+    float: left;
+    padding-bottom: 0;
+    border:0;
+    width: calc(43.6vw);
+    font-size: 11px;
+
+    img{
+        object-fit: cover;
+        -o-object-fit: cover;
+        opacity: .7;
+    }
+    .item-md{
+        .item-inner{
+            padding-right: 0;
+        }
+    }
+    .label-md{
+        text-transform: capitalize;
+        font-weight: 500;
+        padding:0px !important;
+        margin:0px !important;
+    }
+  }
+
+  .liststyle{
+    font-weight: bold;
+    border-top: thin solid gainsboro;
+    padding-top: 30px;
+    font-size:15px;
+    margin: 0;
+    padding-bottom:22px;
+  }
+
+  .list-ios{
+    margin: -1px 0 22px;
+    &> .item-block:first-child {
+      border:0;
+    }
+    &> .item-block:last-child {
+      border:0;
+    }
+  }
+  // .inputborder{
+  //   border-bottom: thin solid gainsboro;
+  //   color:black;
+  // }
+
+  .inputborder{
+    border: thin solid gainsboro;
+    color:black;
+    border-radius: 5px; 
+  }
+  .showbutton{
+    margin: auto;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    height: 5rem;
+    border-radius: 27px;
+    margin-bottom:40px !important;
+    background-color: #f55349;
+  }
+
+  .borderstyle{
+    font-weight: bold;
+    border-top: thin solid gainsboro;
+    width: 100%;
+    font-size: 17px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    &.datestyle{
+      display: inline-grid;
+    }
+  }
+
+  .dateimage{
+    border: 1px solid #c6c6c7;
+    height: 3.5rem;
+  }
+
+  .wardrobe {
+    z-index: 0;
+    position: relative;
+    padding:0px !important;
+    margin:0px !important;
+  }
+  .cover {
+    z-index: 1;
+    position: absolute;
+    left:23vw;
+    top: 1.8rem;
+    padding:0px !important;
+    margin:0px !important;
+    font-size: 2rem;
+    color: white;
+  }
+  ion-app.ios [padding], ion-app.ios [padding] .scroll-content {
+    padding: 0px;
+  }
+
+  
+
+  .select-ios {
+    padding: 13px 3px 7px 6px;
+    border: thin solid gainsboro;
+    min-height: 4.5rem;
+    min-width: 40vw !important;
+  }
+
+  .distancesize{
+    height:15px;
+    width:auto;
+  }
+
+  .categorytitle{
+    font-weight: bold;
+    border-bottom: thin solid gainsboro;
+    padding-bottom: 1rem;
+    font-size:15px;
+    margin: 0;
+  }
+
+  .locationicon{
+    height: 22px;
+    width: auto;
+  }
+
+  .locationimage{
+    height: 19px;
+    padding-left: 5px;
+    padding-top: 2px;
+  }
+
+  .app-content.paddingbottom{
+    margin-bottom:40px;
+  }
+
+  
+  .back-button-md{
+    margin: 0;
+    padding: 0 4px;
+    min-width: 8px;
+  }
+  .back-button-icon-md{
+    margin: 0;
+    padding: 0;
+    display: inherit;
+    min-width: 18px;
+    font-size: 28px;
+  }
+  .ion-md-arrow-back:before {
+    content: "\f3cf";
+  }
+
+
+  .item-md .radio-md {
+    margin: 8px 11px 8px 8px;
+   }
+  .radio-md .radio-icon{
+    border-color: transparent;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-style: solid;
+    border-radius: 0;
+  }
+  .radio-md .radio-checked .radio-inner {
+    left: 7px;
+    top: 4px;
+    position: absolute;
+    width: 5px;
+    height: 12px;
+    border-width: 2px;
+    border-top-width: 0;
+    border-left-width: 0;
+    border-style: solid;
+    border-radius: 0;
+    border-color: #f55349;
+    background-color: transparent;
+}
+.item-radio .label-md{
+  font-size: 1.7rem;
+
+}
+
+
+}
+.size{
+  margin:0;
+  color:white;
+  font-size:20px;
+  text-align: center;
+  &.backicon{
+    font-size:2.6rem;
+  }
+}
+.locationstyle{
+  border-bottom: 1px solid #c6c6c7;
+  margin-bottom: 35px;
+  padding-bottom: 1rem;
+}
+
+.searchbar-md .searchbar-input {
+  padding: 0 28px;
+  border-radius: 5px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #000;
+}
+.searchbar-md.searchbar-left-aligned .searchbar-input{
+  padding-left: 30px;
+}
+.searchbar-md .searchbar-search-icon {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background-repeat: no-repeat;
+  background-size: 14px;
+  opacity: 0.4;
+}
+.footer .toolbar-md {
+  min-height: 44px;
+}
+.footer .toolbar-title-md {
+  text-align: center;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+.range-md {
+  padding: 8px 16px;
+}
+.range-md .range-bar{
+  height: 1px;
+}
+.range-md .range-knob {
+  left: 7px;
+  top: 7px;
+  width: 28px;
+  height: 28px;
+  background: red !important;  
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.13), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.13), 0 0 0 1px rgba(0, 0, 0, 0.02);
+}
+.range-md .range-knob-min.range-knob-min .range-knob{
+  border:none;
+}
+.range-md [range-left] {
+  margin: 0 20px 0 0;
+}
+.range-md [range-right] {
+  margin: 0 0 0 20px;
+}
+.item-md.item-input.item-input-has-focus .item-inner, .item-md.item-input.input-has-focus .item-inner{
+box-shadow: none;
+-webkit-box-shadow:none;  
+}

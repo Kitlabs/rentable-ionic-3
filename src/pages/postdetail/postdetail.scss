@@ -1,0 +1,113 @@
+page-postdetail {
+
+  .centeralign{
+  	text-align:center;
+    font-size: 21px;
+    font-weight: 600;
+  }
+  
+  .posttitle-inactive {
+    color: gray;
+    padding-top: 3px;
+  }
+  .item-md{
+    padding:0;
+  }
+  .label-md,
+    .label-ios{
+  	margin:0px;
+  }
+  .item-md p:last-child{
+     margin: 8px 8px 0;
+  }
+  .graycolor{
+  	color:gray;
+    margin-top: 10px;
+  }
+
+  .graycolor {
+    color: gray;
+  }
+
+  textarea.text-input {
+    display: block;
+    font-size: 0.7em;
+}
+
+
+  .helpstr{
+    font-size: 1.1rem;
+    color:gray;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
+  .titleimage{
+  	height: 15vw;
+    width:100%;
+  }
+
+  .radio-postimg {
+    margin: 10px 0;
+    input[type=radio] {
+      &:checked {
+        color: #f55349;
+        & + label {
+          color: #f55349;
+
+        }
+      }
+    }
+  }
+
+
+
+  .radio-postimg.grid-list{
+    float: left;
+    padding-bottom: 0;
+    width: calc(44.9vw);
+    font-size: 12px;
+    img{
+        object-fit: cover;
+        -o-object-fit: cover;
+        opacity: .7;
+    }
+    .item-md{
+        .item-inner{
+            padding-right: 0;
+        }
+    }
+    .label-md{
+        text-transform: capitalize;
+        font-weight: 500;
+        padding:0px !important;
+        margin:0px !important;
+    }
+  }
+
+  .detailstyle{
+    font-size: 2rem;
+    margin-bottom:10rem;
+  }
+
+  .detailabelstyle{
+    height:90px;
+  }
+
+  .card-ios {
+    margin: 0 0 25px 0;;
+    border-radius: 0px;
+    font-size: 1.4rem;
+    background: white;
+    box-shadow: 0 0 0;
+    width: calc(50%);
+	}
+	//radio category
+}
+.conditionstar{
+  color:red;
+  display: inline-block;
+  font-size:2rem;
+  text-align: left;
+  margin-left:0.1px;
+}

@@ -1,0 +1,82 @@
+<ion-content class="appcontent">
+
+ <!--  <div class="Landingpagee"> -->
+    
+    <div class="formContainerr">
+
+      <form  class="landingformm" [formGroup]="forgetForm">    
+        <ion-list >
+			  <ion-item>
+			    <ion-label floating class="helpstring">Code</ion-label>
+			    <ion-input 
+			    class="inputstyle"
+			    type="number"
+			    pattern="[0-9]*"
+			    formControlName="code"></ion-input>
+			  </ion-item>
+
+			  <ion-item  *ngIf="code.hasError('required') && code.touched">`
+			  	<p>*Code required</p>
+			  </ion-item>
+
+			  <ion-item class="error-message"*ngIf="forgetForm.controls['code'].hasError('minlength') && forgetForm.controls['code'].touched">
+        		<p> *Code length is 4</p>
+      		  </ion-item>
+
+      		  <ion-item class="error-message"*ngIf="forgetForm.controls['code'].hasError('maxlength') && forgetForm.controls['code'].touched">
+        		<p> *Code length is 4</p>
+      		  </ion-item>
+
+			  <ion-item>
+			    <ion-label floating class="helpstring">New Password</ion-label>
+			    <ion-input
+			    class="inputstyle" 
+			    type="password"
+			    formControlName="newpass"></ion-input>
+			  </ion-item>
+
+			 <!--  <ion-item class="error-message" *ngIf="registerForm.controls['email'].hasError('pattern')  && 	registerForm.controls['email'].touched">
+        		<p>Please enter a valid email.</p>
+		      </ion-item> -->
+ 			<ion-item class="error-message" *ngIf="forgetForm.controls['newpass'].hasError('minlength') && forgetForm.controls['newpass'].touched">
+        		<p> *Password must be 6 to 20 characters</p>
+      		  </ion-item>
+
+			<ion-item class="error-message" *ngIf="forgetForm.controls['newpass'].hasError('maxlength') && forgetForm.controls['newpass'].touched">
+        		<p> *Password must be 6 to 20 characters</p>
+      		</ion-item>
+		     
+		      <ion-item *ngIf="forgetForm.controls['newpass'].hasError('pattern') && 
+		      forgetForm.controls['newpass'].touched ">
+		      	<p class="error-message">*Required  atleast one letter and one number </p>
+		      	<p>{{forgetForm.controls['newpass'].hasError('pattern')}}</p>
+		      </ion-item>
+ 			 
+
+
+			  <ion-item>
+			    <ion-label floating class="helpstring">Confirm Password</ion-label>
+			    <ion-input 
+			    class="inputstyle"
+			    type="password"
+			    formControlName="conpass"></ion-input>
+			  </ion-item>
+			
+			<ion-item  *ngIf="forgetForm.controls['conpass'].touched && 
+			forgetForm.hasError('mismatchedPasswords') && forgetForm.controls['newpass'].valid">
+        		<p class="error-message">Passwords do not match</p>
+      		</ion-item>
+			   
+
+
+		</ion-list>
+       <button ion-button 
+	       id="button" 
+	       class="submit-btn" 
+	       [disabled]="!forgetForm.valid"
+	       (click)="forgetPassword()">Submit</button>
+      </form>
+
+    </div>
+ <!--  </div> -->
+</ion-content>

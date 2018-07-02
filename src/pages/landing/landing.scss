@@ -1,0 +1,253 @@
+.Landingpage{
+  
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align:center;
+  top: 0;
+  left: 0;
+  .formContainer{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    .button-md{
+      margin:auto;
+      display:block;
+    }
+    &.landingform{
+      &>button:disabled{
+        background-color:gray;
+        color:black;
+      }
+    }
+  }
+  .grayborder.width{
+    max-width:15vw !important;
+  }
+  .grayborder.widthh{
+    max-width:15vw !important;
+  }
+
+  .list-md {
+    margin: -1px 0 32px;
+}
+
+.list-md .item-input.item-input-has-focus:last-child,
+.list-md .item-input.input-has-focus:last-child {
+  border:none;
+  -webkit-box-shadow: inset 0 0 0 0 #03a9f4;
+  box-shadow: inset 0 0 0 0 #03a9f4;
+}
+.button-md{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.button-md {
+  border-radius: 4px;
+  height: 2.8em;
+  font-size: 1.6rem;
+  color: #fff;
+  background-color: #f55349;
+  margin: 0.4rem 0.2rem;
+  padding: 0 1em;
+}
+.grayborderr {
+    float: left;
+    background: transparent;
+    padding: 0 0;
+}
+
+.continubutton{
+  border-radius: 25px;
+  background-color: #03a9f4;
+  color: white;
+  width: 100%;
+  margin: auto;
+  display: block;
+  height: 5rem;
+  font-size: 2rem;
+}
+}
+.item-md{
+  background-color: transparent;
+}
+.grayborderr {
+  float: left;
+  background: transparent;
+  padding: 0 0;
+}
+
+.apptitle{
+  text-align:center;
+  margin-top:25vh;
+  color:white;
+  font-size:5rem;
+  display:inline-block;
+  border-bottom:solid #009edd;
+}
+
+.inputstyle{
+  color:white;
+  border-bottom:thin solid gray;
+  font-size: 21px
+}
+
+.helpstring{
+  font-size:1.3rem;
+  color:gray;
+  text-align: left;
+}
+
+.phoncode{
+  border-bottom: thin solid gray;
+  color: white;
+  font-size: 21px;
+}
+
+.grayborder{
+  margin: 0 20px 0 0;
+  border-bottom: thin solid gray;
+  color: white;
+  font-size: 21px;
+}
+
+.continubutton{
+  border-radius: 25px;
+  background-color: #03a9f4;
+  color: white;
+  width: 100%;
+  margin: auto;
+  display: block;
+  height: 5rem;
+  font-size: 2rem;
+}
+
+.appcontent{
+  background-image: url(../assets/icon/bg.png);
+  background-size: 100% 100%;
+}
+
+.graycolor{
+    color:gray;
+}
+
+.LandingFooter{
+  align-self: flex-end;
+  min-width: 100%;
+  flex: 1;
+  display: flex;
+}
+
+.landingform {
+  width: 80%;
+  margin: 6vh auto;
+  padding: 5px;
+}
+
+/* .app-form{
+  max-width: calc(100% - 32px);
+  width: calc(100% - 32px);
+  text-align:center;
+  flex: 1;
+   h4{
+      font-size: 1.2rem;
+  }
+  .item-md{
+    background-color: transparent;
+    margin-bottom: 10px;
+    ion-icon{
+      font-size: 2.2rem;
+      min-height: 2.2rem;
+      &[item-left]{
+        margin: 20px 15px 0 0;
+        + .item-inner{
+            margin-left: 0;
+        }
+      }
+    }
+    &.item-input.input-has-focus{
+      .item-inner{
+        border-bottom: .55px solid color($colors , secondary);
+        box-shadow: inset 0 -1px 0 color($colors , secondary);
+      }
+    }
+  }
+  .list-md{
+    .item-input{
+      &:last-child{
+        padding-left: 0;
+        width: auto;
+        border-bottom: none !important;
+      }
+      &.input-has-focus{
+        &:last-child{
+          box-shadow: none;
+          border: none;
+        }
+      }
+    }
+    .item-block{
+      .item-inner{
+        border-bottom: 0.55px solid color($colors , secondary);
+      }
+    }
+  }
+  .item-block:first-child{
+      border-top: 0;
+  }
+  .text-input-md{
+    margin-bottom: 0px;
+    margin-left: 0px;
+    color: white;
+  }
+  input::-webkit-input-placeholder {
+    color: rgba(255,255,255,.7);
+    font-size: 1.4rem;
+  }
+  input:-moz-placeholder {
+    color: rgba(255,255,255,.7);
+    font-size: 1.4rem;
+  }
+  .button-md{
+    margin: 4rem .2rem 3rem .2rem;
+    text-align:center;
+  }
+} */
+
+.option-sign{
+  color: white;
+  margin: 0 auto;
+  p{
+      color: rgba(255,255,255,.7);
+      margin-bottom: 10px;
+  }
+  ion-grid{
+      width: 160px;
+      margin: 0 auto;
+      color: white;
+      font-size: 25px;
+  }
+}
+
+
+
+.md .ion-page.show-page ~ .nav-decor{  
+  left: 0;
+  top: 0;
+  position: absolute;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  pointer-events: none;        
+}
+.text-input-md {
+  margin: 11px 8px 11px 0;
+  padding: 0;
+  width: calc(100% - 8px);
+}
+

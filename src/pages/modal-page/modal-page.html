@@ -1,0 +1,48 @@
+<ion-header >
+    <ion-navbar class="profileheader" color="navbarcolor">
+      <ion-row >
+        <ion-col col-1>
+            <ion-icon class="whiteicon" (click)="goPrevious()" name="ios-arrow-back-outline"></ion-icon>
+        </ion-col>
+        <ion-col col-10 style="text-align: center;">
+          <h4 class="size">FILTER</h4>
+        </ion-col>
+        <ion-col col-1 >
+        </ion-col>
+      </ion-row>
+    </ion-navbar>
+  </ion-header>
+<ion-content class="map-content">
+
+   <!-- <ion-searchbar #searchbar placeholder="Select Location" class="search-place" ></ion-searchbar> -->
+ 
+    <!-- <div #map id="map" data-tap-disabled="true">
+    
+  </div> -->
+
+  <ion-searchbar 
+    [(ngModel)]="autocomplete.query"
+    (ionInput)="updateSearch()" 
+    (ionCancel)="dismiss()"
+    placeholder="{{strSelectedPlace}}"
+    class="search-place">
+  </ion-searchbar>
+
+  <ion-list id="place-list" *ngIf="plResultStatus">
+    <ion-item *ngFor="let item of autocompleteItems" 
+      (click)="chooseItem(item.description)">
+      {{ item.description }}
+    </ion-item>
+  </ion-list>
+
+  <div #map id="map" data-tap-disabled="true">
+  </div>
+
+  <button ion-button class="btn-save-location" (click)="dismiss()">SAVE LOCATION</button>
+</ion-content>
+
+<!-- <ion-footer (click)="dismiss()"  class="btn-save-location">
+  <ion-toolbar class="footer">
+    <ion-title >SAVE LOCATION</ion-title>
+  </ion-toolbar>
+</ion-footer> -->

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "637150074544",
+    "firebase_url": "https://rental-335fb.firebaseio.com",
+    "project_id": "rental-335fb",
+    "storage_bucket": "rental-335fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637150074544:android:99c58e27f85b6295",
+        "android_client_info": {
+          "package_name": "com.patrick.rental2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637150074544-fe48up6cdatlctl19o2diph1149qfef0.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "637150074544-fe48up6cdatlctl19o2diph1149qfef0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjxVTgMM54yoEIE8NSiV8vsNBsiZAi7Rk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,77 @@
+
+<ion-content padding>
+
+  <ion-list class="filter-modal">
+
+    <h4 text-capitalize no-margin>price</h4>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item color="none" no-padding>
+            <ion-select>
+              <ion-option value="Min" [selected]="true">Min</ion-option>
+              <ion-option value="1000">1000</ion-option>
+              <ion-option value="2000">2000</ion-option>
+              <ion-option value="2500">2500</ion-option>
+              <ion-option value="3000">3000</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item color="none" no-padding>
+            <ion-select>
+              <ion-option value="Max" [selected]="true">Max</ion-option>
+              <ion-option value="4000">4000</ion-option>
+              <ion-option value="4500">4500</ion-option>
+              <ion-option value="5000">5000</ion-option>
+              <ion-option value="5500">5500</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h4 text-capitalize no-margin>Baths</h4>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item color="none" no-padding>
+            <ion-select>
+              <ion-option value="0" [selected]="true">0+</ion-option>
+              <ion-option value="1">1</ion-option>
+              <ion-option value="2">2</ion-option>
+              <ion-option value="3">3</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h4 text-capitalize no-margin>Lot Size</h4>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item color="none" no-padding>
+            <ion-select>
+              <ion-option value="Any" [selected]="true">Any</ion-option>
+              <ion-option value="50">30 * 50</ion-option>
+              <ion-option value="70">30 * 70</ion-option>
+              <ion-option value="80">30 * 80</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h4 text-capitalize no-margin>Keywords</h4>
+    <ion-item class="Keyword-item">
+      <ion-textarea rows="1"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-fab (click)="dismiss()" right bottom>
+    <button ion-fab mini><ion-icon name="md-checkmark"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

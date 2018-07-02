@@ -1,0 +1,48 @@
+
+<ion-header>
+
+  <ion-navbar color="navbarcolor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-capitalize>setting</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="app-content">
+  <div class="setting-list content-bg" padding>
+
+      <ion-list class="check-list" no-margin>
+        <ion-list-header color="none" no-padding no-margin>
+          Mobile Alerts
+        </ion-list-header>
+        <ion-item color="none" no-padding>
+          <ion-label>
+            Saved search update
+            <p color="graytext">A new home matches saved searches</p>
+          </ion-label>
+          <ion-checkbox checked="true" item-right></ion-checkbox>
+        </ion-item>
+
+        <ion-item color="none" no-padding>
+          <ion-label>
+            Saved home update
+            <p color="graytext">A home changes price or status</p>
+          </ion-label>
+          <ion-checkbox checked="true" item-right></ion-checkbox>
+        </ion-item>
+      </ion-list>
+
+      <ion-list no-margin>
+        <ion-list-header color="none" no-padding no-margin>
+          Info
+        </ion-list-header>
+        <ion-item color="none" no-padding>Help</ion-item>
+        <ion-item color="none" [navPush]="about" no-padding>About</ion-item>
+        <ion-item color="none" no-padding>Privacy Policy</ion-item>
+      </ion-list>
+
+  </div>
+</ion-content>

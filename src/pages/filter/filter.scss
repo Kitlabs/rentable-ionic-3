@@ -1,0 +1,49 @@
+page-filter {
+    height: 300px !important;
+    bottom: 0 !important;
+    top: auto !important;
+    .content-md{
+        background: color($colors , primary);
+    }
+}
+
+.filter-modal{
+    .item-block{
+        min-height: 1.5rem;
+    }
+    .item-md{
+        padding-right: 15px !important;
+    }
+    .label-md{
+        color: color($colors , light);;
+        margin-bottom: 3px;
+    }
+    .select-md{
+        max-width: 100%;
+        width: 100%;
+        padding: 13px 5px 3px 0;
+        .select-icon{
+            .select-icon-inner{
+                color: color($colors , light);
+            }
+        }
+    }
+    .grid , [col-6]{
+        padding: 0 5px 10px 0;
+    }
+    h4{
+        font-size: 1.5rem;
+    }
+
+
+}
+
+.Keyword-item{
+    background: none;
+    padding-left: 0;
+    .text-input-md{
+        margin: 0 20px 0 5px;
+        color: white;
+        width: calc(100% - 25px);
+    }
+}

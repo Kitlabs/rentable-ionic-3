@@ -1,0 +1,28 @@
+page-contact {
+
+    .root_div {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+    
+    .child_title {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .child_des {
+        text-align: center;
+    }
+
+    .link {
+        text-align: center;
+        text-decoration: underline;
+        color: #0B6CDA;
+    }
+    .msg_icon {
+        height: 70px;
+        width: 70px;
+        display: table;
+        margin: auto;
+    }
+}

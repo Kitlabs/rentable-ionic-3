@@ -1,0 +1,29 @@
+page-feedback {
+	img{
+		margin: 10px 7px;
+  }	
+  .back-button-md{
+		margin: 0;
+		padding: 0 4px;
+		min-width: 8px;
+  }
+  .back-button-icon-md{
+    padding:0;
+    margin: 0;
+    display: inherit;
+    min-width: 18px;
+    font-size: 28px;
+}
+  
+  .ion-md-arrow-back:before {
+    content: "\f3cf";
+  }
+}
+
+.feedbackinput{
+  border: thin solid gainsboro;
+  margin-bottom: 3rem;
+  height: 23vh;
+  font-size: 15px;
+  text-align:left;
+}

@@ -1,0 +1,35 @@
+
+<ion-list class="filterDialog contact-popup list-margin">
+  <form  class="signupform inputnumber" [formGroup]="formgroup">
+    <ion-list >
+      <p class="helpstring">ENTER YOUR VERIFICATION CODE</p>
+      <ion-item>
+        <ion-input 
+        id="code"
+        type="number" 
+        class="inputstyle"
+        pattern="[0-9]*" 
+        formControlName="digitcode"
+        (ionChange)='numberfill()' 
+        ></ion-input>
+      </ion-item>
+      <ion-item *ngIf="digitcode.hasError('required') && digitcode.touched">
+        <p> *Codes should be numbers only</p>
+      </ion-item>
+      
+      <ion-item *ngIf="formgroup.controls['digitcode'].hasError('minlength') && formgroup.controls['digitcode'].touched">
+        <p> *Minimum code length is 4</p>
+      </ion-item>
+
+       <ion-item *ngIf="formgroup.controls['digitcode'].hasError('maxlength') && formgroup.controls['digitcode'].touched">
+        <p> *Maximum code length is 4</p>
+      </ion-item>
+      
+    </ion-list>
+    <button ion-button class="signupbutton" style="width: 100%;" (click)="closeModel()" [disabled]="!formgroup.valid">UPDATE</button>
+    <ion-icon name="close" class="close" (click)="close()"></ion-icon>
+  </form>
+
+</ion-list>
+
+

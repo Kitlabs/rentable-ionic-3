@@ -1,0 +1,38 @@
+
+<ion-header>
+
+  <ion-navbar color="navbarcolor">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-capitalize>Apartment</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list class="app-list" no-margin>
+    <ion-item *ngFor="let item of list" [navPush]="details" no-lines no-padding>
+      <h2 color="darken" class="bold">{{item.title}}</h2>
+      <div class="stars">
+        <ion-icon name="md-star"></ion-icon>
+        <ion-icon name="md-star"></ion-icon>
+        <ion-icon name="md-star"></ion-icon>
+        <ion-icon name="md-star"></ion-icon>
+        <ion-icon name="md-star-half"></ion-icon>
+        <p color="dark">4.6</p>
+      </div>
+      <p>Paradeplein, 2018 Antwerp, Belgium</p>
+      <p class="price" color="darken"> <span color="primary" class="bold">$3,100</span> per month</p>
+      <ion-thumbnail no-margin item-right>
+        <img src="{{item.img}}">
+      </ion-thumbnail>
+    </ion-item>
+  </ion-list>
+
+<ion-fab (click)="presentFilterModal()" right bottom>
+  <button ion-fab mini><ion-icon name="ios-funnel"></ion-icon></button>
+</ion-fab>
+</ion-content>

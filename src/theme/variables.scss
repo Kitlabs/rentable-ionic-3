@@ -1,0 +1,154 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+// Font path is used to include ionicons,
+// roboto, and noto sans fonts
+$font-path: "../assets/fonts";
+
+
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: ltr;
+
+%main-bg{
+  background-image: url(../assets/img/bg-head.png);
+}
+
+%cover{
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
+%box-shadow{
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+%overflow{
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+}
+
+@import "ionic.globals";
+
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+
+
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:      #f55349,
+  graytext:     #757575,
+  graylight:    #bdbdbd,
+  dark:         #2e343e,
+  darken:       #000,
+  navbarcolor:  #002b42,
+  backwhite:    #ffffff,
+  secondary:    #03a9f4,
+  lightprimary: #ffc107,
+  danger:       #f53d3d,
+  light:        #fbf8fc,
+  none:         transparent,
+  element:      #f55349
+);
+
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+
+
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+$background-color: color($colors , light);
+
+$button-md-height: 3.4rem;
+$button-md-text-transform: capitalize;
+$button-md-font-size: 1.7rem;
+$button-md-font-weight: normal;
+
+$text-input-md-highlight-color: color($colors , secondary);
+
+$toolbar-md-title-font-size: 1.7rem;
+
+$searchbar-md-input-background-color: transparent;
+$searchbar-md-input-border-radius: 0px;
+$searchbar-md-input-box-shadow: none;
+$searchbar-md-input-search-icon-color: #002b42;
+$searchbar-md-input-placeholder-color: #002b42;
+$searchbar-md-input-text-color: #002b42;
+$searchbar-md-input-search-icon-size: 22px;
+$searchbar-md-input-clear-icon-color: color($colors , light);
+
+$fab-md-background-color: color($colors , secondary);
+$fab-mini-size: 50px;
+
+$card-md-border-radius: 0px;
+$card-md-margin-bottom: 0px;
+$card-md-margin-left: 0px;
+$card-md-margin-right: 0px;
+$card-md-margin-top: 0px;
+
+$item-md-thumbnail-size: 110px;
+
+$datetime-md-placeholder-color: #000;
+
+//toast background color
+$toast-md-background: rgb(3, 169, 244);;
+$toast-ios-background: rgb(3, 169, 244);;
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css);

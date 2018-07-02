@@ -1,0 +1,83 @@
+<ion-header >
+  <ion-toolbar  no-padding  >
+    <ion-row class="profileheader">
+      <ion-col  col-1 class="icon-col">
+        <img src="assets/icon/avatar.png" style="margin-top: 10px;" [navPush]="profile">
+      </ion-col>
+      <ion-col class="icon-col" col-10>
+      <ion-searchbar class="searchbar" placeholder="Find items near you" (ionInput)="filterItems($event)"></ion-searchbar>
+      </ion-col>
+      <ion-col class="icon-col" col-1>
+        <img src="assets/icon/filter.png" style="margin-top: 10px;"  (click)="goToFilter()">
+       </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding class="app-content">
+ 
+  <ion-scroll  scrollX="true" class="categorystyle">
+    <ion-segment [(ngModel)]="timeline" style="justify-content: left;">
+      
+      <!-- category -->
+      <ion-segment-button  *ngIf="catNameStatus" (click)="removeFilter(0)"  value="category">
+        <img  src="{{catImage}}" class="categoryimg">
+        <!-- <ion-icon name="md-close" class="deleteicon"></ion-icon> -->
+        <p class="categoryfont">{{catName}}</p>
+      </ion-segment-button>
+
+      <!-- location -->
+      <ion-segment-button *ngIf="locationStatus" value="location" (click)="removeFilter(1)" style="justify-content: left;">
+        <img  src="assets/icon/location_filter.png" class="categoryimg">
+        <!-- <ion-icon name="md-close" class="deleteicon-new"></ion-icon> -->
+        <p class="categoryfont">{{location}}</p>
+      </ion-segment-button> 
+
+      <!-- distance -->
+      <ion-segment-button  *ngIf="distanceStatus" value="distance" (click)="removeFilter(2)" style="justify-content: left;">
+        <img  src="assets/icon/car_filter.png" class="categoryimg">
+        <!-- <ion-icon name="md-close" class="deleteicon-new"></ion-icon> -->
+        <p class="categoryfont">{{distance}} km</p>
+      </ion-segment-button> 
+
+      <!-- price -->
+      <ion-segment-button *ngIf="priceStatus" value="price" (click)="removeFilter(3)" style="justify-content: left;">
+        <img  src="assets/icon/price_filter.png" class="categoryimg">
+        <!-- <ion-icon name="md-close" class="deleteicon-new"></ion-icon> -->
+        <p class="categoryfont"> {{fromToPrice}} </p>
+      </ion-segment-button> 
+
+      <!-- posted within -->  
+      <ion-segment-button *ngIf="postedWithinStatus" value="postedWithin" (click)="removeFilter(4)" style="justify-content: left;">
+        <img  src="assets/icon/distance_filter.png" class="categoryimg">
+        <!-- <ion-icon name="md-close" class="deleteicon-new"></ion-icon> -->
+        <p class="categoryfont"> {{postedWithin}}</p>
+      </ion-segment-button> 
+      
+      <!-- sort by -->
+      <ion-segment-button *ngIf="sortedByStatus" value="sortedBy" (click)="removeFilter(5)" style="justify-content: left;">
+        <img  src="assets/icon/distance_filter.png" class="categoryimg">
+        <!-- <ion-icon name="md-close" class="deleteicon-new"></ion-icon> -->
+        <p class="categoryfont"> {{sortedBy}}</p>
+      </ion-segment-button> 
+      
+    </ion-segment>
+
+  </ion-scroll>
+
+   <!-- Products -->
+   <ion-card class=" animated fadeIn grid-list backcolor" *ngFor="let item of itemlist; let i=index">
+      <div class="image-item" no-lines> 
+        <img (click)="godetails(item.id)" class="wardrobe" src="{{item.base_path}}{{item.image_single}}" />
+        <ion-label class="cover_1" >${{item.dailyrentalPrice}}</ion-label>
+        
+        <img *ngIf="!like[item.id]" class="cover_image animated bounceIn" (click)="ActiveFavourite(item.id)" src="assets/icon/like.png">
+        <img *ngIf="like[item.id]" class="cover_image animated bounceIn" (click)="DeactiveFavourite(item.id)" src="assets/icon/like-full.png">
+  
+       <!--  <img *ngIf="item.favourites=='0'" class="cover_image" (click)="ActiveFavourite(item.id)" src="assets/icon/like.png" >
+        <img *ngIf="item.favourites=='1'" class="cover_image" (click)="DeactiveFavourite(item.id)" src="assets/icon/like-full.png"> -->
+     
+      </div>
+    </ion-card>
+
+</ion-content>
