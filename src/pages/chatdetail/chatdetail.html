@@ -60,7 +60,7 @@
 
           <div *ngFor="let msg of messages" >
         
-           <div   [class]="msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'" 
+           <div [class]="msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'" 
            *ngIf="msg.type == 'normal'" >
             <!-- normal-->
               <div class="msg-detail" text-wrap>

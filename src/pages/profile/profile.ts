@@ -1,5 +1,5 @@
 import { Component , Directive ,ViewChild } from '@angular/core';
-import { Nav, NavController, NavParams,LoadingController } from 'ionic-angular';
+import { Nav, NavController, NavParams,LoadingController,Platform } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -15,6 +15,7 @@ import { Storage } from '@ionic/storage';
 import { TabPage } from '../tab/tab'
 import { TcPage } from '../tc/tc';
 import { ContactPage } from '../contact/contact';
+import { AppRate } from '@ionic-native/app-rate';
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html'
@@ -46,7 +47,9 @@ export class Profile {
    public afAuth: AngularFireAuth,
    public authprovier: AuthenticateProvider,
    public loadingCtrl:LoadingController,
-   public storage:Storage
+   public storage:Storage,
+   public plt: Platform,
+   private appRate: AppRate
   ) {
     console.log("it is constructor");
     this.profile ={
@@ -123,4 +126,26 @@ export class Profile {
 
   }
 
+  RateApp(){
+   if(this.plt.is('cordova')){
+    if(this.plt.is('android')){
+      this.appRate.preferences = {
+        storeAppURL: {
+         android: 'market://details?id=com.patrick.rental2',
+        }
+      };
+    }else{
+      this.appRate.preferences = {
+        storeAppURL: {
+         ios: '123456',
+        }
+      };
+    }
+    if(this.appRate.preferences != null){
+      this.appRate.promptForRating(true);
+    }
+    
+   }
+   
+  }
 }

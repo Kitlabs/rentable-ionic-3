@@ -192,7 +192,7 @@ export class DetailsRentPage {
   Function to get item details 
   */
   getItemDetails(){
-
+    console.log('rahul');
     this.loading=this.loadingCtrl.create({
         spinner:'bubbles',
         content:`Please wait..`
@@ -248,8 +248,6 @@ export class DetailsRentPage {
          this.hideOrShowOptionBasedOnItemStatus(this.pStatus);
         //from and to date
         var fromDateStr = this.navParams.get("fromDate");
-     
-
         var toDateStr = this.navParams.get("toDate");
         var fromDateRes = fromDateStr.split("-");
         var toDateRes = toDateStr.split("-");
@@ -280,6 +278,7 @@ export class DetailsRentPage {
    * Function to cancellation period, if user cance within 48 hours then there will be a cancellation fee
    */
   checkCancelOption(fromDatee){
+    console.log('FromDatee--->'+fromDatee);
     this.todayDate = new Date();
     var dd = this.todayDate.getDate();
     var mm = this.todayDate.getMonth()+1; //January is 0!
@@ -482,7 +481,6 @@ export class DetailsRentPage {
   	
   goToCancelScreen(){
     console.log("Go to cancel screen");
-    
     if(this.chargeCancelFeeStatus){
       //we need to charge cancellation fee from user
       this.presentCancelRequestPrompt("There will be a 1 day fee for the cancellation",0);
@@ -491,8 +489,6 @@ export class DetailsRentPage {
       this.presentCancelRequestPrompt("Are you sure you want to cancel the rental request",1);
     }
 
-    
-    
     // if(this.pStatus== "Rented"){
     //   this.presentCancelRequestPrompt("There will be a 1 day fee for the cancellation");
     // }else{

@@ -46,7 +46,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { TooltipsModule } from 'ionic-tooltips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-
+import { AppRate } from '@ionic-native/app-rate';
 import { Badge } from '@ionic-native/badge';
 const firebaseConfig = {
   apiKey: "AIzaSyDfySkoXoUcI9Ed39TNJwXnntSg8nKyt10",
@@ -61,7 +61,6 @@ var APP_Pages = [];
   for(let i in allPages){
     APP_Pages.push(allPages[i]);
   }
-
 @NgModule({
   declarations: [
     MyApp,
@@ -135,7 +134,8 @@ var APP_Pages = [];
     Stripe,
     AngularFireDatabase,
    LocalNotifications,
-    Badge
+    Badge,
+    AppRate
   ]
 })
 export class AppModule {}

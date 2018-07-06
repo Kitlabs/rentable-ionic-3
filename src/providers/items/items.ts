@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AppSetting } from '../api_route';
-
 /*
+
   Generated class for the ItemsProvider provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
@@ -194,8 +194,8 @@ export class ItemsProvider {
   /*
    Method to delete post by owner of item
   */
+ 
   public deleteItemById(postId){
-
     let body={
       action:'deleteByItemId',
       id:postId
@@ -242,7 +242,6 @@ export class ItemsProvider {
   Method to get all item by search
   */
   public getItemsBySearch(searchTag,uid,selectedCategory){
-
     let body={
       action:'ItemByName',
       userId:uid,

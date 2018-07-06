@@ -396,7 +396,7 @@ export class Details implements OnInit {
           // //product owner id
           this.productOwnerId=this.Product.user_details.id
           //security deposit text
-          this.securityDepositText="Security deposit for this items is :$"+this.Product.securityDeposit;
+          this.securityDepositText="Security deposit for this item is :$"+this.Product.securityDeposit;
           this.securityDepositText2=" DON'T WORRY, your money won't be touched unless the owner makes a claim, in case there's a problem when the item is returned. But you will be asked for confirmation first"
           if(this.productDailyRentalPrice[1]=="00"){
            this.dailyPrice=this.productDailyRentalPrice[0];

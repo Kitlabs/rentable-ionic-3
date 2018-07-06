@@ -76,8 +76,10 @@ export class ChatdetailPage {
 
     this.chatprovider.getChatRef(this.uid, this.reqUserId,this.itemId)
     .then((chatRef:any)=>{
+
       console.log(chatRef);
       this.chatRef=chatRef;
+      
       this.chats = this.af.list(chatRef).subscribe( data => {
         this.messages = data;
         console.log(data);

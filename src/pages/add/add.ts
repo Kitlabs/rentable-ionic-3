@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+ 
+ import { Component } from '@angular/core';
 import { NavController, NavParams,AlertController,App,LoadingController  } from 'ionic-angular';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { PostdetailPage } from '../postdetail/postdetail';

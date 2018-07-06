@@ -265,7 +265,6 @@ export class ChatPage {
   }
 
   goToAcceptRejectPage(requesterId,requestedItemId){
-
     // this.navCtrl.push(RentPage,{
     //   requesterId:requesterId,
     //   requestedItemId:requestedItemId
