@@ -5,7 +5,12 @@ page-postdetail {
     font-size: 21px;
     font-weight: 600;
   }
-  
+   .active{
+    color: #f55349;
+  }
+  .deactive{
+    color: #000;
+  }
   .posttitle-inactive {
     color: gray;
     padding-top: 3px;
@@ -49,17 +54,18 @@ page-postdetail {
 
   .radio-postimg {
     margin: 10px 0;
-    input[type=radio] {
-      &:checked {
-        color: #f55349;
-        & + label {
-          color: #f55349;
+    // input[type=radio] {
+    //   &:checked {
+    //     color: #f55349;
+    //     & + label {
+    //       color: #f55349;
 
-        }
-      }
-    }
+    //     }
+    //   }
+    // }
   }
 
+  
 
 
   .radio-postimg.grid-list{
@@ -102,7 +108,13 @@ page-postdetail {
     box-shadow: 0 0 0;
     width: calc(50%);
 	}
-	//radio category
+  //radio category
+  .active{
+    color: #f55349;
+  }
+  .deactive{
+    color: #000;
+  }
 }
 .conditionstar{
   color:red;

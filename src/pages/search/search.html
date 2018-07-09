@@ -60,13 +60,15 @@
     </ion-label>
     
     <div style="display: flow-root;">
-      <div  class="radio-img grid-list" *ngFor="let item of categorylist"  >
+      <div  class="radio-img grid-list" *ngFor="let item of categorylist;let i=index;">
         <input type="radio" name="radio-group" id="{{item.radionumber}}" class="input-hidden" />
-        <label  for="{{item.radionumber}}" (click)="myFunction($event)" >
-          <img class="categoryimage" id="{{item.value}}" src="{{item.inactive_img}}">
+
+        <label  for="{{item.radionumber}}" (click)="myFunction($event)" class="{{item.class}}">
+          <img class="categoryimage" id="{{item.value}}" src="{{item.tempimage}}">
           <span class="categoryname" id="{{item.title}}">{{item.title}}</span>
         </label>
       </div>
+      
     </div>
   </ion-row>
 

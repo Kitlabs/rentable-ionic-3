@@ -73,16 +73,16 @@ export class SearchPage implements OnInit {
     public storage:Storage) {
   	this.categorylist = [
       // {active_img: 'assets/icon/cat-nearyou-red.png', title: 'Nearby', inactive_img: 'assets/icon/cat-nearyou-grey.png', value:'nearby',radionumber:'radio1'},
-      {active_img: 'assets/icon/cat-electronics-red.png', title: 'Electronics', inactive_img: 'assets/icon/cat-electronics-grey.png', value:'electronics',radionumber:'radio2'},
-      {active_img: 'assets/icon/cat-cars-red.png', title: 'Cars and motors', inactive_img: 'assets/icon/cat-cars-grey.png', value:'cars',radionumber:'radio3'},
-      {active_img: 'assets/icon/cat-sports-red.png', title: 'Sports and leisure', inactive_img: 'assets/icon/cat-sports-grey.png', value:'sports',radionumber:'radio4'},
-      {active_img: 'assets/icon/cat-home-red.png', title: 'Home and garden', inactive_img: 'assets/icon/cat-home-grey.png', value:'home',radionumber:'radio5'},
-      {active_img: 'assets/icon/cat-movies-red.png', title: 'Movies and music', inactive_img: 'assets/icon/cat-movies-grey.png', value:'movies',radionumber:'radio6'},
-      {active_img: 'assets/icon/cat-fashion-red.png', title: 'Fashion and accessories', inactive_img: 'assets/icon/cat-fashion-grey.png', value:'fashion',radionumber:'radio7'},
-      {active_img: 'assets/icon/cat-baby-red.png', title: 'Baby and child', inactive_img: 'assets/icon/cat-baby-grey.png', value:'baby',radionumber:'radio8'},
-      {active_img: 'assets/icon/cat-tools-red.png', title: 'Tools and machines', inactive_img: 'assets/icon/cat-tools-grey.png', value:'tools',radionumber:'radio9'},
-      {active_img: 'assets/icon/cat-party-red.png', title: 'Party and Events', inactive_img: 'assets/icon/cat-party-grey.png', value:'party',radionumber:'radio10'},
-      {active_img: 'assets/icon/cat-other-red.png', title: 'Other', inactive_img: 'assets/icon/cat-other-grey.png', value:'other',radionumber:'postradio11'}
+      {active_img: 'assets/icon/cat-electronics-red.png', title: 'Electronics', inactive_img: 'assets/icon/cat-electronics-grey.png',tempimage:'assets/icon/cat-electronics-grey.png', value:'electronics',radionumber:'radio2',class:'deactive'},
+      {active_img: 'assets/icon/cat-cars-red.png', title: 'Cars and motors', inactive_img: 'assets/icon/cat-cars-grey.png',tempimage:'assets/icon/cat-cars-grey.png', value:'cars',radionumber:'radio3',class:'deactive'},
+      {active_img: 'assets/icon/cat-sports-red.png', title: 'Sports and leisure', inactive_img: 'assets/icon/cat-sports-grey.png',tempimage:'assets/icon/cat-sports-grey.png', value:'sports',radionumber:'radio4',class:'deactive'},
+      {active_img: 'assets/icon/cat-home-red.png', title: 'Home and garden', inactive_img: 'assets/icon/cat-home-grey.png',tempimage:'assets/icon/cat-home-grey.png', value:'home',radionumber:'radio5',class:'deactive'},
+      {active_img: 'assets/icon/cat-movies-red.png', title: 'Movies and music', inactive_img: 'assets/icon/cat-movies-grey.png',tempimage:'assets/icon/cat-movies-grey.png', value:'movies',radionumber:'radio6',class:'deactive'},
+      {active_img: 'assets/icon/cat-fashion-red.png', title: 'Fashion and accessories', inactive_img: 'assets/icon/cat-fashion-grey.png',tempimage:'assets/icon/cat-fashion-grey.png', value:'fashion',radionumber:'radio7',class:'deactive'},
+      {active_img: 'assets/icon/cat-baby-red.png', title: 'Baby and child', inactive_img: 'assets/icon/cat-baby-grey.png',tempimage:'assets/icon/cat-baby-grey.png', value:'baby',radionumber:'radio8',class:'deactive'},
+      {active_img: 'assets/icon/cat-tools-red.png', title: 'Tools and machines', inactive_img: 'assets/icon/cat-tools-grey.png',tempimage:'assets/icon/cat-tools-grey.png', value:'tools',radionumber:'radio9',class:'deactive'},
+      {active_img: 'assets/icon/cat-party-red.png', title: 'Party and Events', inactive_img: 'assets/icon/cat-party-grey.png',tempimage:'assets/icon/cat-party-grey.png', value:'party',radionumber:'radio10',class:'deactive'},
+      {active_img: 'assets/icon/cat-other-red.png', title: 'Other', inactive_img: 'assets/icon/cat-other-grey.png',tempimage:'assets/icon/cat-other-grey.png', value:'other',radionumber:'postradio11',class:'deactive'}
     ]
     this.location="Change Location";
   }
@@ -279,12 +279,16 @@ ionViewWillEnter(){
    
     if(res){  
       if(res.catStatus=="true"){
+        console.log(res);
           //catName:this.category,catImage:this.categoryImg,
           //let selected={"catStatus":"true","catTitle":this.categorylist[i].title,"catValue":this.categorylist[i].value,"catId":i}
           this.category=res.catTitle;
           this.categoryImg=res.catImg;
-          document.getElementById(res.catValue).setAttribute("src",this.categorylist[parseInt(res.catId)].active_img);
-          document.getElementById(res.catTitle).style.color="#f55349";
+          this.categorylist[parseInt(res.catId)].tempimage = this.categorylist[parseInt(res.catId)].active_img;
+          this.categorylist[parseInt(res.catId)].class = 'active';
+          console.log(this.categorylist);
+          //document.getElementById(res.catValue).setAttribute("src",this.categorylist[parseInt(res.catId)].active_img);
+          //document.getElementById(res.catTitle).style.color="#f55349";
           this.enableShowButton();
         }
       }                       
@@ -358,8 +362,11 @@ ionViewWillEnter(){
     this.storage.get("categorySelectedFilter").then((res)=>{
       if(res){  
         if(res.catStatus=="true"){
-            document.getElementById(res.catValue).setAttribute("src",this.categorylist[parseInt(res.catId)].inactive_img);//image item.value
-            document.getElementById(res.catTitle).style.color="#000";//item.title
+          this.categorylist[parseInt(res.catId)].class = 'deactive';
+          this.categorylist[parseInt(res.catId)].tempimage = this.categorylist[parseInt(res.catId)].inactive_img;
+         
+            // document.getElementById(res.catValue).setAttribute("src",this.categorylist[parseInt(res.catId)].inactive_img);//image item.value
+            // document.getElementById(res.catTitle).style.color="#000";//item.title
             this.storage.set("categorySelectedFilter",null);
           }
         }                       
@@ -372,30 +379,37 @@ ionViewWillEnter(){
     Method used to select or deselect the category
   */
   myFunction(event){
+    console.log(event);
     var target = event.target || event.srcElement || event.currentTarget;
     var parent = event.srcElement.parentElement;
     var preparent = parent.parentElement;
     var divparent = preparent.parentElement;
     var children = divparent.children;
     var count = children.length;
+    
     for (var i = 0; i < count; ++i) {
-      if(preparent==children[i]){
-        var image=this.categorylist[i].active_img;
-        this.category=this.categorylist[i].title;
-        this.categoryImg=this.categorylist[i].inactive_img;
-
+      if(preparent == children[i]){
+        console.log(preparent);
+        console.log(children[i])
+        this.categorylist[i].tempimage = this.categorylist[i].active_img;
+        this.categorylist[i].class = 'active';
+       // var image = this.categorylist[i].active_img;
+        this.category = this.categorylist[i].title;
+        this.categoryImg = this.categorylist[i].inactive_img;
+        this.categorylist[i].catId = i;
         let selected={"catStatus":"true","catTitle":this.categorylist[i].title,"catValue":this.categorylist[i].value,"catId":i,"catImg":this.categoryImg}
         this.storage.set("categorySelectedFilter",selected);
-
-        console.log(children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0] + "children[i]");
-        children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0].setAttribute("src", image);
-        children[i].getElementsByTagName('label')[0].getElementsByTagName('span')[0].setAttribute("style", "color: #f55349;");
+        //console.log(this.categorylist);
+        // console.log(children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0] + "children[i]");
+        // children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0].setAttribute("src", image);
+        // children[i].getElementsByTagName('label')[0].getElementsByTagName('span')[0].setAttribute("style", "color: #f55349;");
         this.enableShowButton();
       }
       else{
-        var inactiveimage=this.categorylist[i].inactive_img;
-        children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0].setAttribute("src", inactiveimage);
-        children[i].getElementsByTagName('label')[0].getElementsByTagName('span')[0].setAttribute("style", "color: #000;");
+        this.categorylist[i].tempimage = this.categorylist[i].inactive_img;
+        this.categorylist[i].class = 'deactive';
+        // children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0].setAttribute("src", inactiveimage);
+        // children[i].getElementsByTagName('label')[0].getElementsByTagName('span')[0].setAttribute("style", "color: #000;");
       }
     }
   }

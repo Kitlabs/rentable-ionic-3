@@ -1,6 +1,5 @@
 page-search {
 
-
   .label-md {
     margin: 11px 8px 11px 0;
   }
@@ -23,6 +22,12 @@ page-search {
     border-bottom: 1px solid #c6c6c7;
     border-top: 1px solid #c6c6c7;
     padding-top: 2rem;
+  }
+  .active{
+    color: #f55349;
+  }
+  .deactive{
+    color: #000;
   }
   .liststyle{
     font-weight: bold;
@@ -166,14 +171,14 @@ page-search {
   }
   .radio-img {
     margin: 10px 0;
-    input[type=radio] {
-      &:checked {
-        color: #f55349;
-        & + label {
-          color: #f55349;
-        }
-      }
-    }
+    // input[type=radio] {
+    //   &:checked {
+    //     color: #f55349;
+    //     & + label {
+    //       color: #f55349;
+    //     }
+    //   }
+    // }
   }
   .radio-img.grid-list{
     float: left;

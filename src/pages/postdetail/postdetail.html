@@ -86,8 +86,8 @@
     <div>
       <div  radio-group [(ngModel)]="category" class="radio-postimg grid-list" *ngFor="let item of categorylist; let i = index; " >
         <input type="radio" name="radio-group"   id="{{item.radionumber}}" class="input-hidden" />
-        <label (click)="myFunction($event)" for="{{item.radionumber}}" >
-          <img  id="{{item.value}}" src="{{item.inactive_img}}"  class="categoryimage" > 
+        <label (click)="myFunction($event)" for="{{item.radionumber}}" class="{{item.class}}" >
+          <img  id="{{item.value}}" src="{{item.tempimage}}"  class="categoryimage" > 
           <span id="{{item.titleSecond}}" class="categoryname" >{{item.title}}</span>
         </label>
       </div>

@@ -343,6 +343,7 @@ export class AddPage {
 			this.storage.set('image',this.photos);
 			this.navCtrl.setRoot(PostdetailPage); 
 		}else{
+			//this.navCtrl.setRoot(PostdetailPage); 
 			//this.presentAlert("Atleast 1 photo is required");
 		}
 	}
