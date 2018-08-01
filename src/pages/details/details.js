@@ -8,23 +8,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { NavController, ModalController, NavParams, Content, ViewController, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, ModalController, NavParams, Content, ViewController, LoadingController, ToastController, Events } from 'ionic-angular';
 import { RentPage } from '../rent/rent';
 import { MapModal } from '../modal-page/modal-page';
-import { ShareModal } from '../share-modal/share-modal';
 import { Home } from '../home/home';
 import { ItemsProvider } from '../../providers/items/items';
+import { ProfileProvider } from '../../providers/payment/profile';
 import { Geolocation } from 'ionic-native';
 import { ChatProvider } from '../../providers/chat/chat';
 import { AuthenticateProvider } from '../../providers/authenticate/authenticate';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { AcceptPage } from '../accept/accept';
 import { PickupPage } from '../pickup/pickup';
 import { ClaimownerPage } from '../claimowner/claimowner';
 import { OtherprofilePage } from '../otherprofile/otherprofile';
 import { Storage } from '@ionic/storage';
 import { CalendarModal } from "ion2-calendar";
+import { ImageViewerController } from 'ionic-img-viewer';
+import { DatePipe } from '@angular/common';
+var now = new Date(), today = new Date(new Date().setDate(new Date().getDate()));
 var Details = /** @class */ (function () {
-    function Details(navCtrl, navParams, myElement, modalCtrl, zone, viewCtrl, itemprovider, chatprovider, loadingCtrl, storage, authProvider, toastCtrl) {
+    function Details(navCtrl, navParams, myElement, modalCtrl, zone, viewCtrl, itemprovider, chatprovider, loadingCtrl, storage, authProvider, toastCtrl, events, af, ivc, profileProvider, socialSharing) {
         // this.Product ={
         //   img: 'assets/img/11.png', ownerimage:'assets/img/profile-img.png', ownername: 'John', item_title:'house', price:'25', description:'this is good rentalable book please use this Thanks', selectdate:'', total_cost:'100'}
         this.navCtrl = navCtrl;
@@ -39,6 +44,11 @@ var Details = /** @class */ (function () {
         this.storage = storage;
         this.authProvider = authProvider;
         this.toastCtrl = toastCtrl;
+        this.events = events;
+        this.af = af;
+        this.ivc = ivc;
+        this.profileProvider = profileProvider;
+        this.socialSharing = socialSharing;
         this.showFooter = false;
         this.rentPage = RentPage;
         this.home = Home;
@@ -50,6 +60,7 @@ var Details = /** @class */ (function () {
         this.locationstatus = false;
         this.rent = RentPage;
         this.return = AcceptPage; //return process
+        this.productDailyRentalCost = null;
         this.itemId = navParams.get("itemId");
         console.log(this.itemId);
         this.Product = [];
@@ -60,45 +71,8 @@ var Details = /** @class */ (function () {
         this.itembadcondition = [];
         this.userRatingNeg = [];
         this.userRatingPos = [];
+        this.bookedDates = [];
         this.myDate = "Select Pick Date";
-        /*this.itemprovider.Getitemdetail(this.detailitem ).subscribe(data=>{
-          this.Product=data.json().result.item;
-          this.itemowner=data.json().result.user;
-          this.uid = this.itemowner._id;
-          //this.fullname = data.json().result.user.firstName + " " + data.json().result.user.lastName;
-          this.fullname="john bell";
-          console.log('owner',this.itemowner);
-          for (var i=0; i < this.Product.condition;  i++) {
-            this.itemgoodcondition[i]=i;
-          }
-          for (var j=0; j < 5-this.Product.condition;  j++) {
-            this.itembadcondition[j]=j;
-          }
-          if(this.Product.condition<=1)
-          {
-            this.itemconditiontext = "POOR";
-          }
-          if(this.Product.condition==2)
-          {
-            this.itemconditiontext = "FAIR";
-          }
-          if(this.Product.condition==3)
-          {
-            this.itemconditiontext = "GOOD";
-          }
-          if(this.Product.condition==4)
-          {
-            this.itemconditiontext = "VERY GOOD";
-          }
-          if(this.Product.condition==5)
-          {
-            this.itemconditiontext = "EXCELLENT";
-          }
-    
-        },
-        err =>{
-          console.log(err);
-        });*/
         //getting current date
         this.myDate = new Date().toISOString();
         //set button status to false
@@ -107,13 +81,31 @@ var Details = /** @class */ (function () {
         this.btnReturn = true;
         this.btnCancel = true;
         this.pickReturnDateStatus = false;
+        this.isDelivery = false;
+        this.deliveryStatus = false;
+        this.btnSendMessage = false;
     }
     Details.prototype.ionViewDidLoad = function () {
+        console.log("Detail Page");
         this.getItemDetails();
         this.addItemViewOrLike();
     };
+    Details.prototype.testImage = function (img) {
+        console.log(img);
+    };
+    Details.prototype.ionViewDidEnter = function () {
+        var _this = this;
+        console.log("Detail Page ionViewDidEnter");
+        this.storage.get('CARD_STATUS').then(function (data) {
+            _this.cardStatus = data;
+        });
+    };
+    /**
+     * Not Used
+     */
     Details.prototype.openCalendar = function () {
         var _this = this;
+        this.isDelivery = false;
         var options = {
             pickMode: 'range',
             title: 'Select Date',
@@ -128,14 +120,17 @@ var Details = /** @class */ (function () {
             console.log(date);
             if (type == 'done') {
                 //d-m-y
-                _this.pickUpDate = date.from.date + "-" + date.from.months + "-" + date.from.years;
-                _this.returnDate = date.to.date + "-" + date.to.months + "-" + date.to.years;
-                ;
+                _this.pickUpDate = date.from.years + "-" + date.from.months + "-" + date.from.date;
+                _this.returnDate = date.to.years + "-" + date.to.months + "-" + date.to.date;
+                var fromMonth = date.from.months > 9 ? date.from.months : "0" + date.from.months;
+                var toMonth = date.to.months > 9 ? date.to.months : "0" + date.to.months;
+                //to show on ui
+                _this.pickUpDateUi = date.from.date + "/" + fromMonth + "/" + date.from.years;
+                _this.returnDateUi = date.to.date + "/" + toMonth + "/" + date.to.years;
                 var date1 = new Date(date.from.string);
                 var date2 = new Date(date.to.string);
                 var timeDiff = Math.abs(date2.getTime() - date1.getTime());
                 var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
-                console.log(diffDays);
                 if (diffDays != null) {
                     _this.pickReturnDateStatus = true;
                     if (diffDays == 0) {
@@ -144,8 +139,9 @@ var Details = /** @class */ (function () {
                     }
                     else {
                         _this.btnSendRentalReq = true;
-                        //this.productDailyRentalCost=this.productDailyRentalPriceSecond*diffDays;
-                        _this.calculateTotalCost(_this.productDailyRentalPriceSecond);
+                        _this.productDailyRentalCost = _this.productDailyRentalPriceSecond * diffDays;
+                        _this.productRentCost = _this.productDailyRentalCost;
+                        _this.calculateTotalCost(0);
                     }
                 }
                 else {
@@ -161,40 +157,62 @@ var Details = /** @class */ (function () {
             }
         });
     };
-    Details.prototype.calculateTotalCost = function (totalCost) {
+    Details.prototype.calculateTotalCost = function (withOrWithoutDelivery) {
         var _this = this;
-        this.itemprovider.getTotalRentalCost(totalCost, "0").subscribe(function (data) {
+        //calculateTotalCost :: cost,Isdelivery,DeliveryPickUpFee
+        //this.favourite=this.Product.favourites==0?false:true;
+        //this.deliveryFee=withOrWithoutDelivery==1?this.deliveryFee:0;
+        this.itemprovider.getTotalRentalCost(this.productRentCost, withOrWithoutDelivery, withOrWithoutDelivery == 1 ? this.deliveryFee : 0).subscribe(function (data) {
             _this.productDailyRentalCost = data.json().Renter.Total;
             console.log(_this.productDailyRentalCost);
-            _this.toolTip = "Rental Cost = " + data.json().Renter.RentalCost + "           Rentable Service Fee = " + data.json().Renter.ServiceFee;
+            _this.btnSendRentalReq = true;
+            _this.itemOwnerFee = data.json().Owner.Total;
+            _this.AdminFee = data.json().Admin.ServiceFee;
+            _this.rentableServiceFee = data.json().Renter.RenterServiceFee;
+            _this.productRentalCostWithoutFee = data.json().Renter.RentalCost;
+            if (withOrWithoutDelivery == 1) {
+                //include delivery fee
+                _this.toolTip = "Rental Cost = $" + data.json().Renter.RentalCost + "                    Service Fee = $" + data.json().Renter.RenterServiceFee + "                    Delivery Fee = $" + data.json().Renter.DeliveryPickUpFee;
+            }
+            else {
+                _this.toolTip = "Rental Cost = $" + data.json().Renter.RentalCost + "  Service Fee = $" + data.json().Renter.RenterServiceFee;
+            }
         });
-    };
-    Details.prototype.getReturnDate = function () {
-        // this.datePicker.show({
-        //   date: new Date(),
-        //   mode: 'date'
-        // }).then(
-        //   date =>this.returnDate=date,
-        //   err => console.log('Error occurred while getting date: ', err)
-        // );
-    };
-    Details.prototype.getPickUpDate = function () {
-        // this.datePicker.show({
-        //   date: new Date(),
-        //   mode: 'date'
-        // }).then(
-        //   date =>this.pickUpDate=date,
-        //   err => console.log('Error occurred while getting date: ', err)
-        // );
     };
     Details.prototype.ionViewLoaded = function () {
         this.loadMap();
     };
     Details.prototype.loadMap = function () {
     };
+    /**
+     * cardStatus
+     * 1 user added the card and sending message functionality available to user
+     * 0 user didn't attached the card and message functionality not available to user
+     */
     Details.prototype.number = function () {
-        var n = this.messagetext.length;
-        this.messagenumber = 350 - n;
+        if (this.cardStatus == 1) {
+            var n = this.messagetext.length;
+            if (n > 0) {
+                this.messagenumber = 350 - n;
+                this.btnSendMessage = true;
+            }
+            else {
+                this.btnSendMessage = false;
+            }
+        }
+    };
+    /*
+    function to check whether user need delivery of product from user or not
+    case:1 add delivery amount
+    case:0 no include delivery amount
+    */
+    Details.prototype.needDelivery = function () {
+        if (this.isDelivery) {
+            this.calculateTotalCost(1);
+        }
+        else {
+            this.calculateTotalCost(0);
+        }
     };
     /*
     function to add view or likes
@@ -222,6 +240,7 @@ var Details = /** @class */ (function () {
     */
     Details.prototype.getItemDetails = function () {
         var _this = this;
+        console.log("ItemId=" + this.itemId);
         this.loading = this.loadingCtrl.create({
             spinner: 'bubbles',
             content: "Please wait.."
@@ -231,13 +250,12 @@ var Details = /** @class */ (function () {
         this.storage.get('userId').then(function (uid) {
             console.log("DetailsId=" + uid);
             _this.userId = uid;
-            _this.itemprovider.getItemDetail(_this.itemId, uid).subscribe(function (data) {
+            _this.itemprovider.getItemDetailWithBookedDates(_this.itemId, uid).subscribe(function (data) {
                 _this.loading.dismiss();
-                console.log(data.json());
                 if (data.json().msg == "success") {
-                    _this.Product = data.json().data[0];
+                    _this.Product = data.json().PostData[0];
                     //splitting images to array
-                    _this.sliderImages = data.json().data[0].image.split('|');
+                    _this.sliderImages = data.json().PostData[0].image.split('|');
                     _this.productDailyRentalPrice = _this.Product.dailyrentalPrice.split('.');
                     //Info to share via facebook or twitter
                     _this.productTitle = _this.Product.title;
@@ -247,52 +265,236 @@ var Details = /** @class */ (function () {
                     _this.productImage = _this.Product.image_single;
                     _this.postedLocationLat = _this.Product.lat;
                     _this.postedLocationLng = _this.Product.lng;
-                    _this.basePath = _this.Product.base_path;
+                    _this.basePath = data.json().base_path;
+                    //delivery
+                    _this.ownerProvideDelivery = _this.Product.delivery == 1 ? true : false;
+                    _this.deliveryDistance = _this.Product.distance;
+                    _this.deliveryFee = _this.Product.deliveryfee;
                     //favourite or not
-                    _this.favourite = _this.Product.favourites == 0 ? false : true;
+                    _this.favourite = _this.Product.favourite == 0 ? false : true;
                     //username
                     _this.fullname = _this.Product.user_details.firstName + " " + _this.Product.user_details.lastName;
                     //base url
-                    _this.profilePic = _this.Product.base_path + _this.Product.user_details.photoURL;
+                    _this.profilePic = _this.basePath + _this.Product.user_details.photoURL;
+                    // //product owner id
+                    _this.productOwnerId = _this.Product.user_details.id;
+                    //security deposit text
+                    _this.securityDepositText = "Security deposit for this item is :$" + _this.Product.securityDeposit;
+                    _this.securityDepositText2 = " DON'T WORRY, your money won't be touched unless the owner makes a claim, in case there's a problem when the item is returned. But you will be asked for confirmation first";
                     if (_this.productDailyRentalPrice[1] == "00") {
                         _this.dailyPrice = _this.productDailyRentalPrice[0];
                     }
                     else {
                         _this.dailyPrice = _this.Product.dailyrentalPrice;
                     }
-                    _this.setUserRating(_this.Product.rating);
+                    _this.getUserRating(_this.Product.userId);
                     _this.setItemRating(_this.Product.currentcondition);
-                    if (_this.Product.currentcondition <= 1) {
-                        _this.itemconditiontext = "POOR";
+                    _this.hideShowDeliveryOption(_this.postedLocationLat, _this.postedLocationLng);
+                    //this.disableBookedDates(this.Product.BookingDate);
+                    //var str=this.Product;
+                    if (_this.Product.hasOwnProperty('BookingDate')) {
+                        _this.disableBookedDates(_this.Product.BookingDate);
                     }
-                    if (_this.Product.currentcondition == 2) {
-                        _this.itemconditiontext = "FAIR";
-                    }
-                    if (_this.Product.currentcondition == 3) {
-                        _this.itemconditiontext = "GOOD";
-                    }
-                    if (_this.Product.currentcondition == 4) {
-                        _this.itemconditiontext = "VERY GOOD";
-                    }
-                    if (_this.Product.currentcondition == 5) {
-                        _this.itemconditiontext = "EXCELLENT";
+                    else {
+                        _this.displayWithoutBookedDates();
                     }
                 }
                 else {
                     //no response
+                    _this.showToast("Unable to fetch data, please try again later");
+                    _this.navCtrl.pop();
+                    _this.loading.dismiss();
                 }
             }, function (err) {
+                _this.showToast("Unable to fetch data, please try again later");
+                _this.navCtrl.pop();
                 _this.loading.dismiss();
                 console.log();
             }, function () {
             });
         }); //end of storage
     };
+    Details.prototype.displayWithoutBookedDates = function () {
+        console.log("Display without booked dates");
+        var self = this;
+        this.daterangeSettings = {
+            min: today,
+            theme: 'range-custom-rentable',
+            layout: 'liquid',
+            animate: 'flip',
+            fromText: 'Pick Up Date',
+            toText: 'Return Date',
+            onSet: function (event, inst) {
+                /**
+                 * Index contain
+                 * 0=month
+                 * 1=day
+                 * 2=year
+                 */
+                var fromDateAr, toDateAr;
+                var data = event.valueText.split('-');
+                fromDateAr = data[0].split('/');
+                toDateAr = data[1].split('/');
+                //format to send to server
+                self.pickUpDate = (fromDateAr[2] + "-" + fromDateAr[0] + "-" + fromDateAr[1]).replace(/\s+/, "");
+                self.returnDate = (toDateAr[2] + "-" + toDateAr[0] + "-" + toDateAr[1]).replace(/\s+/, "");
+                //format to show on ui
+                self.pickUpDateUi = (fromDateAr[1] + "/" + fromDateAr[0] + "/" + fromDateAr[2].slice(2)).replace(/\s+/, "");
+                self.returnDateUi = (toDateAr[1] + "/" + toDateAr[0] + "/" + toDateAr[2].slice(2)).replace(/\s+/, "");
+                var date1 = new Date(data[0]);
+                var date2 = new Date(data[1]);
+                var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+                if (diffDays != null) {
+                    self.pickReturnDateStatus = true;
+                    if (diffDays == 0) {
+                        self.productDailyRentalCost = self.productDailyRentalPriceSecond;
+                        self.btnSendRentalReq = false;
+                    }
+                    else {
+                        if (self.cardStatus == 1) {
+                            self.btnSendRentalReq = true;
+                        }
+                        else {
+                            self.btnSendRentalReq = false;
+                        }
+                        self.productDailyRentalCost = self.productDailyRentalPriceSecond * diffDays;
+                        self.productRentCost = self.productDailyRentalCost;
+                        self.calculateTotalCost(0);
+                    }
+                }
+                else {
+                    self.productDailyRentalCost = self.productDailyRentalPriceSecond;
+                    self.pickReturnDateStatus = false;
+                    self.btnSendRentalReq = false;
+                }
+            },
+        };
+    };
+    Details.prototype.disableBookedDates = function (bookedDates) {
+        var self = this;
+        for (var index in bookedDates) {
+            var arrayData = { start: bookedDates[index].start, end: bookedDates[index].end, text: 'Booked Dates' };
+            this.bookedDates.push(arrayData);
+        }
+        console.log("BOOKED==", this.bookedDates);
+        console.log("TODAY=", today);
+        this.daterangeSettings = {
+            invalid: this.bookedDates,
+            min: today,
+            theme: 'range-custom-rentable',
+            layout: 'liquid',
+            animate: 'flip',
+            fromText: 'Pick Up Date',
+            toText: 'Return Date',
+            onDayChange: function (event, inst) {
+                if (event.active == "start") {
+                    self.dateSelectedFrom = new DatePipe('en-US').transform(event.date, 'yyyy-MM-dd');
+                }
+                if (event.active == "end") {
+                    self.dateSelectedTo = new DatePipe('en-US').transform(event.date, 'yyyy-MM-dd');
+                    if (Date.parse(self.dateSelectedFrom) < Date.parse(self.dateSelectedTo)) {
+                    }
+                    else {
+                        return false;
+                    }
+                    for (var i in self.bookedDates) {
+                        if (self.dateCheck(self.dateSelectedFrom, self.dateSelectedTo, self.bookedDates[i].start)) {
+                            return false;
+                        }
+                        else {
+                        }
+                    }
+                }
+                //return false;
+            },
+            onSet: function (event, inst) {
+                /**
+                 * Index contain
+                 * 0=month
+                 * 1=day
+                 * 2=year
+                 */
+                var fromDateAr, toDateAr;
+                var data = event.valueText.split('-');
+                fromDateAr = data[0].split('/');
+                toDateAr = data[1].split('/');
+                //format to send to server
+                self.pickUpDate = (fromDateAr[2] + "-" + fromDateAr[0] + "-" + fromDateAr[1]).replace(/\s+/, "");
+                self.returnDate = (toDateAr[2] + "-" + toDateAr[0] + "-" + toDateAr[1]).replace(/\s+/, "");
+                //format to show on ui
+                self.pickUpDateUi = (fromDateAr[1] + "/" + fromDateAr[0] + "/" + fromDateAr[2].slice(2)).replace(/\s+/, "");
+                self.returnDateUi = (toDateAr[1] + "/" + toDateAr[0] + "/" + toDateAr[2].slice(2)).replace(/\s+/, "");
+                var date1 = new Date(data[0]);
+                var date2 = new Date(data[1]);
+                var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+                if (diffDays != null) {
+                    self.pickReturnDateStatus = true;
+                    if (diffDays == 0) {
+                        self.productDailyRentalCost = self.productDailyRentalPriceSecond;
+                        self.btnSendRentalReq = false;
+                    }
+                    else {
+                        if (self.cardStatus == 1) {
+                            self.btnSendRentalReq = true;
+                        }
+                        else {
+                            self.btnSendRentalReq = false;
+                        }
+                        self.productDailyRentalCost = self.productDailyRentalPriceSecond * diffDays;
+                        self.productRentCost = self.productDailyRentalCost;
+                        self.calculateTotalCost(0);
+                    }
+                }
+                else {
+                    self.productDailyRentalCost = self.productDailyRentalPriceSecond;
+                    self.pickReturnDateStatus = false;
+                    self.btnSendRentalReq = false;
+                }
+            },
+        };
+    };
+    Details.prototype.demo = function () {
+        console.log("Hey this is demo");
+    };
+    Details.prototype.dateCheck = function (from, to, check) {
+        var fDate, lDate, cDate;
+        fDate = Date.parse(from);
+        lDate = Date.parse(to);
+        cDate = Date.parse(check);
+        if ((cDate <= lDate && cDate >= fDate)) {
+            return true;
+        }
+        return false;
+    };
+    Details.prototype.bookedDateSet = function (ev) {
+        console.log("booked dates");
+    };
+    Details.prototype.hideShowDeliveryOption = function (lat1, lng1) {
+        //deliveryStatus
+        //ownerProvideDelivery
+        //deliveryDistance
+        var _this = this;
+        //true, means owner of product providing the delivery pickup
+        if (this.ownerProvideDelivery) {
+            this.storage.get('location').then(function (location) {
+                if (_this.calculateDistance(lat1, lng1, location.lat, location.lng) <= _this.deliveryDistance) {
+                    _this.deliveryStatus = true; //show delivery option
+                }
+                else {
+                    _this.deliveryStatus = false; //hide delivery option
+                }
+            });
+        }
+        else {
+            console.log("else ownerProvideDelivery");
+        }
+    };
     /*
     Function to set item rating
     */
     Details.prototype.setItemRating = function (rating) {
-        //product rating
         for (var i = 0; i < rating; i++) {
             this.itemgoodcondition[i] = i;
         }
@@ -303,17 +505,49 @@ var Details = /** @class */ (function () {
     /*
     Function to set user rating
     */
-    Details.prototype.setUserRating = function (rating) {
-        for (var i = 0; i < rating; i++) {
-            this.userRatingPos[i] = i;
-        }
-        for (var j = 0; j < 5 - this.Product.rating; j++) {
-            this.userRatingNeg[j] = j;
-        }
+    Details.prototype.getUserRating = function (userId) {
+        var _this = this;
+        var rating;
+        //product rating
+        this.profileProvider.getRating(userId).subscribe(function (data) {
+            rating = data.json().AverageRating;
+            console.log(rating);
+            if (data.json().msg == "success") {
+                if (rating > 0 && rating < 1) {
+                    rating = 0;
+                }
+                if (rating >= 1 && rating < 2) {
+                    rating = 1;
+                }
+                if (rating >= 2 && rating < 3) {
+                    rating = 2;
+                }
+                if (rating >= 3 && rating < 4) {
+                    rating = 3;
+                }
+                if (rating >= 4 && rating < 5) {
+                    rating = 4;
+                }
+                if (rating >= 5) {
+                    rating = 5;
+                }
+                console.log("Rating=", rating);
+                for (var i = 0; i < rating; i++) {
+                    _this.userRatingPos[i] = i;
+                }
+                for (var j = 0; j < 5 - rating; j++) {
+                    _this.userRatingNeg[j] = j;
+                }
+            }
+        }, function (err) {
+        });
     };
+    /**
+     * Function to take user to other user profile page
+    */
     Details.prototype.goToOtherProfile = function () {
         this.navCtrl.push(OtherprofilePage, {
-            userId: this.userId,
+            userId: this.productOwnerId,
             itemId: this.itemId
         });
     };
@@ -321,6 +555,7 @@ var Details = /** @class */ (function () {
         this.navCtrl.pop();
     };
     Details.prototype.checker = function () {
+        console.log('checker');
         var date1 = new Date(this.pickUpDate);
         var monthp = date1.getUTCMonth() + 1; //months from 1-12
         var dayp = date1.getUTCDate();
@@ -345,6 +580,9 @@ var Details = /** @class */ (function () {
             this.btnSendRentalReq = false;
         }
     };
+    /**
+     * function to send rental request
+     */
     Details.prototype.sendrental = function () {
         var _this = this;
         console.log("send rental request");
@@ -353,24 +591,136 @@ var Details = /** @class */ (function () {
             content: "Please wait.."
         });
         this.loading.present();
-        //sendRentalRequest(userId,postId,pickUpDate,returnDate,amount) 
-        this.itemprovider.sendRentalRequest(this.userId, this.itemId, this.pickUpDate, this.returnDate, this.productDailyRentalCost)
+        //sendRentalRequest(userId,postId,pickUpDate,returnDate,amount,itemOwnerFee,AdminFee,needDelivery,rentableServiceFee)
+        this.itemprovider.sendRentalRequest(this.userId, this.itemId, this.pickUpDate, this.returnDate, this.productDailyRentalCost, this.itemOwnerFee, this.AdminFee, this.isDelivery == true ? 1 : 0, this.rentableServiceFee, this.productRentalCostWithoutFee)
             .subscribe(function (data) {
             _this.loading.dismiss();
             if (data.json().msg == "success") {
+                _this.sendmessage();
+                _this.markMessageAsUnRead();
                 _this.showToast("Request has been sent successfully");
             }
             else {
-                _this.showToast("You are not able send request again");
+                _this.showToast("You can rent this product again, once you return it");
             }
         }, function (err) {
+            _this.loading.dismiss();
+        });
+    };
+    /**
+     * Method to add message status as unread
+     */
+    Details.prototype.markMessageAsUnRead = function () {
+        console.log("markMessageAsUnRead");
+        this.chatprovider.markMessageAsUnread(this.userId, this.productOwnerId, this.itemId).subscribe(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
         });
     };
     Details.prototype.sendmessage = function () {
-        // this.chatprovider.addChats(this.uid, this.itemowner._id);
-        // console.log('id-----',this.itemowner._id);
-        // let param = {uid: this.uid, interlocutor: this.itemowner._id, message: this.messagetext};
-        // this.navCtrl.push(ChatdetailPage,param);
+        var _this = this;
+        this.itemprovider.insertChatList(this.userId, this.productOwnerId, this.itemId)
+            .subscribe(function (data) {
+            //{"msg":"success","inserted_id":12}
+            //{"msg":"error","data":"already added!"}
+            console.log(data);
+            if (data.json().msg == "success" || data.json().msg == "error") {
+                _this.chatprovider.getChatRef(_this.userId, _this.productOwnerId, _this.itemId)
+                    .then(function (chatRef) {
+                    console.log(chatRef);
+                    _this.af.list(chatRef).push({
+                        from: _this.userId,
+                        ownermsg: "Please confirm rental request, click here",
+                        rentermsg: "Rental request pending approval",
+                        type: "rental_request_show",
+                        time: Date()
+                    }).then(function () {
+                        console.log("message sent successfully");
+                        _this.navCtrl.pop();
+                        // message is sent
+                    }).catch(function () {
+                        // some error. maybe firebase is unreachable
+                        console.log("firebase unreachable");
+                        _this.navCtrl.pop();
+                    });
+                });
+            }
+        });
+    };
+    Details.prototype.sendCommonMessage = function () {
+        var _this = this;
+        if (this.messagetext) {
+            this.loading = this.loadingCtrl.create({
+                spinner: 'bubbles',
+                content: "Sending..."
+            });
+            this.loading.present();
+            this.itemprovider.insertChatList(this.userId, this.productOwnerId, this.itemId)
+                .subscribe(function (data) {
+                console.log(data.json());
+                if (data.json().msg == "success" || data.json().msg == "error") {
+                    _this.chatprovider.getChatRef(_this.userId, _this.productOwnerId, _this.itemId)
+                        .then(function (chatRef) {
+                        console.log(chatRef);
+                        _this.af.list(chatRef).push({
+                            from: _this.userId,
+                            message: _this.messagetext,
+                            type: "normal",
+                            time: Date()
+                        }).then(function () {
+                            _this.messagetext = "";
+                            console.log("message sent successfully");
+                            _this.loading.dismiss();
+                            _this.showToast("Message sent");
+                            _this.notifyReceiver();
+                            // message is sent
+                        }).catch(function () {
+                            // some error. maybe firebase is unreachable
+                            _this.loading.dismiss();
+                            console.log("firebase unreachable");
+                        });
+                    });
+                }
+                else {
+                    _this.loading.dismiss();
+                }
+            });
+        }
+        else {
+            console.log("false msg");
+        }
+    };
+    /**
+    * Method to used send notifcation
+    */
+    Details.prototype.notifyReceiver = function () {
+        console.log("Call is received to send message notification to user");
+        this.chatprovider.sendMessageNotification(this.userId, this.productOwnerId).subscribe(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    /**
+     * This method used on following case:
+     * 1.Sending rental request
+     * 2.Sending message
+     * uid represent fromId
+     * productOwnerId represent toId
+     * itemId represent itemId
+     */
+    Details.prototype.addChatList = function () {
+        this.itemprovider.insertChatList(this.userId, this.productOwnerId, this.itemId)
+            .subscribe(function (data) {
+            if (data.json().msg == "success") {
+                return true;
+            }
+            if (data.json().msg == "error") {
+                return true;
+            }
+        });
+        return false;
     };
     Details.prototype.addMarker = function () {
         var marker = new google.maps.Marker({
@@ -441,13 +791,15 @@ var Details = /** @class */ (function () {
         modal.present();
     };
     Details.prototype.presentShare = function () {
-        var Share = this.modalCtrl.create(ShareModal, {
-            productTitle: this.productTitle,
-            productDescription: this.productDescription,
-            productDailyRentalCost: this.productDailyRentalCost,
-            productImage: this.productImage
+        var message = this.productDescription + " and daily rental price is $" + this.productDailyRentalCost;
+        var subject = this.productTitle;
+        this.socialSharing.share(message, subject, this.basePath + this.productImage, this.basePath + this.productImage).
+            then(function () {
+            //this.showToast("Sharing success");
+        }).catch(function () {
+            //Error!
+            //this.showToast("Share failed");
         });
-        Share.present();
     };
     Details.prototype.ActiveLike = function () {
         this.like = !this.like;
@@ -476,7 +828,6 @@ var Details = /** @class */ (function () {
         var _this = this;
         console.log("show");
         this.locationstatus = true;
-        console.log(this.postedLocationLng);
         Geolocation.getCurrentPosition().then(function (position) {
             var map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 15,
@@ -540,15 +891,31 @@ var Details = /** @class */ (function () {
         //   console.log(err);
         // });
     };
+    /*
+     This function takes in latitude and longitude of two location and returns the distance between them
+    */
+    Details.prototype.calculateDistance = function (lat1, lon1, lat2, lon2) {
+        var R = 6371; // km
+        var dLat = this.toRad(lat2 - lat1);
+        var dLon = this.toRad(lon2 - lon1);
+        var lat1 = this.toRad(lat1);
+        var lat2 = this.toRad(lat2);
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return d;
+    };
+    //Converts numeric degrees to radians
+    Details.prototype.toRad = function (Value) {
+        return Value * Math.PI / 180;
+    };
     Details.prototype.showToast = function (msg) {
-        var _this = this;
         var toast = this.toastCtrl.create({
             message: msg,
             position: "top",
             duration: 2000
         });
         toast.onDidDismiss(function () {
-            _this.navCtrl.pop();
         });
         toast.present();
     };
@@ -580,7 +947,12 @@ var Details = /** @class */ (function () {
             LoadingController,
             Storage,
             AuthenticateProvider,
-            ToastController])
+            ToastController,
+            Events,
+            AngularFireDatabase,
+            ImageViewerController,
+            ProfileProvider,
+            SocialSharing])
     ], Details);
     return Details;
 }());

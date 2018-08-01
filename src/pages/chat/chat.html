@@ -64,11 +64,11 @@
 <ion-content [ngSwitch]="own_rent" class="app-content">
   
   <div *ngSwitchCase="'own'">
-
-    <div  *ngFor="let item of ownlist;let i = index" style="position: relative;">
+   
+    <div *ngFor="let item of ownlist;let i = index" style="position: relative;">
     <ion-item-sliding   class="like-list bottomborder" 
       no-margin 
-      (click)="goToIOwnChatDetails(item.User_Id,item.PostId,item.title,item.image_single,item.User_photoURL,item.dailyrentalPrice,item.Poststatus,item.pl_status,item.FromDate,item.ToDate,item.Amount,item.itemOwnerFee,item.AdminFee,item.rentableServiceFee,item.rentalCostWithoutFee,item.needDelivery)" (press)="deleteIownChatList(item.User_Id,item.pl_status,item.PostId)" >
+      (click)="goToIOwnChatDetails(item.User_Id,item.PostId,item.title,item.image_single,item.User_photoURL,item.dailyrentalPrice,item.Poststatus,item.pl_status,item.FromDate,item.ToDate,item.Amount,item.itemOwnerFee,item.AdminFee,item.rentableServiceFee,item.rentalCostWithoutFee,item.needDelivery,item.IsDeletedFromId,item.IsDeletedToId)" (press)="deleteIownChatList(item.User_Id,item.pl_status,item.PostId,item.IsDeletedFromId,item.IsDeletedToId,item.ReturnAgreeWithRating)" >
         <ion-item  no-lines paddings>
           <ion-thumbnail  item-left>
             <img class="itemimage" src="{{basePath}}{{item.image_single}}" />
@@ -86,12 +86,16 @@
      </ion-item-sliding>
      <p class="counter" *ngIf=" item.IsRead == 'true' ">1+</p>
     </div>
+    <div class="nodata" *ngIf="ownlist.length == 0"> 
+      <img src="assets/img/Chat.png" width="100px" style="margin-bottom: 15px;"><br>
+      <span>No Chats.</span>
+    </div>
   </div>
 
   <div *ngSwitchCase="'rent'" >
     <div  *ngFor="let item of rentlist" style="position: relative;"  >
         <ion-item-sliding class="like-list bottomborder animated fadeIn" no-margin>
-            <ion-item (click)="goToIRentChatDetails(item.User_Id,item.PostId,item.title,item.image_single,item.User_photoURL,item.dailyrentalPrice,item.Poststatus,item.pl_status,item.FromDate,item.ToDate,item.Amount,item.itemOwnerFee,item.AdminFee,item.rentableServiceFee,item.rentalCostWithoutFee,item.needDelivery)" (press)="deleteIrentChatList(item.User_Id,item.pl_status,item.PostId)">
+            <ion-item (click)="goToIRentChatDetails(item.User_Id,item.PostId,item.title,item.image_single,item.User_photoURL,item.dailyrentalPrice,item.Poststatus,item.pl_status,item.FromDate,item.ToDate,item.Amount,item.itemOwnerFee,item.AdminFee,item.rentableServiceFee,item.rentalCostWithoutFee,item.needDelivery,item.IsDeletedFromId,item.IsDeletedToId)" (press)="deleteIrentChatList(item.User_Id,item.pl_status,item.PostId,item.IsDeletedFromId,item.IsDeletedToId,item.ReturnAgreeWithRating)">
               <ion-thumbnail  item-left>
                 <img class="itemimage" src="{{basePath}}{{item.image_single}}" imageViewer />
               </ion-thumbnail>
@@ -107,6 +111,10 @@
         </ion-item-sliding>
         <p class="counter" *ngIf=" item.IsRead == 'true' ">1+</p>
     </div>
+    <div class="nodata" *ngIf="rentlist.length == 0"> 
+        <img src="assets/img/Chat.png" width="100px" style="margin-bottom: 15px;"><br>
+        <span>No Chats.</span>
+      </div>
   </div>
 
 </ion-content>

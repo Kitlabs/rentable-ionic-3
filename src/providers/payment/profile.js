@@ -19,14 +19,17 @@ var ProfileProvider = /** @class */ (function () {
         this.http = http;
         console.log('Hello PaymentProvider Provider');
     }
-    ProfileProvider.prototype.ChangeProfile = function (email, phonenumber, pasword, firstname, lastname, photourl, postalcode, userId) {
+    ProfileProvider.prototype.ChangeProfile = function (email, phonenumber, pasword, firstname, lastname, photourl, postalcode, userId, lat, lng, location) {
         var body = {
             action: 'ProfileUpdate',
             id: userId,
             email: email,
             firstName: firstname,
             lastName: lastname,
-            postalCode: postalcode
+            postalCode: postalcode,
+            lat: lat,
+            lng: lng,
+            location: location
         };
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
@@ -48,6 +51,32 @@ var ProfileProvider = /** @class */ (function () {
             action: 'PorfilePicUpload',
             UserId: userId,
             image: JSON.stringify(profilePic)
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /**
+     *Function to send verifcation code to update mobile number
+     */
+    ProfileProvider.prototype.getVerificationCode = function (phoneNumber, id) {
+        //{"action":"SendSMSVerificationForPhoneUpdate","phoneNumber":"+919417349947","id":"16"}
+        var body = {
+            action: 'SendSMSVerificationForPhoneUpdate',
+            phoneNumber: phoneNumber,
+            id: id
+        };
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /**
+      *Function to send verifcation code to update mobile number
+      */
+    ProfileProvider.prototype.updateMobileNumber = function (phoneNumber, id, code) {
+        //{"action":"smsverifyForPhoneUpdate","phoneNumber":"+919417349947","id":"16","code":"4686"}
+        var body = {
+            action: 'smsverifyForPhoneUpdate',
+            phoneNumber: phoneNumber,
+            id: id,
+            code: code
         };
         console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
@@ -82,6 +111,26 @@ var ProfileProvider = /** @class */ (function () {
     };
     ProfileProvider.prototype.moneyoutyear = function (uid) {
         return this.http.post(this.apiUrl + "profil/moneyoutyear", { uid: uid });
+    };
+    ProfileProvider.prototype.giveFeedback = function (UserId, PostId, FeedbackRating, FeedbackComment) {
+        //{"action":"FinalFeedbackOnPost","UserId":"45","PostId":"182","FeedbackRating":"2","FeedbackComment":"test"}
+        var body = {
+            action: 'FinalFeedbackOnPost',
+            UserId: UserId,
+            PostId: PostId,
+            FeedbackRating: FeedbackRating,
+            FeedbackComment: FeedbackComment
+        };
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    ProfileProvider.prototype.getRating = function (UserId) {
+        //{"action":"GetOverallFeedbackRating","UserId":"50"}
+        var body = {
+            action: 'GetOverallFeedbackRating',
+            UserId: UserId,
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     ProfileProvider = __decorate([
         Injectable(),

@@ -13,7 +13,6 @@ import { Camera } from '@ionic-native/camera';
 import { Device } from '@ionic-native/device';
 import { ProfileProvider } from '../../providers/payment/profile';
 import { Profile } from '../profile/profile';
-import { ProfileinputPage } from '../profileinput/profileinput';
 import { Storage } from '@ionic/storage';
 /*
   Generated class for the EditprofilePage page.
@@ -56,10 +55,8 @@ var EditprofilePage = /** @class */ (function () {
                     _this.phonenumber = data.json().userDetails[0].phoneNumber;
                     _this.postalcode = data.json().userDetails[0].postalCode;
                     _this.password = data.json().userDetails[0].password;
-                    _this.imageURI = "http://54.79.124.187/api/uploads/" + data.json().userDetails[0].photoURL;
-                    //this.imageURI=data.json().userDetails[0].photoURL;
-                    //this.imageURI="http://54.79.124.187/api/uploads/"+data.json().userDetails[0].photoURL;
-                    _this.basePath = "54.79.124.187/api/uploads/";
+                    _this.imageURI = data.json().base_path + data.json().userDetails[0].photoURL;
+                    _this.basePath = data.json().base_path;
                 }, function (err) {
                     console.log(err);
                 });
@@ -69,28 +66,40 @@ var EditprofilePage = /** @class */ (function () {
         });
     };
     EditprofilePage.prototype.firstfocus = function () {
-        this.navCtrl.push(ProfileinputPage, {
+        this.navCtrl.push('ProfileinputPage', {
             type: "FIRST NAME",
-            data: this.firstname
+            data: this.firstname,
+            option: "other"
         });
     };
     EditprofilePage.prototype.lastfocus = function () {
-        this.navCtrl.push(ProfileinputPage, {
+        this.navCtrl.push('ProfileinputPage', {
             type: "LAST NAME",
-            data: this.lastname
+            data: this.lastname,
+            option: "other"
         });
     };
     EditprofilePage.prototype.mobilefocus = function () {
-        // this.navCtrl.push(ProfileinputPage,{
-        //    type: "MOBILE NUMBER"
-        //  })
-        this.showDevelopment("Under Development");
+        //console.log(this.phonenumber.split("0")[0]);
+        var res = this.phonenumber.split("0");
+        var no = this.phonenumber.slice(res[0].length, this.phonenumber.length);
+        console.log("CODE=", res[0]);
+        console.log("NO=", no);
+        this.navCtrl.push('ProfileinputPage', {
+            type: "MOBILE NUMBER",
+            data: no,
+            code: res[0],
+            option: "mobile"
+        });
+        //this.showDevelopment("Under Development");
     };
     EditprofilePage.prototype.emailfocus = function () {
-        // this.navCtrl.push(ProfileinputPage,{
-        //   type: "EMAIL"
-        // })
-        this.showDevelopment("Under Development");
+        this.navCtrl.push('ProfileinputPage', {
+            type: "EMAIL",
+            data: this.email,
+            option: "email"
+        });
+        //this.showDevelopment("Under Development");
     };
     EditprofilePage.prototype.passwordfocus = function () {
         //  this.navCtrl.push(ProfileinputPage,{
@@ -100,9 +109,10 @@ var EditprofilePage = /** @class */ (function () {
         this.navCtrl.push('ChangePasswordPage');
     };
     EditprofilePage.prototype.postalfocus = function () {
-        this.navCtrl.push(ProfileinputPage, {
+        this.navCtrl.push('ProfileinputPage', {
             type: "POSTAL CODE",
-            data: this.postalcode
+            data: this.postalcode,
+            option: "postal"
         });
     };
     EditprofilePage.prototype.presentToast = function (msg) {
@@ -193,6 +203,7 @@ var EditprofilePage = /** @class */ (function () {
         });
         toast.present();
     };
+    var EditprofilePage_1;
     EditprofilePage = EditprofilePage_1 = __decorate([
         Component({
             selector: 'page-editprofile',
@@ -208,7 +219,6 @@ var EditprofilePage = /** @class */ (function () {
             Storage])
     ], EditprofilePage);
     return EditprofilePage;
-    var EditprofilePage_1;
 }());
 export { EditprofilePage };
 //# sourceMappingURL=editprofile.js.map

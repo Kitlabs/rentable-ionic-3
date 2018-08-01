@@ -61,6 +61,10 @@
             <p class="info_1">{{item.likes}}</p>
           </div>
         </ion-card>
+         <div class="nodata" no-lines *ngIf="own_avaiablelist == null || own_avaiablelist.length == 0"> 
+      <img src="assets/img/nodata.png" style="display: block;margin: auto;width:60px !important;"><br>
+      <span>Sorry, we couldn't find any matches.<br>Please try again.</span>
+    </div>
       </div>
 
       <!-- I Own -> RENTED -->
@@ -107,7 +111,10 @@
 
           </div>
         </ion-card>
-       
+        <div class="nodata" no-lines *ngIf="own_rentedlist == null || own_rentedlist.length == 0"> 
+      <img src="assets/img/nodata.png" style="display: block;margin: auto;width:60px !important;"><br>
+      <span>Sorry, we couldn't find any matches.<br>Please try again.</span>
+    </div>
       </div>
     </ion-card-content>
 
@@ -159,6 +166,10 @@
           </div> -->
         </div>
         </ion-card>
+        <div class="nodata" no-lines *ngIf="rent_historylist == null || rent_historylist.length == 0"> 
+      <img src="assets/img/nodata.png" style="display: block;margin: auto;width:60px !important;"><br>
+      <span>Sorry, we couldn't find any matches.<br>Please try again.</span>
+    </div>
       </div>
 
 
@@ -208,6 +219,10 @@
             </div> -->
           </div>
         </ion-card>
+         <div class="nodata" no-lines *ngIf="rent_currentlist == null || rent_currentlist.length == 0"> 
+      <img src="assets/img/nodata.png" style="display: block;margin: auto;width:60px !important;"><br>
+      <span>Sorry, we couldn't find any matches.<br>Please try again.</span>
+    </div>
       </div>
     </ion-card-content>
     

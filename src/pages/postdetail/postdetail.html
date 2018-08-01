@@ -109,7 +109,8 @@
 
 	  <ion-row class="detailstyle">
 	  	<ion-col col-11>
-	  		<ion-textarea  #textarea id="conditiontitle" (ionFocus)='myFocus(0)' (ionBlur)='myFocus(1)' (click)="focus()" (ionChange)='conditionnum()' style="margin-bottom:50px; font-size: 1em" rows="5" type="text"  placeholder="I have only worn these shoes for a total of 3 days..." [(ngModel)]="conditiontitle" maxlength="200"></ion-textarea >
+        <ion-textarea  #textarea id="conditiontitle" (ionChange)='conditionnum()' style="margin-bottom:50px; font-size: 1em" rows="5" placeholder="I have only worn these shoes for a total of 3 days..." [(ngModel)]="conditiontitle" maxlength="200"></ion-textarea >
+	  		<!-- <ion-textarea  #textarea id="conditiontitle" (ionFocus)='myFocus(0)' (ionBlur)='myFocus(1)' (click)="focus()" (ionChange)='conditionnum()' style="margin-bottom:50px; font-size: 1em" rows="5" type="text"  placeholder="I have only worn these shoes for a total of 3 days..." [(ngModel)]="conditiontitle" maxlength="200"></ion-textarea > -->
 	  	</ion-col>
 	  	<ion-col col-1>
 	  		<ion-icon name="md-close" class="graycolor" (click)="removeItemDetails()"></ion-icon>

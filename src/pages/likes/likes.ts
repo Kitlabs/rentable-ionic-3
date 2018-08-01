@@ -20,7 +20,7 @@ export class Likes {
 
   @ViewChild(Navbar) navBar: Navbar;
 
-  categorylist:Array<any>;
+  categorylist:Array<any> = [];
   newcategorylist:Array<any>;
   profile=Profile;
   search=SearchPage;
@@ -36,15 +36,10 @@ export class Likes {
     public itemprovider: ItemsProvider,
     public storage:Storage,) {
 
-    
+    console.log(this.categorylist.length);
     // for (var i = 0; i < 12; ++i) {
     //         this.like[i]=false;
     //       }
-
-
-
-    
-
     /*this.categorylist = [
       {img: 'assets/img/01.png', price:'21',id:'0'},
       {img: 'assets/img/02.png', price:'56',id:'1'},
@@ -64,6 +59,7 @@ export class Likes {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LikesPage');
+    //alert('likes')
     // this.navBar.backButtonClick = () => {
 
     //   this.navCtrl.setRoot(Myrent);
@@ -72,7 +68,6 @@ export class Likes {
   ionViewWillEnter(){
     console.log("ionViewWillEnter LikesPage");
     this.like = [];
-    this.categorylist=[];
     this.getListOfFavouriteList();
   }
   ionViewDidEnter(){
@@ -106,6 +101,7 @@ export class Likes {
     this.itemprovider.addRemoveFavourite(this.userId,itemId,0).subscribe(data=>{
      console.log(data); 
      this.categorylist.splice(i,1);
+     console.log(this.categorylist);
     });
   }
 

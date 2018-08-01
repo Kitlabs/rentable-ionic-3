@@ -162,9 +162,6 @@
       
       </ion-row>
 
-  
-
-        
       <ion-row  style="padding-bottom: 10px;padding-top: 10px;text-align: center;" class="bottomborder" *ngIf="pickReturnDateStatus"> 
         <ion-col col-5 style="text-align: left;">
           <span > Total Rental Cost:</span>
@@ -188,14 +185,14 @@
         </ion-col>
       </ion-row>
 
-      
-
-      <button ion-button block   
-      [ngClass]="{disabled : !btnSendRentalReq,
-      'send-button-on animated zoomIn':btnSendRentalReq,
-      'send-button-off':!btnSendRentalReq }"  
+       <button ion-button block [disabled]="!btnSendRentalReq" [ngClass]="{'send-button-on animated zoomIn':btnSendRentalReq,'send-button-off':!btnSendRentalReq }"  
       (click)="btnSendRentalReq && sendrental()"
      >Send Rental Request</button>
+
+      <!-- <button ion-button block   
+      [ngClass]="{disabled : !btnSendRentalReq,'send-button-on animated zoomIn':btnSendRentalReq,'send-button-off':!btnSendRentalReq }"  
+      (click)="btnSendRentalReq && sendrental()"
+     >Send Rental Request</button> -->
       
      
       <ion-item style="color: black;">
@@ -218,12 +215,14 @@
         <p item-left class="helpstr">SEND MESSAGE</p>
         <p item-right class="helpstr">{{messagenumber}}</p>
       </ion-item>
-      <ion-item >
+      <ion-item>
         <ion-input  style="width: 80vw;" [(ngModel)]="messagetext" (ionChange)="number()" type="text" placeholder="send message..." maxlength='350'></ion-input>
-        <img item-right class="sendbutton" (click)="sendCommonMessage()" src="assets/icon/ico_send.png" 
-        [ngClass]="{disabled : !btnSendMessage,
-          'send-msg-on':btnSendMessage,
-          'send-msg-off':!btnSendMessage }" >
+        <!-- <img item-right class="sendbutton" (click)="sendCommonMessage()" src="assets/icon/ico_send.png" 
+        [ngClass]="{disabled : !btnSendMessage,'send-msg-on':btnSendMessage,'send-msg-off':!btnSendMessage }" > -->
+        <button ion-button icon-only clear item-right class="sendbutton" [disabled]="!messagetext" (click)="sendCommonMessage()">
+            <ion-icon><img item-right class="sendbutton" src="assets/icon/ico_send.png" 
+              [ngClass]="{'send-msg-on':btnSendMessage,'send-msg-off':!btnSendMessage }" ></ion-icon>
+        </button>
       </ion-item>
     </div>
     </ion-row>

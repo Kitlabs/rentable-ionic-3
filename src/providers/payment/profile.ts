@@ -146,6 +146,10 @@ export class ProfileProvider {
     action:'GetOverallFeedbackRating',
     UserId:UserId,
   }
+  // let body={
+  //   action:'GetOverallFeedbackRatingForRated',
+  //   UserId:UserId,
+  // }
   console.log(JSON.stringify(body));
   return this.http.post(this.apiUrl,JSON.stringify(body));
  }  

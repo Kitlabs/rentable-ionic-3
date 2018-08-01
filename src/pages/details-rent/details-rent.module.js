@@ -7,6 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { DetailsRentPage } from './details-rent';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { TooltipsModule } from 'ionic-tooltips';
 var DetailsRentPageModule = /** @class */ (function () {
     function DetailsRentPageModule() {
     }
@@ -17,6 +19,8 @@ var DetailsRentPageModule = /** @class */ (function () {
             ],
             imports: [
                 IonicPageModule.forChild(DetailsRentPage),
+                IonicImageViewerModule,
+                TooltipsModule,
             ],
         })
     ], DetailsRentPageModule);

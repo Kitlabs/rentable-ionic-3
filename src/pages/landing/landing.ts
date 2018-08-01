@@ -1108,13 +1108,13 @@ export class LandingPage {
      this.loading.present();
      this.Authprovider.phoneverify(this.number).subscribe(
         data=>{
-
+          console.log(data)
             //response Error
             if(data.json().msg=="error"){
               //number not registered
               //send otp to number 
               this.Authprovider.Sendsms(this.number).subscribe(data=>{
-                
+                console.log(data)
                 if(data.json().msg=="success"){ 
                   this.showToast("verification code has been sent to your number");
                   //take user to otp screen

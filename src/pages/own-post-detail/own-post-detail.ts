@@ -292,6 +292,7 @@ export class OwnPostDetailPage {
      //product rating
      this.profileProvider.getRating(userId).subscribe(
        (data)=>{
+         console.log(data.json());
         rating=data.json().AverageRating;
         console.log(rating);
        if(data.json().msg=="success"){

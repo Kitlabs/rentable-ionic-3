@@ -1,5 +1,18 @@
 page-chat {
+  .nodata{
+    position: fixed;
+top: 42%;
+text-align: center;
+width: 100%;
+//padding-left: 30px;
+padding-right: 30px;
+}
 
+.nodata span{
+    color: grey;
+    font-weight: 700;
+    font-size: 17px;
+}
   .list-md {
     margin: -1px 0 32px;
   }

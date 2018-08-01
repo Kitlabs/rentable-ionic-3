@@ -8,12 +8,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { LandingPage } from '../landing/landing';
 var CountrycodePage = /** @class */ (function () {
-    function CountrycodePage(navCtrl, navParams) {
+    function CountrycodePage(navCtrl, navParams, viewCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
         this.countries =
             [
                 {
@@ -991,12 +992,16 @@ var CountrycodePage = /** @class */ (function () {
         console.log('ionViewDidLoad CountrycodePage');
     };
     CountrycodePage.prototype.countryCode = function (countrycode) {
-        console.log(countrycode);
-        this.navCtrl.setRoot(LandingPage, {
-            code: countrycode,
-            animation: true,
-            direction: "forwared"
-        });
+        if (this.navParams.get("type") == "updatenumber") {
+            this.viewCtrl.dismiss(countrycode);
+        }
+        else {
+            this.navCtrl.setRoot(LandingPage, {
+                code: countrycode,
+                animation: true,
+                direction: "forwared"
+            });
+        }
     };
     CountrycodePage = __decorate([
         IonicPage(),
@@ -1004,7 +1009,7 @@ var CountrycodePage = /** @class */ (function () {
             selector: 'page-countrycode',
             templateUrl: 'countrycode.html',
         }),
-        __metadata("design:paramtypes", [NavController, NavParams])
+        __metadata("design:paramtypes", [NavController, NavParams, ViewController])
     ], CountrycodePage);
     return CountrycodePage;
 }());

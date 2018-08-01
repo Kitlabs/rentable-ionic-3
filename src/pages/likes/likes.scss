@@ -1,5 +1,20 @@
 
 page-likes {
+    .nodata{
+            position: fixed;
+    top: 39%;
+    text-align: center;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    }
+    .nodata p{
+        font-size:17px;
+        font-weight: 600;
+    }
+    .nodata span{
+            color: grey;
+    }
   .grid-list{
     width: 50%;
     float: left;

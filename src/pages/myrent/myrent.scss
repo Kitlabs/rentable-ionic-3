@@ -1,4 +1,17 @@
 page-myrent {
+    .nodata{
+            position: fixed;
+    top: 42%;
+    text-align: center;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    }
+   
+    .nodata span{
+            color: grey;
+            font-weight: 700;
+    }
   .fab-md{
       color: white !important;
       box-shadow: 0 9px 3px 0 rgba(0, 0, 0, 0.001), 0 2px 6px rgba(0, 0, 0, 0.1);

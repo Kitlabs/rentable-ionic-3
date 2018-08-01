@@ -19,7 +19,7 @@ var ShareModal = /** @class */ (function () {
         this.viewCtrl = viewCtrl;
         this.socialSharing = socialSharing;
         this.alertCtrl = alertCtrl;
-        this.subject = 'Message from Social Sharing App';
+        this.subject = 'Message from Rentable Application';
         this.message = 'Take your app development skills to the next level with Mastering Ionic 2 - the definitive guide';
         this.image = 'http://masteringionic2.com/perch/resources/mastering-ionic-2-cover-1-w320.png';
         this.uri = 'https://www.jadecreative.co.nz';
@@ -30,18 +30,16 @@ var ShareModal = /** @class */ (function () {
         this.productTitle = this.navParams.get('productTitle');
         this.productDescription = this.navParams.get('productDescription');
         this.productDailyRentalCost = this.navParams.get('productDailyRentalCost');
-        this.image = this.rootUrl + this.navParams.get('productImage');
+        this.image = this.navParams.get('productImage');
         this.message = "Title=" + this.productTitle + " , " + "Description=" + this.productDescription + " , " + "Daily rental cost=" + "$" + this.productDailyRentalCost;
+        console.log(this.image);
     };
     ShareModal.prototype.shareViaFacebook = function () {
         var _this = this;
         console.log("facebook share");
         this.platform.ready()
             .then(function () {
-            // this.socialSharing.canShareVia('com.apple.social.facebook', this.message, this.productImage, this.uri)
-            // .then((data) =>
-            // {
-            _this.socialSharing.shareViaFacebook(_this.message, _this.image, _this.uri)
+            _this.socialSharing.shareViaFacebook(_this.message, _this.image, _this.image)
                 .then(function (data) {
                 _this.presentAlert('Shared via Facebook');
             })
@@ -56,23 +54,29 @@ var ShareModal = /** @class */ (function () {
     };
     ShareModal.prototype.shareViaTwitter = function () {
         var _this = this;
-        // this.platform.ready()
-        // .then(() =>
-        // {
-        this.socialSharing.canShareVia('com.apple.social.twitter', this.message, this.productImage, this.uri)
-            .then(function (data) {
-            _this.socialSharing.shareViaFacebook(_this.message, _this.productImage, _this.uri)
+        this.platform.ready()
+            .then(function () {
+            _this.socialSharing.shareViaTwitter(_this.message, _this.image, _this.image)
                 .then(function (data) {
                 _this.presentAlert('Shared via Twitter');
             })
                 .catch(function (err) {
                 _this.presentAlert('Was not shared via Twitter');
             });
-        })
-            .catch(function (err) {
-            _this.presentAlert('Not able to be shared via Twitter');
         });
-        // });
+    };
+    ShareModal.prototype.shareViaWhatsapp = function () {
+        var _this = this;
+        this.platform.ready()
+            .then(function () {
+            _this.socialSharing.shareViaWhatsApp(_this.message, _this.image, _this.image)
+                .then(function (data) {
+                _this.presentAlert('Shared via Whatsapp');
+            })
+                .catch(function (err) {
+                _this.presentAlert('Was not shared via Whatsapp');
+            });
+        });
     };
     ShareModal.prototype.closeShareDialog = function () {
         this.viewCtrl.dismiss();
@@ -92,30 +96,25 @@ var ShareModal = /** @class */ (function () {
     //       });
     //    });
     // }
-    // shareViaEmail()
-    // {
-    //    this.platform.ready()
-    //    .then(() =>
-    //    {
-    //       SocialSharing.canShareViaEmail()
-    //       .then(() =>
-    //       {
-    //          SocialSharing.shareViaEmail(this.message, this.subject, this.sendTo)
-    //          .then((data) =>
-    //          {
-    //             console.log('Shared via Email');
-    //          })
-    //          .catch((err) =>
-    //          {
-    //             console.log('Not able to be shared via Email');
-    //          });
-    //       })
-    //       .catch((err) =>
-    //       {
-    //          console.log('Sharing via Email NOT enabled');
-    //       });
-    //    });
-    // }
+    ShareModal.prototype.shareViaEmail = function () {
+        var _this = this;
+        this.platform.ready()
+            .then(function () {
+            _this.socialSharing.canShareViaEmail()
+                .then(function () {
+                _this.socialSharing.shareViaEmail(_this.message, _this.subject, _this.sendTo)
+                    .then(function (data) {
+                    console.log('Shared via Email');
+                })
+                    .catch(function (err) {
+                    console.log('Not able to be shared via Email');
+                });
+            })
+                .catch(function (err) {
+                console.log('Sharing via Email NOT enabled');
+            });
+        });
+    };
     ShareModal.prototype.presentAlert = function (subTitle) {
         var alert = this.alertCtrl.create({
             subTitle: subTitle,

@@ -8,6 +8,7 @@ import { Details } from '../details/details';
 import { ChatPage } from '../chat/chat';
 import { RentPage } from '../../pages/rent/rent';
 import { Storage } from '@ionic/storage';
+import { ItemsProvider } from '../../providers/items/items';
 
 @Component({
   selector: 'page-chatdetail',
@@ -27,7 +28,7 @@ export class ChatdetailPage {
   interlocutor:string="22";
   message:string;
   messages: object[] = [];
-  chatRef:any;  
+  chatRef:any;
   //chats:FirebaseListObservable<any>;
   chats;
   //variable used in firebase chat
@@ -47,7 +48,9 @@ export class ChatdetailPage {
     public chatprovider: ChatProvider,
     public storage:Storage,
     public ev:Events,
-    public toastCtrl:ToastController) {
+    public toastCtrl:ToastController,
+    public itemprovider: ItemsProvider
+    ) {
 
     // this.Chatdetail ={
     //   img: 'assets/img/11.png', ownerimage:'assets/img/profile-img.png', item_title:'house', price:'25'};
@@ -83,11 +86,9 @@ export class ChatdetailPage {
       this.chats = this.af.list(chatRef).subscribe( data => {
         this.messages = data;
         console.log(data);
+        //this.chatprovider.DeleteAllChatItems(chatRef);
         if(data.length>0){ 
-          //old
-          // if(data[data.length-1].from!=this.uid){
-          //   this.ev.publish("messageCount",1)  
-          // }
+  
         }
       });
       
@@ -108,6 +109,35 @@ export class ChatdetailPage {
           time: Date()
       }).then( () => {
         // message is sent
+        console.log(this.chatDetail.DeletedFromId);
+        console.log(this.chatDetail.DeletedToId);
+        if(this.chatDetail.status == 'iown'){
+           if(this.chatDetail.DeletedFromId == "Yes"){
+             console.log('delete from id is Yes');
+              this.itemprovider.UpdateChatItemOwn(this.uid,this.chatDetail.reqUserId,this.chatDetail.itemId,'No','No').subscribe(data =>{
+               if(data.json().msg=="success"){
+                 //this.chatprovider.deleteChats(this.uid,renterId,itemId);
+               }
+             },
+             err=>{
+               console.log("error");
+             });
+          }
+      }else{
+        if(this.chatDetail.DeletedToId == "Yes"){
+          console.log('delete from id is Yes');
+           this.itemprovider.UpdateChatItemRent(this.uid,this.chatDetail.reqUserId,this.chatDetail.itemId,'No','No').subscribe(data =>{
+            if(data.json().msg=="success"){
+              //this.chatprovider.deleteChats(this.uid,renterId,itemId);
+              
+            }
+          },
+          err=>{
+            console.log("error");
+          });
+       }
+      }
+       
         this.markMessageAsUnRead();
         this.notifyReceiver();   
       }).catch( () => {

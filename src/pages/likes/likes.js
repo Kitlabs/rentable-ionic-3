@@ -17,6 +17,9 @@ import { Myrent } from '../myrent/myrent';
 import { Storage } from '@ionic/storage';
 var Likes = /** @class */ (function () {
     function Likes(navCtrl, navParams, itemprovider, storage) {
+        // for (var i = 0; i < 12; ++i) {
+        //         this.like[i]=false;
+        //       }
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.itemprovider = itemprovider;
@@ -25,11 +28,6 @@ var Likes = /** @class */ (function () {
         this.search = SearchPage;
         this.details = Details;
         this.myrent = Myrent;
-        this.like = [];
-        this.categorylist = [];
-        for (var i = 0; i < 12; ++i) {
-            this.like[i] = false;
-        }
         /*this.categorylist = [
           {img: 'assets/img/01.png', price:'21',id:'0'},
           {img: 'assets/img/02.png', price:'56',id:'1'},
@@ -46,12 +44,19 @@ var Likes = /** @class */ (function () {
         ]*/
     }
     Likes.prototype.ionViewDidLoad = function () {
-        var _this = this;
         console.log('ionViewDidLoad LikesPage');
-        this.navBar.backButtonClick = function () {
-            _this.navCtrl.setRoot(Myrent);
-        };
+        // this.navBar.backButtonClick = () => {
+        //   this.navCtrl.setRoot(Myrent);
+        // }
+    };
+    Likes.prototype.ionViewWillEnter = function () {
+        console.log("ionViewWillEnter LikesPage");
+        this.like = [];
+        this.categorylist = [];
         this.getListOfFavouriteList();
+    };
+    Likes.prototype.ionViewDidEnter = function () {
+        console.log("ionViewDidEnter LikesPage");
     };
     Likes.prototype.ActiveLike = function (i) {
         this.like[i] = false;
@@ -61,19 +66,24 @@ var Likes = /** @class */ (function () {
     };
     Likes.prototype.ActiveFavourite = function (itemId) {
         var _this = this;
+        this.categorylist.splice(itemId, 1);
         this.like[itemId] = false;
         this.itemprovider.addRemoveFavourite(this.userId, itemId, 1).subscribe(function (data) {
-            _this.getListOfFavouriteList();
+            console.log(data);
+            _this.categorylist.splice(itemId, 1);
         });
     };
-    Likes.prototype.DeactiveFavourite = function (itemId) {
+    Likes.prototype.DeactiveFavourite = function (i, itemId) {
         var _this = this;
-        this.like[itemId] = true;
+        console.log("deactivate=" + itemId);
+        this.like[i] = true;
         this.itemprovider.addRemoveFavourite(this.userId, itemId, 0).subscribe(function (data) {
-            _this.getListOfFavouriteList();
+            console.log(data);
+            _this.categorylist.splice(i, 1);
         });
     };
     Likes.prototype.goToDetails = function (itemId) {
+        console.log(itemId);
         this.navCtrl.push(Details, {
             itemId: itemId
         });
@@ -83,9 +93,8 @@ var Likes = /** @class */ (function () {
         this.storage.get('userId').then(function (data) {
             _this.userId = data;
             _this.itemprovider.getFavouriteList(_this.userId).subscribe(function (data) {
-                console.log("succes");
-                console.log(data.json());
                 if (data.json().msg == "success") {
+                    console.log(data.json());
                     _this.basePath = data.json().base_path;
                     _this.categorylist = data.json().msg_details;
                 }
@@ -95,8 +104,6 @@ var Likes = /** @class */ (function () {
                 console.log("error");
             });
         });
-    };
-    Likes.prototype.filterItems = function () {
     };
     __decorate([
         ViewChild(Navbar),

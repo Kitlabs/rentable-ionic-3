@@ -8,23 +8,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { PaymentProvider } from '../../providers/payment/payment';
 import { AddpaymentPage } from '../addpayment/addpayment';
 import { Stripe } from '@ionic-native/stripe';
+import { Storage } from '@ionic/storage';
 var CreditPage = /** @class */ (function () {
-    function CreditPage(navCtrl, navParams, paymentprovider, stripe) {
+    function CreditPage(navCtrl, navParams, paymentprovider, storage, loadingCtrl, toastCtrl, stripe) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.paymentprovider = paymentprovider;
+        this.storage = storage;
+        this.loadingCtrl = loadingCtrl;
+        this.toastCtrl = toastCtrl;
         this.stripe = stripe;
         this.type = 'password';
         this.showPass = false;
         this.addpayment = AddpaymentPage;
+        this.searchStatus = false;
+        ///^[a-zA-Z ]*$/;
+        this.alphabetRegex = /^[A-Za-z ]*$/;
+        this.numberRegex = "[0-9]";
         this.cardinfor = [];
         this.iscard = false;
         this.countryname = "Australia";
-        this.expirydate = 22;
+        this.expirydate = "";
+        this.name = "";
+        this.cardnumber = "";
+        this.password = "";
         this.countries =
             [
                 {
@@ -999,14 +1010,32 @@ var CreditPage = /** @class */ (function () {
             ];
         //stripe token
         //pk_test_9nMqfLFLdeCntkhuhselGkI
+        this.minYear = "2018";
+        var today = new Date();
+        this.dd = today.getDate();
+        this.mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (this.dd < 10) {
+            this.dd = '0' + this.dd;
+        }
+        if (this.mm < 10) {
+            this.mm = '0' + this.mm;
+        }
+        // this.minDate =this.mm + '/' + this.dd + '/' + yyyy;
+        this.minDate = yyyy + '-' + this.mm + '-' + this.dd;
+        console.log(this.minDate);
     }
-    CreditPage.prototype.ionViewDidLoad = function () {
+    CreditPage.prototype.ionViewDidEnter = function () {
+        var _this = this;
         console.log('ionViewDidLoad CreditPagePage');
+        this.storage.get('userId').then(function (userId) {
+            _this.userId = userId;
+        });
     };
     CreditPage.prototype.showPassword = function () {
         this.showPass = !this.showPass;
         if (this.showPass) {
-            this.type = 'text';
+            this.type = 'number';
         }
         else {
             this.type = 'password';
@@ -1027,8 +1056,105 @@ var CreditPage = /** @class */ (function () {
         this.cardnumber = "";
     };
     CreditPage.prototype.cleardate = function () {
-        this.expirydate = "2018";
+        this.expirydate = "";
     };
+    /**
+     * Function called when user enter card name
+     */
+    CreditPage.prototype.nameChange = function () {
+        if (this.name.match(this.alphabetRegex)) {
+            console.log("Valid name");
+        }
+        else {
+            console.log("Invalid name");
+        }
+        if (this.expirydate == "" || this.name == "" || this.cardnumber == "" || this.password == "") {
+            this.searchStatus;
+        }
+        else {
+            console.log("enable");
+        }
+    };
+    /**
+     * Function called when user enter card number
+     */
+    CreditPage.prototype.cardNumberChange = function () {
+        var isNumber = /^\d+$/.test(this.cardnumber);
+        console.log(this.cardnumber);
+        if (this.cardnumber.length == 4 || this.cardnumber.length == 9 || this.cardnumber.length == 14) {
+            this.cardnumber = this.cardnumber.concat('-');
+        }
+        if (this.expirydate == "" || this.name == "" || !this.name.match(this.alphabetRegex) || !this.validateCardNumber(this.cardnumber) || !this.password.match(this.numberRegex) || this.password == "" || this.password.length != 3) {
+            this.searchStatus = false;
+        }
+        else {
+            this.searchStatus = true;
+        }
+    };
+    /**
+     * Function called when user enter expirty data of card
+     */
+    CreditPage.prototype.cardExpiryChange = function () {
+        if (this.expirydate || this.name || this.cardnumber || this.password) {
+            console.log("disable");
+        }
+        else {
+            console.log("enable");
+        }
+    };
+    /**
+     * Fuction called when user enter security code
+     */
+    CreditPage.prototype.cardSecurityChange = function () {
+        if (this.expirydate || this.name || this.cardnumber || this.password) {
+            console.log("disable");
+        }
+        else {
+            console.log("enable");
+        }
+    };
+    CreditPage.prototype.change = function () {
+        if (this.expirydate == "" || this.name == "" || !this.name.match(this.alphabetRegex) || !this.validateCardNumber(this.cardnumber) || this.password == "" || this.password.length != 3) {
+            this.searchStatus = false;
+        }
+        else {
+            this.searchStatus = true;
+        }
+    };
+    CreditPage.prototype.saveCard = function () {
+        var _this = this;
+        //seprating month and year from security deposit
+        var loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+        });
+        loading.present();
+        var expiryDate = this.expirydate;
+        var res = expiryDate.split("-");
+        this.cardinfor.userId = this.userId;
+        this.cardinfor.nameOnCard = this.name;
+        this.cardinfor.cardNumber = this.cardnumber.replace(/-/g, "");
+        this.cardinfor.cardExpiryYear = res[0];
+        this.cardinfor.cardExpiryMonth = res[1];
+        this.cardinfor.cardSecurityCode = this.password;
+        this.cardinfor.cardCountry = this.countryname;
+        this.paymentprovider.addCardInfo(this.cardinfor).subscribe(function (data) {
+            console.log(data);
+            loading.dismiss();
+            if (data.json().msg == "success") {
+                _this.presentToast("Card has been added successfully", 0);
+            }
+            else {
+                _this.presentToast("Invalid Card", 1);
+            }
+        }, function (err) {
+            console.log(err);
+            _this.presentToast("Invalid card details", 1);
+            loading.dismiss();
+        });
+    };
+    /**
+     * Old Method with native stripe plugin
+     */
     CreditPage.prototype.save = function () {
         this.cardinfor.name = this.name;
         this.cardinfor.number = this.cardnumber;
@@ -1052,24 +1178,45 @@ var CreditPage = /** @class */ (function () {
             }
         });
     };
-    // takes the form field value and returns true on valid number
-    CreditPage.prototype.valid_credit_card = function (value) {
-        // accept only digits, dashes or spaces
-        if (/[^0-9-\s]+/.test(value))
-            return false;
-        // The Luhn Algorithm. It's so pretty.
-        var nCheck = 0, nDigit = 0, bEven = false;
-        value = value.replace(/\D/g, "");
-        for (var n = value.length - 1; n >= 0; n--) {
-            var cDigit = value.charAt(n), nDigit = parseInt(cDigit, 10);
-            if (bEven) {
-                if ((nDigit *= 2) > 9)
-                    nDigit -= 9;
+    CreditPage.prototype.presentToast = function (msg, id) {
+        var _this = this;
+        var toast = this.toastCtrl.create({
+            message: msg,
+            duration: 3000,
+            position: 'top'
+        });
+        toast.onDidDismiss(function () {
+            if (id == 0) {
+                _this.navCtrl.pop();
             }
-            nCheck += nDigit;
-            bEven = !bEven;
+            else {
+            }
+        });
+        toast.present();
+    };
+    //Checking whether credit card valid or not 
+    //https://stackoverflow.com/questions/6176802/how-to-validate-credit-card-number
+    //https://en.wikipedia.org/wiki/Payment_card_number
+    CreditPage.prototype.validateCardNumber = function (number) {
+        number = number.replace(/-/g, "");
+        var regex = new RegExp("^[0-9]{16}$");
+        if (!regex.test(number))
+            return false;
+        return this.luhnCheck(number);
+    };
+    CreditPage.prototype.luhnCheck = function (val) {
+        var sum = 0;
+        for (var i = 0; i < val.length; i++) {
+            var intVal = parseInt(val.substr(i, 1));
+            if (i % 2 == 0) {
+                intVal *= 2;
+                if (intVal > 9) {
+                    intVal = 1 + (intVal % 10);
+                }
+            }
+            sum += intVal;
         }
-        return (nCheck % 10) == 0;
+        return (sum % 10) == 0;
     };
     CreditPage = __decorate([
         Component({
@@ -1079,6 +1226,9 @@ var CreditPage = /** @class */ (function () {
         __metadata("design:paramtypes", [NavController,
             NavParams,
             PaymentProvider,
+            Storage,
+            LoadingController,
+            ToastController,
             Stripe])
     ], CreditPage);
     return CreditPage;

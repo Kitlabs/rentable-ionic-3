@@ -62,8 +62,6 @@ var SignupPage = /** @class */ (function () {
         if (this.tabBarElement) {
             this.tabBarElement.style.display = 'none';
         }
-        ///this.registerForm.get('email').setValue(localStorage.getItem('userEmail'));
-        //this.registerForm.get('email').setValue("abc@gmail.com");
     };
     SignupPage.prototype.ionViewWillLeave = function () {
         if (this.tabBarElement) {
@@ -77,20 +75,8 @@ var SignupPage = /** @class */ (function () {
     SignupPage.prototype.facebook = function () {
     };
     SignupPage.prototype.doRegister = function () {
-        /*    this.Usersignup.email=this.email.value;
-            this.Usersignup.password=this.password.value;
-            this.uuid=this.device.uuid;
-      
-            console.log('device token',this.uuid);
-            console.log(this.Usersignup.phonenumber);
-          this.navCtrl.setRoot(FinishsignPage,{
-            user:this.Usersignup
-          });*/
-        //this.Usersignup.id=0;
         this.Usersignup.email = this.email.value;
         this.Usersignup.password = this.password.value;
-        //this.email="abc@gmail.com";
-        //localStorage.setItem("userEmail",this.email.value);
         this.navCtrl.push(FinishsignPage, {
             user: this.Usersignup
         });
@@ -118,25 +104,8 @@ var SignupPage = /** @class */ (function () {
             _this.Usersignup.password = _this.password.value;
             _this.Usersignup.firstName = _this.users.first_name;
             _this.Usersignup.lastName = _this.users.last_name;
-            //this.Usersignup.fbId=userid;
-            //this.fbEmail="suraj2";
-            //set the email in ui
             _this.fbEmail = _this.users.email;
             _this.registerForm.get('email').setValue(_this.users.email);
-            // this.navCtrl.setRoot(FinishsignPage,{
-            //   user:this.Usersignup
-            // });
-            // this.navCtrl.push(FinishsignPage,{
-            //   user:this.Usersignup
-            // })
-            /*this.Authprovider.signup(this.Usersignup).subscribe(data=>{
-            
-            if(data.json().msg=="success"){
-              this.showToastWithCloseButton("Registered Successfully");
-                this.userInfo=data.json(). user_details;
-                this.storage.set("userId",this.userInfo[0].id);
-              }
-            });*/
         })
             .catch(function (e) {
             console.log(e);

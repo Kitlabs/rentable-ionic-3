@@ -13,91 +13,291 @@ import { ItemsProvider } from '../../providers/items/items';
 import { Profile } from '../profile/profile';
 import { SearchPage } from '../search/search';
 import { Details } from '../details/details';
-/*
-  Generated class for the SearchresultPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+import { Storage } from '@ionic/storage';
+import { Home } from '../home/home';
 var SearchresultPage = /** @class */ (function () {
-    function SearchresultPage(navCtrl, navParams, itemprovider) {
-        var _this = this;
+    function SearchresultPage(navCtrl, navParams, itemprovider, storage) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.itemprovider = itemprovider;
+        this.storage = storage;
         this.profile = Profile;
         this.search = SearchPage;
         this.details = Details;
+        //filterStatus
+        this.locationStatus = false;
+        this.catNameStatus = false;
+        this.distanceStatus = false;
+        this.priceStatus = false;
+        this.postedWithinStatus = false;
+        this.sortedByStatus = false;
         this.itemlist = [];
-        this.categorylist = [];
-        //this.itemlist = [{img: 'assets/img/01.png', title: 'apartment', icon: 'ios-home-outline', price:'20'}, {img: 'assets/img/02.png', title: 'wedding hall', icon: 'ios-bowtie-outline',price:'22'}, {img: 'assets/img/03.png', title: 'shop', icon: 'ios-shirt-outline', price:'30'}, {img: 'assets/img/04.png', title: 'rent', icon: 'ios-headset-outline', price:'20'},{img: 'assets/img/01.png', title: 'apartment', icon: 'ios-home', price:'27'}, {img: 'assets/img/02.png', title: 'wedding hall', icon: 'ios-bowtie', price:'60'}, {img: 'assets/img/03.png', title: 'shop', icon: 'md-cart', price:'39'}, {img: 'assets/img/04.png', title: 'rent', icon: 'md-headset', price:'43'},{img: 'assets/img/01.png', title: 'apartment', icon: 'ios-home', price:'31'}, {img: 'assets/img/02.png', title: 'wedding hall', icon: 'ios-bowtie', price:'34'}, {img: 'assets/img/03.png', title: 'shop', icon: 'md-cart', price:'13'}, {img: 'assets/img/04.png', title: 'rent', icon: 'md-headset', price:'20'}]
-        this.totalcategorylist = [
-            { active_img: 'assets/icon/cat-nearyou.png', title: 'Nearby', inactive_img: 'assets/icon/cat-nearyou-grey.png', value: 'nearby' },
-            { active_img: 'assets/icon/cat-electronics.png', title: 'Electronics', inactive_img: 'assets/icon/cat-electronics-grey.png', value: 'electronics' },
-            { active_img: 'assets/icon/cat-cars.png', title: 'Cars and motors', inactive_img: 'assets/icon/cat-cars-grey.png', value: 'cars' },
-            { active_img: 'assets/icon/cat-sports.png', title: 'Sports and leisure', inactive_img: 'assets/icon/cat-sports-grey.png', value: 'sports' },
-            { active_img: 'assets/icon/cat-home.png', title: 'Home and garden', inactive_img: 'assets/icon/cat-home-grey.png', value: 'home' },
-            { active_img: 'assets/icon/cat-movies.png', title: 'Movies and music', inactive_img: 'assets/icon/cat-movies-grey.png', value: 'movies' },
-            { active_img: 'assets/icon/cat-fashion.png', title: 'Fashion and accessories', inactive_img: 'assets/icon/cat-fashion-grey.png', value: 'fashion' },
-            { active_img: 'assets/icon/cat-baby.png', title: 'Baby and child', inactive_img: 'assets/icon/cat-baby-grey.png', value: 'baby' },
-            { active_img: 'assets/icon/cat-tools.png', title: 'Tools and machines', inactive_img: 'assets/icon/cat-tools-grey.png', value: 'tools' },
-            { active_img: 'assets/icon/cat-party.png', title: 'Party and Events', inactive_img: 'assets/icon/cat-party-grey.png', value: 'party' },
-            { active_img: 'assets/icon/cat-other.png', title: 'Other', inactive_img: 'assets/icon/cat-other-grey.png', value: 'other' },
-        ];
-        this.itemprovider.Getitems().subscribe(function (data) {
-            for (var j = 0; j < data.json().result.length; j++) {
-                _this.itemlist[j] = data.json().result[j];
-                console.log(_this.itemlist[j]);
-            }
-            _this.itemlist = data.json().result;
-        }, function (err) {
-            console.log(err);
-        });
-        this.date = navParams.get("date");
-        this.langs = navParams.get("langs");
-        this.within = navParams.get("within");
-        this.fromprice = navParams.get("fromprice");
-        this.toprice = navParams.get("toprice");
-        this.location = navParams.get("location");
-        this.distance = navParams.get("distance");
-        this.category = navParams.get("category");
-        this.categorylist[0] = this.totalcategorylist[0];
-        this.categorylist[1] = this.category;
-        console.log('category', this.category);
+        this.like = [];
     }
-    SearchresultPage.prototype.ionViewDidLoad = function () {
+    SearchresultPage.prototype.ionViewWillEnter = function () {
+        var _this = this;
         console.log('ionViewDidLoad SearchresultPagePage');
+        this.storage.get('selectedFilterOption').then(function (filteredOption) {
+            _this.selectedFilterOption = JSON.parse(filteredOption);
+            _this.selectedFilter();
+            _this.getFilteredData();
+        });
     };
-    SearchresultPage.prototype.myFunction = function (i) {
-        console.log('index', i);
-        this.categorylist.splice(i, 1);
-        // var target = event.target || event.srcElement || event.currentTarget;
-        // var idAttr = target.attributes.id;
-        // var parent = event.srcElement.parentElement;
-        // var preparent = parent.parentElement;
-        // console.log(preparent);
-        // var children = preparent.children;
-        // var count = children.length;
-        // console.log(count);
-        // for (var i = 0; i < count; ++i) {
-        //   if(parent==children[i]){
-        //     var image=this.categorylist[i].active_img;
-        //     console.log(i);
-        //     console.log(children[i].getElementsByTagName('img')[0].getAttribute("data-inactive"));
-        //     children[i].getElementsByTagName('img')[0].setAttribute("src", image);
-        //   }
-        //   else{
-        //     var inactiveimage=this.categorylist[i].inactive_img;
-        //     children[i].getElementsByTagName('img')[0].setAttribute("src", inactiveimage);
-        //   }
-        // }
+    /**
+     *
+     * @param option this.filteredOptionList=
+       {lat:this.lat,lng:this.lng,location:this.location,
+       catName:this.category,catImage:this.categoryImg,
+       distance:this.distance,
+       fromPrice:this.fromprice,toPrice:this.toprice,
+       postedWithin:this.within,
+       sortedBy:this.sortBy};
+     */
+    SearchresultPage.prototype.selectedFilter = function () {
+        console.log("selected filter method");
+        console.log(this.selectedFilterOption);
+        console.log("LOCATION=" + this.selectedFilterOption.location);
+        //1.location
+        if (this.selectedFilterOption.location) {
+            this.locationStatus = true;
+            this.lat = this.selectedFilterOption.lat;
+            this.lng = this.selectedFilterOption.lng;
+            this.location = this.selectedFilterOption.location;
+        }
+        else {
+            this.locationStatus = false;
+        }
+        //2.category
+        if (this.selectedFilterOption.catName) {
+            this.catNameStatus = true;
+            this.catName = this.selectedFilterOption.catName;
+            this.catImage = this.selectedFilterOption.catImage;
+        }
+        else {
+            this.catNameStatus = false;
+        }
+        //3.distance
+        if (this.selectedFilterOption.distance != 0) {
+            console.log("inside distance status");
+            this.distanceStatus = true;
+            this.lat = this.selectedFilterOption.lat;
+            this.lng = this.selectedFilterOption.lng;
+            this.distance = this.selectedFilterOption.distance;
+        }
+        else {
+            console.log("outside distance status");
+            this.distanceStatus = false;
+        }
+        //4.price
+        if (this.selectedFilterOption.fromPrice || this.selectedFilterOption.toPrice) {
+            this.toPrice = this.selectedFilterOption.toPrice;
+            this.fromPrice = this.selectedFilterOption.fromPrice;
+            if (this.fromPrice == 5 && this.toPrice < 500) {
+                this.priceStatus = true;
+            }
+            else if (this.fromPrice > 5 && this.toPrice == 500) {
+                this.priceStatus = true;
+            }
+            else if (this.fromPrice == 5 && this.toPrice == 500) {
+                this.priceStatus = false;
+            }
+            this.fromToPrice = "$" + this.selectedFilterOption.fromPrice + " to " + this.selectedFilterOption.toPrice;
+        }
+        else {
+            this.priceStatus = false;
+            this.toPrice = "";
+            this.fromPrice = "";
+        }
+        //5.posted within
+        if (this.selectedFilterOption.postedWithin) {
+            this.postedWithinStatus = true;
+            this.postedWithin = this.selectedFilterOption.postedWithin;
+        }
+        else {
+            console.log("else posted within");
+            this.postedWithinStatus = false;
+            this.postedWithin = "";
+        }
+        //6.sortby 
+        //if sortby contain first then we need to include location
+        if (this.selectedFilterOption.sortedBy) {
+            this.sortedByStatus = true;
+            this.sortedBy = this.selectedFilterOption.sortedBy;
+            if (this.selectedFilterOption.sortedBy == "Closest first") {
+                this.lat = this.selectedFilterOption.lat;
+                this.lng = this.selectedFilterOption.lng;
+            }
+        }
+        else {
+            this.sortedByStatus = false;
+        }
+        console.log("------------------------------------");
+        console.log(this.locationStatus);
+        console.log(this.catNameStatus);
+        console.log(this.distanceStatus);
+        console.log(this.priceStatus);
+        console.log(this.sortedByStatus);
+    };
+    /**
+     *
+     * @param removeFilterId contain id of filter to remove
+     * 0:category
+     * 1:location
+     * 2.distance
+     * 3.price
+     * 4.posted within
+     * 5.sort by
+     */
+    SearchresultPage.prototype.removeFilter = function (removeFilterId) {
+        switch (removeFilterId) {
+            case 0:
+                this.catNameStatus = false;
+                this.catName = "";
+                this.getFilteredData();
+                this.goToHomePage();
+                break;
+            case 1:
+                this.locationStatus = false;
+                if (this.sortedBy != "Closest first" || !this.distanceStatus) {
+                    this.lat = "";
+                    this.lng = "";
+                }
+                this.getFilteredData();
+                this.goToHomePage();
+                break;
+            case 2:
+                this.distanceStatus = false;
+                this.distance = "";
+                if (!this.locationStatus || this.sortedBy != "Closest first") {
+                    this.lat = "";
+                    this.lng = "";
+                }
+                this.getFilteredData();
+                this.goToHomePage();
+                break;
+            case 3:
+                this.priceStatus = false;
+                this.fromPrice = "";
+                this.toPrice = "";
+                this.getFilteredData();
+                this.goToHomePage();
+                break;
+            case 4:
+                this.postedWithinStatus = false;
+                this.postedWithin = "";
+                this.getFilteredData();
+                this.goToHomePage();
+                break;
+            case 5:
+                this.sortedByStatus = false;
+                this.sortedBy = "";
+                if (!this.distanceStatus || !this.locationStatus) {
+                    if (this.sortedBy == "Closest first") {
+                        this.lat = "";
+                        this.lng = "";
+                    }
+                }
+                this.getFilteredData();
+                this.goToHomePage();
+                break;
+            default:
+                console.log("default statement");
+                break;
+        }
+    };
+    SearchresultPage.prototype.goToFilter = function () {
+        this.navCtrl.setRoot(this.search);
+    };
+    SearchresultPage.prototype.goToHomePage = function () {
+        // locationStatus:boolean=false;
+        // catNameStatus:boolean=false;
+        // distanceStatus:boolean=false;
+        // priceStatus:boolean=false;
+        // postedWithinStatus:boolean=false;
+        // sortedByStatus:boolean=false;
+        console.log(this.locationStatus);
+        console.log(this.catNameStatus);
+        console.log(this.distanceStatus);
+        console.log(this.priceStatus);
+        console.log(this.sortedByStatus);
+        if (!this.locationStatus && !this.catNameStatus && !this.distanceStatus && !this.priceStatus && !this.sortedByStatus && !this.postedWithinStatus) {
+            this.navCtrl.setRoot(Home);
+            console.log("hey i'm going to home");
+        }
+        else {
+            console.log("not going to home");
+        }
+    };
+    /**
+     * Method to get filter data from api
+    */
+    SearchresultPage.prototype.getFilteredData = function () {
+        //userId,Category,PostedWithin,PriceFrom,PriceTo,Lat,Long,Range,SortBy
+        var _this = this;
+        this.storage.get('userId').then(function (userId) {
+            _this.userId = userId;
+            _this.itemprovider.getFilterData(userId, _this.catName, _this.postedWithin, _this.fromPrice, _this.toPrice, _this.lat, _this.lng, _this.distance, _this.sortedBy).subscribe(function (data) {
+                //{"msg":"error","msg_details":"Error in Query."}
+                console.log(data);
+                if (data.json().msg == "success") {
+                    _this.itemlist = data.json().data;
+                    _this.addFavUnFav();
+                }
+                else {
+                    _this.itemlist = [];
+                }
+            }, function (err) {
+                console.log(err);
+            }); //end
+        }); //end of storage
+    };
+    SearchresultPage.prototype.godetails = function (itemId) {
+        localStorage.setItem("filterStatus", "true");
+        this.navCtrl.push(Details, {
+            itemId: itemId
+        });
+    };
+    SearchresultPage.prototype.ActiveFavourite = function (itemId) {
+        console.log("like");
+        //this.favouritlist[itemId]=true;
+        this.like[itemId] = true;
+        this.itemprovider.addRemoveFavourite(this.userId, itemId, 1).subscribe(function (data) {
+            console.log(data);
+            //this.getItemsByCategoryName(this.categorySelected);
+        });
+    };
+    SearchresultPage.prototype.DeactiveFavourite = function (itemId) {
+        console.log("dislike");
+        //this.favouritlist[itemId]=false;
+        this.like[itemId] = false;
+        this.itemprovider.addRemoveFavourite(this.userId, itemId, 0).subscribe(function (data) {
+            console.log(data);
+            //this.getItemsByCategoryName(this.categorySelected);
+        });
+    };
+    /*
+    Method to which items user make fav or unfav
+    */
+    SearchresultPage.prototype.addFavUnFav = function () {
+        for (var i = 0; i < this.itemlist.length; ++i) {
+            console.log(this.itemlist[i].favourites);
+            if (this.itemlist[i].Favourite == 0) {
+                this.like[parseInt(this.itemlist[i].id)] = false;
+            }
+            else {
+                this.like[parseInt(this.itemlist[i].id)] = true;
+            }
+        }
     };
     SearchresultPage = __decorate([
         Component({
             selector: 'page-searchresult',
             templateUrl: 'searchresult.html'
         }),
-        __metadata("design:paramtypes", [NavController, NavParams, ItemsProvider])
+        __metadata("design:paramtypes", [NavController,
+            NavParams,
+            ItemsProvider,
+            Storage])
     ], SearchresultPage);
     return SearchresultPage;
 }());

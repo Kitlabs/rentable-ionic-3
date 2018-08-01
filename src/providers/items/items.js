@@ -12,6 +12,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AppSetting } from '../api_route';
 /*
+
   Generated class for the ItemsProvider provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
@@ -85,12 +86,29 @@ var ItemsProvider = /** @class */ (function () {
     /*
      Get item details
     */
+    ItemsProvider.prototype.getItemDetailWithBookedDates = function (itemId, userId) {
+        //{"action":"ItemByDateNew","id":"127","userId":"43"}:return item details plus booked dates
+        //{"action":"ItemById","id":"127","userId":"43"} : return item details without booked dates
+        var body = {
+            action: 'ItemByDateNew',
+            id: itemId,
+            userId: userId
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /**
+     *
+     */
     ItemsProvider.prototype.getItemDetail = function (itemId, userId) {
+        //{"action":"ItemByDateNew","id":"127","userId":"43"}:return item details plus booked dates
+        //{"action":"ItemById","id":"127","userId":"43"} : return item details without booked dates
         var body = {
             action: 'ItemById',
             id: itemId,
             userId: userId
         };
+        console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
@@ -144,12 +162,25 @@ var ItemsProvider = /** @class */ (function () {
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
-     Method to delete post
+     Method to delete post by owner of item
     */
     ItemsProvider.prototype.deleteItemById = function (postId) {
         var body = {
             action: 'deleteByItemId',
             id: postId
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+      Method to delete I Rent-History item by renter
+     */
+    ItemsProvider.prototype.deleteIRentHistoryItem = function (userId, itemId) {
+        //{"action":"DeleteIRentHistory","UserId":"49","PostId":"171"}
+        var body = {
+            action: 'DeleteIRentHistory',
+            UserId: userId,
+            PostId: itemId
         };
         console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
@@ -169,11 +200,12 @@ var ItemsProvider = /** @class */ (function () {
     /*
     Method to get all item by search
     */
-    ItemsProvider.prototype.getItemsBySearch = function (searchTag, uid) {
+    ItemsProvider.prototype.getItemsBySearch = function (searchTag, uid, selectedCategory) {
         var body = {
             action: 'ItemByName',
             userId: uid,
-            name: searchTag
+            name: searchTag,
+            Category: selectedCategory
         };
         console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
@@ -195,14 +227,19 @@ var ItemsProvider = /** @class */ (function () {
     /*
     Method to send rental request
     */
-    ItemsProvider.prototype.sendRentalRequest = function (userId, postId, pickUpDate, returnDate, amount) {
+    ItemsProvider.prototype.sendRentalRequest = function (userId, postId, pickUpDate, returnDate, amount, itemOwnerFee, AdminFee, needDelivery, rentableServiceFee, rentalCostWithoutFee) {
         var body = {
             action: 'PostInsertRequest',
             UserId: userId,
             PostId: postId,
             FromDate: pickUpDate,
             ToDate: returnDate,
-            Amount: amount
+            Amount: amount,
+            itemOwnerFee: itemOwnerFee,
+            AdminFee: AdminFee,
+            needDelivery: needDelivery,
+            rentableServiceFee: rentableServiceFee,
+            rentalCostWithoutFee: rentalCostWithoutFee
         };
         console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
@@ -215,6 +252,7 @@ var ItemsProvider = /** @class */ (function () {
             action: 'GetAllFavByUserId',
             UserId: userId,
         };
+        console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
@@ -225,6 +263,68 @@ var ItemsProvider = /** @class */ (function () {
             action: 'GetRequestByvendor',
             UserId: userId
         };
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+      Api's related to CHAT TABS
+      Method to all request on own posted item and request sent to other items
+      action:
+    */
+    ItemsProvider.prototype.getChatListOwn = function (userId) {
+        //{"action":"GetRequestByvendorIOwnForChat", "UserId":"34"} : I Own-Old
+        //{"action":"UserListIOwn","UserId":"41"} :New
+        var body = {
+            action: 'UserListIOwn',
+            UserId: userId
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+      Method to get all request plus messages sent to other items
+      action:
+    */
+    ItemsProvider.prototype.getChatListRent = function (userId) {
+        //{"action":"GetRequestByvendorIRentForChat", "UserId":"35"}: I Rent
+        //{"action":"UserListIRent","UserId":"41"} : New
+        var body = {
+            action: 'UserListIRent',
+            UserId: userId
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /**
+     *
+     * @param fromId hold the id of requester
+     * @param toId hold the id of item owner
+     * @param postId hold the id of item
+     */
+    ItemsProvider.prototype.insertChatList = function (fromId, toId, postId) {
+        //{"action":"UserListIInsert","FromId":"41","ToId":"42","PostId":"125"}
+        var body = {
+            action: 'UserListInsert',
+            FromId: fromId,
+            ToId: toId,
+            PostId: postId
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /**
+     *
+     * @param fromId hold the id of requester
+     * @param toId hold the id of item owner
+     * @param postId hold the id of item
+     */
+    ItemsProvider.prototype.deleteChatList = function (fromId, toId, postId) {
+        var body = {
+            action: 'UserListDelete',
+            FromId: fromId,
+            ToId: toId,
+            PostId: postId
+        };
+        console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
@@ -241,6 +341,61 @@ var ItemsProvider = /** @class */ (function () {
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
+       Method to get pick up and return rating given by renter
+      */
+    ItemsProvider.prototype.getPickUpAndReturnRating = function (requesterId, requestedItemId) {
+        //{"action":"GetPickUpRating","UserId":"49","PostId":"155"}  
+        var body = {
+            action: 'GetPickUpRating',
+            UserId: requesterId,
+            PostId: requestedItemId
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+       Method to get claim details
+      */
+    ItemsProvider.prototype.getClaimDetails = function (id, requestedItemId) {
+        //{"action":"ClaimByVendor","UserId":"45","PostId":"182"}
+        var body = {
+            action: 'ClaimByVendor',
+            UserId: id,
+            PostId: requestedItemId
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+     Method to make claim response
+     claim status must be Yes/No (not yes/no)
+    */
+    ItemsProvider.prototype.replyToClaim = function (userId, itemId, status) {
+        //{"action":"ClaimStatus","UserId":"45","PostId":"182","ClaimStatus":"Yes"}
+        var body;
+        if (status = "Yes") {
+            body = {
+                action: 'ClaimStatus',
+                UserId: userId,
+                PostId: itemId,
+                ClaimStatus: status,
+                Status: 'Returned',
+                FinalDone: 'Yes'
+            };
+        }
+        else {
+            //if status no
+            body = {
+                action: 'ClaimStatus',
+                UserId: userId,
+                PostId: itemId,
+                ClaimStatus: status
+            };
+        }
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
     Method to reject rental request
     */
     ItemsProvider.prototype.rejectRentalRequest = function (requesterId, requestedItemId, rejReason, isRemove) {
@@ -252,6 +407,106 @@ var ItemsProvider = /** @class */ (function () {
             Reason: rejReason,
             IsRemove: isRemove,
         };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /**
+     * Accept reject pick up rating by item owner
+     */
+    ItemsProvider.prototype.acceptRejectPickUpRating = function (userId, postId, status) {
+        //Accepted= {"action":"AcceptRejectPickUpRating", "UserId":"49","PostId":"155","PickupStatus":"Accepted"},
+        //Rejected= {"action":"AcceptRejectPickUpRating", "UserId":"49","PostId":"155","PickupStatus":"Rejected","Status":"Rented"}.
+        var body;
+        switch (status) {
+            case 0:
+                body = {
+                    action: "AcceptRejectPickUpRating",
+                    UserId: userId,
+                    PostId: postId,
+                    PickupStatus: "Accepted",
+                    Status: "PickedUp"
+                };
+                break;
+            case 1:
+                body = {
+                    action: "AcceptRejectPickUpRating",
+                    UserId: userId,
+                    PostId: postId,
+                    PickupStatus: "Rejected",
+                    Status: "Rented"
+                };
+                break;
+            default:
+                break;
+        }
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /**
+     * accept reject pick up rating and do payment
+     */
+    ItemsProvider.prototype.acceptPickUpRequest = function (userId, postId, status) {
+        var body = {
+            action: "AcceptRejectPickUpRating",
+            UserId: userId,
+            PostId: postId,
+            PickupStatus: "Accepted",
+            Status: "PickedUp"
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /**
+       * Accept reject return rating by item owner
+       */
+    ItemsProvider.prototype.acceptRejectReturnRating = function (userId, postId, status, claimBondAmount, totalAmountBond, claimComment) {
+        //Accepted= {"action":"AcceptRejectReturnedRating", "UserId":"49","PostId":"155","ReturnStatus":"Accepted"}
+        //Rejected= {"action":"AcceptRejectReturnedRating", "UserId":"49","PostId":"155","ReturnStatus":"Rejected","ClaimBondAmount":"50","TotalAmountBond":"100","ClaimComment":"Tuneya"}
+        console.log(status);
+        var body;
+        switch (status) {
+            case 0:
+                body = {
+                    action: "AcceptRejectReturnedRating",
+                    UserId: userId,
+                    PostId: postId,
+                    ReturnStatus: "Accepted",
+                    Status: "Returned"
+                };
+                break;
+            case 1:
+                body = {
+                    action: "AcceptRejectReturnedRating",
+                    UserId: userId,
+                    PostId: postId,
+                    ReturnStatus: "Rejected",
+                    Status: "PickedUp",
+                };
+                break;
+            case 2:
+                body = {
+                    action: "ItemClaimByVendor",
+                    UserId: userId,
+                    PostId: postId,
+                    ReturnStatus: "Rejected",
+                    //Status:"Rented",
+                    ClaimBondAmount: claimBondAmount,
+                    TotalAmountBond: totalAmountBond,
+                    ClaimComment: claimComment,
+                };
+                break;
+            case 3:
+                body = {
+                    action: "AcceptRejectReturnedRating",
+                    UserId: userId,
+                    PostId: postId,
+                    ReturnStatus: "Accepted",
+                    Status: "Returned",
+                    FinalDone: "Yes"
+                };
+                break;
+            default:
+                break;
+        }
         console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
@@ -281,6 +536,32 @@ var ItemsProvider = /** @class */ (function () {
             vendorId: userId,
             Status: status
         };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+    Method to get own available  item old : mohit
+    */
+    ItemsProvider.prototype.getIOwnAvailableItems = function (userId, status) {
+        //{"action":"GetItemsByVendorIownAvailable","vendorId":"49","status":"IownAvailable"}
+        var body = {
+            action: 'GetItemsByVendorIownAvailable',
+            vendorId: userId,
+            Status: status
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+    Method to get own available  item old : heena
+    */
+    ItemsProvider.prototype.getIOwnAvailableItemsSecond = function (userId, status) {
+        //{"action":"getavailableposts","vendorId":"49"}
+        var body = {
+            action: 'getavailableposts',
+            vendorId: userId,
+        };
+        console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
@@ -292,30 +573,46 @@ var ItemsProvider = /** @class */ (function () {
             action: 'IRentCurrent',
             UserId: userId
         };
+        console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
-    Method to calulate total rental request
-    */
-    ItemsProvider.prototype.getTotalRentalCost = function (cost, deliveryCost) {
-        //{"action":"CalculateGST", "Cost":120, "DeliveryPickUpFee":20}
+  I Rent->current
+  */
+    ItemsProvider.prototype.getIRentHistoryItems = function (userId) {
+        //{"action":"GetIRentHistory","UserId":"49"}
         var body = {
-            action: 'CalculateGST',
-            Cost: cost,
-            DeliveryPickUpFee: deliveryCost
+            action: 'GetIRentHistory',
+            UserId: userId
         };
         console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
-      Method to cancel the rental request
+    Method to calulate total rental request
     */
-    ItemsProvider.prototype.cancelItemRequest = function (userId, postId) {
+    ItemsProvider.prototype.getTotalRentalCost = function (cost, Isdelivery, DeliveryPickUpFee) {
+        //{"action":"CalculateGST", "Cost":100,"IsdeliveryFee":1,"DeliveryPickUpFee":20}
+        var body = {
+            action: 'CalculateGST',
+            Cost: cost,
+            IsdeliveryFee: Isdelivery,
+            DeliveryPickUpFee: DeliveryPickUpFee
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+      Method used to cancel rental request
+    */
+    ItemsProvider.prototype.cancelItemRequest = function (renterId, postId, userType) {
         //{"action":"RequestStatusChange", "UserId":"3","PostId":"30","Status":"Cancel"}
+        console.log("Cancel rental reqeust" + renterId);
         var body = {
             action: 'RequestStatusChange',
-            UserId: userId,
+            UserId: renterId,
             PostId: postId,
+            CancelledBy: userType,
             Status: 'Cancel'
         };
         console.log(JSON.stringify(body));
@@ -328,11 +625,11 @@ var ItemsProvider = /** @class */ (function () {
         //{"action":"RequestStatusChange", "UserId":"3","PostId":"30","Status":"PickedUp","PickupComment":"Its Newly itemd sdfsd","UserAgree":"1","PickupRating":"5"}
         var body = {
             action: 'RequestStatusChange',
-            Status: 'PickedUp',
+            Status: 'PickedUpPending',
             UserId: userId,
             PostId: postId,
             PickupComment: pickupComment,
-            UserAgree: userAgree,
+            PickUpUserAgree: userAgree,
             PickupRating: pickupRating
         };
         console.log(JSON.stringify(body));
@@ -341,15 +638,39 @@ var ItemsProvider = /** @class */ (function () {
     /*
       Method to send returned item to owner
     */
-    ItemsProvider.prototype.sendReturnedRequest = function (userId, itemId, returnComment, returnRating) {
+    ItemsProvider.prototype.sendReturnedRequest = function (userId, itemId, returnComment, returnRating, bothPartyAgree, agreeWithRating) {
         //{"action":"RequestStatusChangeReturn", "UserId":"5","PostId":"35","Status":"Returned","ReturnComment":"sdffds","ReturnRating":"2"}
         var body = {
             action: 'RequestStatusChangeReturn',
-            Status: 'Returned',
+            Status: 'ReturnedPending',
             UserId: userId,
             PostId: itemId,
             ReturnComment: returnComment,
-            ReturnRating: returnRating
+            ReturnRating: returnRating,
+            ReturnBothPartyAgree: bothPartyAgree,
+            ReturnAgreeWithRating: agreeWithRating,
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    /*
+      Method to get filter the data based on filter option
+    */
+    ItemsProvider.prototype.getFilterData = function (userId, Category, PostedWithin, PriceFrom, PriceTo, Lat, Long, Range, SortBy) {
+        //{{"action":"GetItemsByFilters", "Category":"Electronics", "PostedWithin":"The last 24 hrs",
+        //"PriceFrom":"05","PriceTo":"280","Lat":"38.682437","Long":"-77.3646313",
+        //"Range":"1500","userId":"01","SortBy":"Closest first"}
+        var body = {
+            action: 'GetItemsByFilters',
+            UserId: userId,
+            Category: Category,
+            PostedWithin: PostedWithin,
+            PriceFrom: PriceFrom,
+            PriceTo: PriceTo,
+            Lat: Lat,
+            Long: Long,
+            Range: Range,
+            SortBy: SortBy
         };
         console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));

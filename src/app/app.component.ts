@@ -39,9 +39,9 @@ export class MyApp {
     private fcm: FCM,
     private ev:Events,
     private badge:Badge) {
+    //alert('Welcome back dude latest!');
 
     window.addEventListener('native.keyboardshow', keyboardShowHandler);
-
     function keyboardShowHandler(e){
       this.keyboard.show();
     }
@@ -57,6 +57,7 @@ export class MyApp {
       this.registerNotification();
       this.showLogInOrWalkScreen();
     });
+
   }
 
    showLogInOrWalkScreen(){
@@ -132,13 +133,23 @@ export class MyApp {
    Method to register and handling the firebase push notification
   */
   registerNotification(){
-
     if (this.platform.is('cordova')) {
       this.fcm.onNotification().subscribe(data=>{
-       // this.displayToast("message outside");  
-
-        if(data.wasTapped){
+       //this.presentConfirm("Test","test");
+       // alert(JSON.stringify(data));
+       // alert('Post id==='+data.PostId);
+       console.log('Notification triggered');
+         console.log('datat'+data);
+        if(data.wasTapped == true){
+          // alert('Tapped')
           console.log("Received in background");
+          if(data.PostId){
+                // alert('found postid');
+                //this.events.publish('redirection',data.PostId);
+                localStorage.setItem('redirection',data.PostId);
+          }else{
+            localStorage.removeItem('redirection');
+          }
           this.storage.get('counter').then((data)=>{
               
             if(data!=null){
@@ -147,20 +158,25 @@ export class MyApp {
             }else{
               this.storage.set('counter',1);
             }
-
           });
         }else {
           console.log("Received in foreground");
+          //alert(JSON.stringify(data));
            // this.presentConfirm("d",data);
+           this.events.publish('messageCount',0);
+           this.events.publish('rentalCount',0);
             this.badge.clear();
           if(data.aps.alert.title=="Message!"){
-            this.events.publish('messageCountt',1);
+            
+            this.presentConfirm(data.aps.alert.title,data.aps.alert.body);
           }else{
-            this.events.publish('rentalCountt',1);
+            
             this.presentConfirm(data.aps.alert.title,data.aps.alert.body);  
           }
         };
 
+      },(error)=>{
+        console.error(error);
       });
 
    }

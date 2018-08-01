@@ -12,13 +12,13 @@ import { NavController, NavParams, Navbar, AlertController, App, Tabs, ViewContr
 import { PostcostPage } from '../postcost/postcost';
 import { AddPage } from '../add/add';
 import { Storage } from '@ionic/storage';
-import { Home } from '../home/home';
 var PostdetailPage = /** @class */ (function () {
-    function PostdetailPage(navCtrl, navParams, storage, app, alertCtrl, viewCtrl) {
+    function PostdetailPage(navCtrl, navParams, storage, app, tab, alertCtrl, viewCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.storage = storage;
         this.app = app;
+        this.tab = tab;
         this.alertCtrl = alertCtrl;
         this.viewCtrl = viewCtrl;
         this.postcost = PostcostPage;
@@ -26,16 +26,18 @@ var PostdetailPage = /** @class */ (function () {
         this.condition = [0, 1, 2, 3, 4];
         this.categorylist = [
             // {active_img: 'assets/icon/cat-nearyou-red.png', title: 'Nearby', inactive_img: 'assets/icon/cat-nearyou-grey.png', value:'nearby',radionumber:'postradio1'},
-            { active_img: 'assets/icon/cat-electronics-red.png', title: 'Electronics', inactive_img: 'assets/icon/cat-electronics-grey.png', value: 'electronics', radionumber: 'postradio2' },
-            { active_img: 'assets/icon/cat-cars-red.png', title: 'Cars and motors', inactive_img: 'assets/icon/cat-cars-grey.png', value: 'cars', radionumber: 'postradio3' },
-            { active_img: 'assets/icon/cat-sports-red.png', title: 'Sports and leisure', inactive_img: 'assets/icon/cat-sports-grey.png', value: 'sports', radionumber: 'postradio4' },
-            { active_img: 'assets/icon/cat-home-red.png', title: 'Home and garden', inactive_img: 'assets/icon/cat-home-grey.png', value: 'home', radionumber: 'postradio5' },
-            { active_img: 'assets/icon/cat-movies-red.png', title: 'Movies and music', inactive_img: 'assets/icon/cat-movies-grey.png', value: 'movies', radionumber: 'postradio6' },
-            { active_img: 'assets/icon/cat-fashion-red.png', title: 'Fashion and accessories', inactive_img: 'assets/icon/cat-fashion-grey.png', value: 'fashion', radionumber: 'postradio7' },
-            { active_img: 'assets/icon/cat-baby-red.png', title: 'Baby and child', inactive_img: 'assets/icon/cat-baby-grey.png', value: 'baby', radionumber: 'postradio8' },
-            { active_img: 'assets/icon/cat-tools-red.png', title: 'Tools and machines', inactive_img: 'assets/icon/cat-tools-grey.png', value: 'tools', radionumber: 'postradio9' },
-            { active_img: 'assets/icon/cat-party-red.png', title: 'Party and Events', inactive_img: 'assets/icon/cat-party-grey.png', value: 'party', radionumber: 'postradio10' }
+            { active_img: 'assets/icon/cat-electronics-red.png', title: 'Electronics', inactive_img: 'assets/icon/cat-electronics-grey.png', tempimage: 'assets/icon/cat-electronics-grey.png', value: 'electronicss', radionumber: 'postradio2', titleSecond: 'a', class: 'deactive' },
+            { active_img: 'assets/icon/cat-cars-red.png', title: 'Cars and motors', inactive_img: 'assets/icon/cat-cars-grey.png', tempimage: 'assets/icon/cat-cars-grey.png', value: 'carss', radionumber: 'postradio3', titleSecond: 'b', class: 'deactive' },
+            { active_img: 'assets/icon/cat-sports-red.png', title: 'Sports and leisure', inactive_img: 'assets/icon/cat-sports-grey.png', tempimage: 'assets/icon/cat-sports-grey.png', value: 'sports', radionumber: 'postradio4', titleSecond: 'c', class: 'deactive' },
+            { active_img: 'assets/icon/cat-home-red.png', title: 'Home and garden', inactive_img: 'assets/icon/cat-home-grey.png', tempimage: 'assets/icon/cat-home-grey.png', value: 'homes', radionumber: 'postradio5', titleSecond: 'd', class: 'deactive' },
+            { active_img: 'assets/icon/cat-movies-red.png', title: 'Movies and music', inactive_img: 'assets/icon/cat-movies-grey.png', tempimage: 'assets/icon/cat-movies-grey.png', value: 'moviess', radionumber: 'postradio6', titleSecond: 'e', class: 'deactive' },
+            { active_img: 'assets/icon/cat-fashion-red.png', title: 'Fashion and accessories', inactive_img: 'assets/icon/cat-fashion-grey.png', tempimage: 'assets/icon/cat-fashion-grey.png', value: 'fashion', radionumber: 'postradio7', titleSecond: 'f', class: 'deactive' },
+            { active_img: 'assets/icon/cat-baby-red.png', title: 'Baby and child', inactive_img: 'assets/icon/cat-baby-grey.png', tempimage: 'assets/icon/cat-baby-grey.png', value: 'babys', radionumber: 'postradio8', titleSecond: 'g', class: 'deactive' },
+            { active_img: 'assets/icon/cat-tools-red.png', title: 'Tools and machines', inactive_img: 'assets/icon/cat-tools-grey.png', tempimage: 'assets/icon/cat-tools-grey.png', value: 'toolss', radionumber: 'postradio9', titleSecond: 'h', class: 'deactive' },
+            { active_img: 'assets/icon/cat-party-red.png', title: 'Party and Events', inactive_img: 'assets/icon/cat-party-grey.png', tempimage: 'assets/icon/cat-party-grey.png.png', value: 'partys', radionumber: 'postradio10', titleSecond: 'i', class: 'deactive' },
+            { active_img: 'assets/icon/cat-other-red.png', title: 'Other', inactive_img: 'assets/icon/cat-other-grey.png', tempimage: 'assets/icon/cat-other-grey.png', value: 'others', radionumber: 'postradio11', titleSecond: 'j', class: 'deactive' }
         ];
+        this.tab = tab;
         this.itemtitle = "";
         this.titlenumber = 25;
         this.conditiontitle = "";
@@ -52,17 +54,13 @@ var PostdetailPage = /** @class */ (function () {
         this.nextStatus = 0;
     }
     PostdetailPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
         console.log('ionViewDidLoad PostdetailPage');
-        this.navBar.backButtonClick = function () {
-            _this.navCtrl.setRoot(AddPage);
-        };
     };
     PostdetailPage.prototype.ionViewWillEnter = function () {
         var _this = this;
         console.log("will enterrrr");
         this.count = 0;
-        console.log(this.count);
+        this.checkEditOrNewPost();
         this.storage.get("status").then(function (res) {
             if (res == "true") {
                 _this.storage.get("itemTitle").then(function (res) {
@@ -75,14 +73,21 @@ var PostdetailPage = /** @class */ (function () {
                 });
                 _this.storage.get("itemCategory").then(function (res) {
                     if (res != null) {
+                        console.log(res);
                         _this.category = res;
                         _this.nextStatus = _this.nextStatus + 1;
-                        _this.storage.get("categorySelected").then(function (res) {
-                            console.log("storage data");
-                            console.log(res);
-                            if (res.catStatus == "true") {
-                                document.getElementById(res.catValue).setAttribute("src", _this.categorylist[parseInt(res.catId)].active_img); //image item.value
-                                document.getElementById(res.catTitle).style.color = "#f55349"; //item.title
+                        _this.storage.get("categorySelectedd").then(function (res) {
+                            if (res) {
+                                if (res.catStatus == "true") {
+                                    _this.categorylist[parseInt(res.catId)].tempimage = _this.categorylist[parseInt(res.catId)].active_img;
+                                    _this.categorylist[parseInt(res.catId)].class = 'active';
+                                    // var imageTest=document.getElementById(res.catValue);
+                                    // imageTest.setAttribute('src',this.categorylist[parseInt(res.catId)].active_img);
+                                    // console.log("TESTING=",document.getElementById(res.catValue));
+                                    // document.getElementById(res.catValue).setAttribute("src",this.categorylist[parseInt(res.catId)].active_img) ;//image item.value
+                                    // document.getElementById(res.catTitle).style.color="#f55349";//item.title
+                                    //document.getElementById("electronicss").setAttribute('src',this.categorylist[parseInt(res.catId)].active_img)021 
+                                }
                             }
                         });
                     }
@@ -117,6 +122,24 @@ var PostdetailPage = /** @class */ (function () {
             }
         });
     };
+    PostdetailPage.prototype.checkEditOrNewPost = function () {
+        var _this = this;
+        this.storage.get('postid').then(function (id) {
+            if (id) {
+                _this.editStatus = true;
+            }
+        });
+    };
+    PostdetailPage.prototype.ionViewWillLeave = function () {
+        console.log("ionVionViewWillLeaveiew");
+    };
+    PostdetailPage.prototype.ionViewDidLeave = function () {
+        console.log("ionViewDidLeave");
+        //this.navCtrl.setRoot(Home);
+    };
+    PostdetailPage.prototype.ionViewWillUnLoad = function () {
+        console.log("ionViewWillUnLoad");
+    };
     PostdetailPage.prototype.nextEnable = function () {
         document.getElementById("next").style.color = "#ffffff";
     };
@@ -133,15 +156,17 @@ var PostdetailPage = /** @class */ (function () {
         var count = children.length;
         for (var i = 0; i < count; ++i) {
             if (preparent == children[i]) {
+                this.categorylist[i].tempimage = this.categorylist[i].active_img;
+                this.categorylist[i].class = 'active';
                 this.category = this.categorylist[i].title;
-                var image = this.categorylist[i].active_img;
+                // var image=this.categorylist[i].active_img;
                 //save category info
-                var selected = { "catStatus": "true", "catTitle": this.categorylist[i].title, "catValue": this.categorylist[i].value, "catId": i };
-                this.storage.set("categorySelected", selected);
+                var selected = { "catStatus": "true", "catTitle": this.categorylist[i].titleSecond, "catValue": this.categorylist[i].value, "catId": i };
+                this.storage.set("categorySelectedd", selected);
                 //highlight selected category
-                console.log(children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0] + "children[i]");
-                children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0].setAttribute("src", image);
-                children[i].getElementsByTagName('label')[0].getElementsByTagName('span')[0].setAttribute("style", "color: #f55349;");
+                //console.log(children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0] + "children[i]");
+                // children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0].setAttribute("src", image);
+                // children[i].getElementsByTagName('label')[0].getElementsByTagName('span')[0].setAttribute("style", "color: #f55349;");
                 //check the validation
                 if (this.itemtitle.length == 0 || this.conditionmark == 0 || this.conditiontitle == "") {
                     this.nextDisable();
@@ -151,9 +176,11 @@ var PostdetailPage = /** @class */ (function () {
                 }
             } //end of if
             else {
-                var inactiveimage = this.categorylist[i].inactive_img;
-                children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0].setAttribute("src", inactiveimage);
-                children[i].getElementsByTagName('label')[0].getElementsByTagName('span')[0].setAttribute("style", "color: gray;");
+                this.categorylist[i].tempimage = this.categorylist[i].inactive_img;
+                this.categorylist[i].class = 'deactive';
+                // var inactiveimage=this.categorylist[i].inactive_img;
+                // children[i].getElementsByTagName('label')[0].getElementsByTagName('img')[0].setAttribute("src", inactiveimage);
+                // children[i].getElementsByTagName('label')[0].getElementsByTagName('span')[0].setAttribute("style", "color: #6d7178;");
             }
         }
     };
@@ -240,10 +267,20 @@ var PostdetailPage = /** @class */ (function () {
         }
     };
     PostdetailPage.prototype.goaddpage = function () {
+        this.storage.set("status", "true");
+        this.storage.set("itemTitle", this.itemtitle);
+        this.storage.set("itemCategory", this.category);
+        this.storage.set("itemConditionMark", this.conditionmark);
+        this.storage.set("itemConditionTitle", this.conditiontitle);
         this.navCtrl.setRoot(AddPage);
     };
     PostdetailPage.prototype.closeScreen = function () {
-        this.presentConfirm();
+        if (this.editStatus) {
+            this.closeEditPrompt();
+        }
+        else {
+            this.presentConfirm();
+        }
     };
     PostdetailPage.prototype.gopostcost = function () {
         if (this.itemtitle.length == 0 || this.category == null || this.conditionmark == 0 || this.conditiontitle == "") {
@@ -279,6 +316,34 @@ var PostdetailPage = /** @class */ (function () {
         });
         alert.present();
     };
+    PostdetailPage.prototype.closeEditPrompt = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: 'Confirm ',
+            message: 'Do you want to discontinue and information will not saved',
+            buttons: [
+                {
+                    text: 'No',
+                    role: 'cancel',
+                    handler: function () {
+                    }
+                },
+                {
+                    text: 'Yes',
+                    handler: function () {
+                        _this.storage.set("status", "false");
+                        _this.storage.set("itemTitle", null);
+                        _this.storage.set("itemCategory", null);
+                        _this.storage.set("itemConditionMark", null);
+                        _this.storage.set("itemConditionTitle", null);
+                        _this.storage.set('image', null);
+                        _this.tab.select(1);
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
     PostdetailPage.prototype.presentConfirm = function () {
         var _this = this;
         var alert = this.alertCtrl.create({
@@ -294,13 +359,7 @@ var PostdetailPage = /** @class */ (function () {
                         _this.storage.set("itemConditionMark", null);
                         _this.storage.set("itemConditionTitle", null);
                         _this.storage.set('image', null);
-                        _this.app.getRootNav().getActiveChildNav().select(0);
-                        _this.navCtrl.setRoot(Home);
-                        _this.navCtrl.push(Home).then(function () {
-                            var index = _this.viewCtrl.index;
-                            _this.navCtrl.remove(index);
-                            //this.app.getRootNav().getActiveChildNav().select(0);
-                        });
+                        _this.tab.select(0);
                     }
                 },
                 {
@@ -322,8 +381,7 @@ var PostdetailPage = /** @class */ (function () {
                             _this.storage.set("status", "true");
                             _this.storage.set("itemConditionTitle", _this.conditiontitle);
                         }
-                        _this.app.getRootNav().getActiveChildNav().select(0);
-                        _this.navCtrl.setRoot(Home);
+                        _this.tab.select(0);
                     }
                 }
             ]
@@ -347,6 +405,7 @@ var PostdetailPage = /** @class */ (function () {
             NavParams,
             Storage,
             App,
+            Tabs,
             AlertController,
             ViewController])
     ], PostdetailPage);

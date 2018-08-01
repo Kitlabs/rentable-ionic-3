@@ -40,13 +40,11 @@ export class ChatProvider {
     let deleteId=uId+","+itemId+","+reqId;
     console.log("Call is received to delete chat=",deleteId);
     this.af.object('chats/'+deleteId).remove();
-
   }
 
   getChatRef(uId,reqId,itemId) {
 
     console.log(reqId + " reqId");
-
     let firstRef = this.af.object(`/chats/${uId},${itemId},${reqId}`, {preserveSnapshot:true});
     let promise = new Promise((resolve, reject) => {
       firstRef.subscribe(snapshot => {
@@ -181,6 +179,18 @@ export class ChatProvider {
           }
           console.log(JSON.stringify(body));
           return this.http.post(this.apiUrl,JSON.stringify(body));
+        }
+
+        /**
+        * Method to delete all chat by key.
+        * Required : userId,RequestId and itemId
+        ***/
+
+        public DeleteAllChatItems(key:string){
+          this.af.object(key).remove().then((success)=>{
+            console.log(success);
+            return success;
+          })
         }
 
 }

@@ -26,9 +26,11 @@
 <ion-content no-padding class="app-content" >
     <ion-scroll  scrollX="true" class="categorystyle">
       <ion-segment [(ngModel)]="timeline" style="justify-content: left;">
-        <ion-segment-button class="segmenthover" *ngFor="let item of categorylist;let i = index" (click)="myFunction($event)"  value="{{item.value}}" >
-          <img src="{{item.inactive_img}}" id="{{item.value}}" class="categoryimg">
-          <p class="categoryfont" id="{{item.title}}">{{item.title}}</p>
+        <ion-segment-button *ngFor="let item of categorylist;let i = index" class="segmenthover" value="{{item.value}}" >
+         
+          <img src="{{item.tempimage}}" id="{{item.value}}" class="categoryimg" (click)="myFunction($event)">
+          <p class="categoryfont {{item.class}}" id="{{item.title}}">{{item.title}}</p>
+       
         </ion-segment-button>
       </ion-segment>
     </ion-scroll>
@@ -42,6 +44,11 @@
       <img *ngIf="like[item.id]" class="cover_image animated bounceIn" (click)="DeactiveFavourite(item.id)" src="assets/icon/like-full.png">
     </div>
   </ion-card>
+
+    <div class="nodata" no-lines *ngIf="!listOfItems || listOfItems.length == 0"> 
+      <img src="assets/img/nodata.png" width="60px" style="margin-bottom: 15px;"><br>
+      <span>Sorry, we couldn't find any matches.<br>Please try again.</span>
+    </div>
 
   <!-- <button ion-button color="secondary" (click)="increaseBadge()">Click Me</button> -->
 

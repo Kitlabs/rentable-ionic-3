@@ -78,6 +78,7 @@ export class RentPage {
     this.requestedItemId=this.navParams.get("requestedItemId");
     this.msgKey=this.navParams.get("msgKey");
     this.chatRef=this.navParams.get("chatRef");
+    console.log(this.chatRef);
   }
 
   backdetail(){
@@ -100,6 +101,7 @@ export class RentPage {
 
         this.rentalRequestDetails=data.json().PostData[0];
         if(this.rentalRequestDetails.Status=='Cancel'){
+          
           this.af.list(this.chatRef).update(this.msgKey,{ 
             type: "rental_request_hide"
           });
@@ -165,11 +167,13 @@ export class RentPage {
           
           this.loading.dismiss();
           if(data.json().msg=="success"){
+            
               this.af.list(this.chatRef).update(this.msgKey,{ 
                 type: "rental_request_hide"
               });
               this.presentToast("Request has been accepted successfully");
               //uid,interlocutor,itemid,message,type
+              this.markMessageAsUnRead();
               this.chatProvider.sendMessageRental(this.userId,this.requesterId,this.requestedItemId,"rental_request_response","rental request has been approved","rental request has been approved")
               this.navCtrl.pop();  
           }
@@ -184,7 +188,20 @@ export class RentPage {
         this.navCtrl.pop();
       });
   }
-
+  /**
+   * Method to add message status as unread 
+   */
+  markMessageAsUnRead(){
+    console.log("markMessageAsUnRead");
+    this.chatProvider.markMessageAsUnread(this.userId,this.requesterId,this.requestedItemId).subscribe(
+      data=>{
+        console.log(data);
+      },
+      err=>{
+        console.log(err);
+      }
+    )
+  }
   
   /*
     Function to set user rating

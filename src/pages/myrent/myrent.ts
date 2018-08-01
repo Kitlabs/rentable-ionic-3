@@ -14,7 +14,7 @@ import { OwnPostDetailPage } from '../own-post-detail/own-post-detail'
 })
 export class Myrent {
 
-  own_avaiablelist: any;;
+  own_avaiablelist: any;
   own_rentedlist: Array<any>;
   rent_currentlist: Array<any>;
   rent_historylist: Array<any>;

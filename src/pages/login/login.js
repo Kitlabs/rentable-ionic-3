@@ -91,15 +91,17 @@ var Login = /** @class */ (function () {
         this.password = this.password.value;
         this.loading.present();
         this.authporvider.login(this.phonenumber, this.password).subscribe(function (data) {
+            console.log(data);
             console.log(data.json().user_details);
             _this.userInfo = data.json().user_details;
-            //store user location into storage
-            var location = { lat: _this.userInfo[0].lat, lng: _this.userInfo[0].lng };
-            _this.storage.set('location', location);
             if (data.json().msg == "success") {
                 _this.storage.set("userId", _this.userInfo[0].id);
+                _this.userId = _this.userInfo[0].id;
                 //uncomment when not running on browser
                 _this.sendToken(_this.userInfo[0].id);
+                //store user location into storage
+                var location_1 = { lat: parseFloat(_this.userInfo[0].lat), lng: parseFloat(_this.userInfo[0].lng), address: _this.userInfo[0].location };
+                _this.storage.set('location', location_1);
                 _this.navCtrl.setRoot(TabPage);
             }
             if (data.json().msg == "error") {
@@ -120,9 +122,19 @@ var Login = /** @class */ (function () {
     Login.prototype.sendToken = function (userId) {
         var _this = this;
         if (this.platform.is('cordova')) {
-            //getting token
             this.fcm.getToken().then(function (token) {
-                _this.authporvider.updateDeviceToken(userId, token);
+                _this.authporvider.updateDeviceToken(userId, token).subscribe(function (data) {
+                    console.log(data);
+                }, function (err) {
+                    _this.sendToken(_this.userId);
+                });
+            });
+            this.fcm.onTokenRefresh().subscribe(function (token) {
+                _this.authporvider.updateDeviceToken(userId, token).subscribe(function (data) {
+                    console.log(data);
+                }, function (err) {
+                    _this.sendToken(_this.userId);
+                });
             });
         }
     };

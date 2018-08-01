@@ -50,15 +50,41 @@ var Postitemprovider = /** @class */ (function () {
             details: post.conditiontitle,
             currentcondition: post.conditionmark,
             dailyrentalPrice: post.dailyPrice,
-            weeklyrentalPrice: post.weeklyprice,
             deliveryfee: post.deliveryOrPickUpFee,
             delivery: post.deliver,
             distance: post.distance,
+            securityDeposit: post.securityDeposit,
             lat: post.lat,
             lng: post.lng,
             status: "available"
         };
         console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    Postitemprovider.prototype.updatePostDetail = function (post) {
+        var body = {
+            image: post.image,
+            action: "ItemUpdate",
+            userId: post.userId,
+            category: post.category,
+            title: post.itemtitle,
+            details: post.conditiontitle,
+            currentcondition: post.conditionmark,
+            dailyrentalPrice: post.dailyPrice,
+            deliveryfee: post.deliveryOrPickUpFee,
+            delivery: post.deliver,
+            distance: post.distance,
+            securityDeposit: post.securityDeposit,
+            PostId: post.PostId
+        };
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
+    };
+    Postitemprovider.prototype.getPostDetail = function (postId) {
+        var body = {
+            action: "GetItemsById",
+            PostId: postId
+        };
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     Postitemprovider = __decorate([

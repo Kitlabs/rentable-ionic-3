@@ -1035,10 +1035,7 @@ var LandingPage = /** @class */ (function () {
         myElement.click();
     };
     LandingPage.prototype.takeMe = function () {
-        this.navCtrl.push("CountrycodePage", {
-            animation: true,
-            direction: 'forward'
-        });
+        this.navCtrl.setRoot("CountrycodePage", {});
     };
     LandingPage.prototype.numberfill = function () {
         var n = this.phonenumber.value.length;
@@ -1060,8 +1057,6 @@ var LandingPage = /** @class */ (function () {
         });
         this.phonenumber = this.phonenumber.value;
         this.testNumber = this.phonenumber;
-        console.log(this.phonenumber);
-        console.log(this.testNumber);
         if (this.testNumber.startsWith("0")) {
             //do nothing        
         }
@@ -1073,13 +1068,11 @@ var LandingPage = /** @class */ (function () {
         console.log(this.number);
         this.loading.present();
         this.Authprovider.phoneverify(this.number).subscribe(function (data) {
-            console.log(data.json());
             //response Error
             if (data.json().msg == "error") {
                 //number not registered
                 //send otp to number 
                 _this.Authprovider.Sendsms(_this.number).subscribe(function (data) {
-                    console.log(data.json());
                     if (data.json().msg == "success") {
                         _this.showToast("verification code has been sent to your number");
                         //take user to otp screen
@@ -1095,8 +1088,6 @@ var LandingPage = /** @class */ (function () {
                 }, function (err) {
                     _this.loading.dismiss();
                     console.log(err);
-                }, function () {
-                    _this.loading.dismiss();
                 });
             }
             //number exist

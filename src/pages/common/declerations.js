@@ -38,10 +38,7 @@ import { EditprofilePage } from '../editprofile/editprofile';
 import { FinishsignPage } from '../finishsign/finishsign';
 import { PostcostPage } from '../postcost/postcost';
 import { PostdetailPage } from '../postdetail/postdetail';
-import { FeedbackPage } from '../feedback/feedback';
-import { ProfileinputPage } from '../profileinput/profileinput';
-import { ClaimrenterPage } from '../claimrenter/claimrenter';
-import { ClaimownerPage } from '../claimowner/claimowner';
+// import { ClaimownerPage } from '../claimowner/claimowner';
 import { PickupPage } from '../pickup/pickup';
 import { OpportunityPage } from '../opportunity/opportunity';
 import { PayPage } from '../stripe/pay/pay';
@@ -86,10 +83,6 @@ export var allPages = {
     FinishsignPage: FinishsignPage,
     PostcostPage: PostcostPage,
     PostdetailPage: PostdetailPage,
-    FeedbackPage: FeedbackPage,
-    ProfileinputPage: ProfileinputPage,
-    ClaimownerPage: ClaimownerPage,
-    ClaimrenterPage: ClaimrenterPage,
     PickupPage: PickupPage,
     OpportunityPage: OpportunityPage,
     PayPage: PayPage

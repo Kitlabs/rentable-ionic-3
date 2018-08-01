@@ -32,7 +32,7 @@
     "@ionic-native/device": "^4.5.0",
     "@ionic-native/diagnostic": "^4.2.1",
     "@ionic-native/facebook": "^4.5.3",
-    "@ionic-native/fcm": "^4.5.3",
+    "@ionic-native/fcm": "^4.9.1",
     "@ionic-native/file": "^4.4.2",
     "@ionic-native/geolocation": "^4.5.3",
     "@ionic-native/image-picker": "^4.5.3",
@@ -55,7 +55,6 @@
     "animate.css": "^3.6.1",
     "com-badrit-base64": "^0.2.0",
     "cordova-android": "^6.3.0",
-    "cordova-browser": "5.0.3",
     "cordova-ios": "~4.5.4",
     "cordova-plugin-add-swift-support": "^1.6.0",
     "cordova-plugin-apprate": "^1.4.0",
@@ -140,7 +139,6 @@
         "PHOTOLIBRARY_ADD_USAGE_DESCRIPTION": "Please Select Image",
         "PHOTOLIBRARY_USAGE_DESCRIPTION": "Please Select Image"
       },
-      "cordova-plugin-fcm": {},
       "com-badrit-base64": {},
       "cordova-plugin-datepicker": {},
       "cordova-plugin-crop": {},
@@ -149,7 +147,8 @@
       "cordova-plugin-local-notification": {},
       "cordova-plugin-badge": {},
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-apprate": {}
+      "cordova-plugin-apprate": {},
+      "cordova-plugin-fcm": {}
     },
     "ionic-plugin-keyboard": {},
     "cordova-plugin-file-transfer": {},

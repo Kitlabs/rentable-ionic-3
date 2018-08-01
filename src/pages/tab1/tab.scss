@@ -1,0 +1,109 @@
+page-tab {
+	.tabs-positive{
+    background-color: rgba(0,255,255,.01) !important;
+    color: transparent;
+		}
+		.tabs-md,
+		.tabs-ios {
+		.tab-button-text {
+	    margin-top: 0;
+	    margin-bottom: 1px;
+	    min-height: 11px;
+	    font-size: 11px;
+	    font-weight: bolder;
+		}
+		.tab-button-icon{
+		    min-width: 24px;
+		    height: 25px;
+		}
+		.tabbar{
+			background-color: #2e343e;
+			opacity: 0.7;
+			}
+		.tab-button[aria-selected=true] {
+			color: #98413f;
+			font-size: 1.5rem;
+			&>.ion-ios-customicon-outline,
+			.ion-ios-customicon,.ion-md-customicon,
+			.ion-md-customicon-outline {
+				width: 2px !important;
+			    content: url(../assets/icon/home_active.png);
+			}
+			&>.ion-ios-customicon1-outline,
+			.ion-ios-customicon1,.ion-md-customicon1,.ion-md-customicon1-outline {
+				width: 2px !important;
+			  	content: url(../assets/icon/item_active.png);
+			}
+			&>.ion-ios-customicon2-outline,
+			.ion-ios-customicon2,.ion-md-customicon2,.ion-md-customicon2-outline {
+				width: 2px !important;
+			  	content: url(../assets/icon/red-post.png);
+			}
+
+			&>.ion-ios-customicon3-outline,
+			.ion-ios-customicon3,.ion-md-customicon3,.ion-md-customicon3-outline {
+				width: 2px !important;
+			  	content: url(../assets/icon/red-chat.png);
+			}
+
+			&>.ion-ios-customicon4-outline,
+			.ion-ios-customicon4,.ion-md-customicon4,.ion-md-customicon4-outline {
+				width: 2px !important;
+			  	content: url(../assets/icon/alarm_active.png);
+			}
+		}
+		.tab-button[aria-selected=true] .tab-button-icon{
+				color: #98413f;
+		}
+	}
+
+	.ion-ios-customicon-outline,
+	.ion-ios-customicon,.ion-md-customicon,.ion-md-customicon-outline {
+		width: 2px !important;
+	  	content: url(../assets/icon/home.png);
+	}
+
+	.ion-ios-customicon1-outline,
+	.ion-ios-customicon1,.ion-md-customicon1,.ion-md-customicon1-outline {
+		width: 2px !important;
+	  	content: url(../assets/icon/ico_items.png);
+	}
+
+	.ion-ios-customicon2-outline,
+	.ion-ios-customicon2,.ion-md-customicon2,.ion-md-customicon2-outline {
+		width: 2px !important;
+	  	content: url(../assets/icon/ico_add.png);
+	}
+
+	.ion-ios-customicon3-outline,
+	.ion-ios-customicon3,.ion-md-customicon3,.ion-md-customicon3-outline {
+		width: 2px !important;
+	  	content: url(../assets/icon/ico_comment_2.png);
+	}
+
+	.ion-ios-customicon4-outline,
+	.ion-ios-customicon4,.ion-md-customicon4,.ion-md-customicon4-outline {
+		width: 2px !important;
+	  	content: url(../assets/icon/ico_alarm.png);
+	}
+
+	
+
+	// .fixed-content,
+	
+	// .scroll-content {
+	// 	margin-bottom: 0 !important;
+	// }
+}
+
+
+.tabs-md .tab-button{
+    color: #8c8c8c;
+}
+
+.enable-hover a:hover{
+	opacity: 1;
+}
+.header-md::after{
+	background-image: none;
+}

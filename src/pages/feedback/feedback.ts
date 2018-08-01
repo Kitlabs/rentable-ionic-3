@@ -81,14 +81,11 @@ export class FeedbackPage {
 
   //serId,PostId,FeedbackRating,FeedbackComment)
   submit(){
-
     this.loading=this.loadingCtrl.create({
       spinner:'bubbles',
       content:`Please wait..`
     });
     this.loading.present();
-
-
     this.storage.get('userId').then((id)=>{  
       
         this.profileprovider.giveFeedback(id,this.itemId,this.appfeedback,this.feedbacktext).subscribe(
@@ -99,7 +96,6 @@ export class FeedbackPage {
             this.af.list(this.chatRef).update(this.msgKey,{ 
               type: "feedback_hide"
             });
-
             this.chatProvider.sendMessageRental(id,this.itemOwnerId,this.itemId,"feedback_response",this.appfeedback+" rating given as feedback ","Feedback submitted");
             this.presentToast("Feedback submitted successfully");
             this.navCtrl.pop();  

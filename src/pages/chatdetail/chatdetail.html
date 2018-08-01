@@ -56,10 +56,7 @@
     <!-- I OWN-->
     <div *ngIf="status">
         <div class="msg-div">
-
-
           <div *ngFor="let msg of messages" >
-        
            <div [class]="msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'" 
            *ngIf="msg.type == 'normal'" >
             <!-- normal-->
@@ -74,9 +71,8 @@
                 </div> 
               </div> 
             </div>
-            
 
-            <div   [class]=" msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'  "  
+            <div [class]=" msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'  "  
               *ngIf="msg.type== 'cancel_req_by_renter' || msg.type=='cancel_req_by_owner'  || msg.type=='claim_by_owner_show'">
             <!-- normal-->
               <div class="msg-detail" text-wrap>
@@ -90,7 +86,6 @@
               </div>
             </div> 
               
-            
             <!--It will show requested message which has been clicked-->
             <div   [class]=" msg.from == uid ? 'innerMessage messageRight' : 'innerMessage messageLeft'  "  
               *ngIf="msg.type== 'rental_request_hide' || msg.type== 'pickup_request_hide' || msg.type== 'return_request_hide' || msg.type == 'claim_by_owner_hide' || msg.type == 'return_request_response_claim_hide'  ">
@@ -118,7 +113,6 @@
                 </div>
               </div>
             </div> 
-
 
             <!-- When renter send a rental request for an item-->
             <div   [class]=" msg.from == uid ? 'innerMessage messageRight animated shake' : 'innerMessage messageLeft animated shake' " *ngIf="msg.type == 'rental_request_show'">  

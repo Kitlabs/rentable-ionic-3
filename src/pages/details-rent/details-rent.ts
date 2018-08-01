@@ -212,6 +212,8 @@ export class DetailsRentPage {
           console.log(data.json());
          if(data.json().msg=="success"){
            this.Product=data.json().PostData[0];
+            console.log(this.userId+','+this.Product.userId+','+this.Product.id)
+           
            //splitting images to array
            this.sliderImages=this.Product.image.split('|');
            this.productDailyRentalPrice=this.Product.dailyrentalPrice.split('.');
@@ -272,6 +274,7 @@ export class DetailsRentPage {
       );
 
     });//end of storage
+
   }
 
   /**
@@ -847,9 +850,21 @@ export class DetailsRentPage {
           text: 'Yes',
           handler: () => {
             if(id==0){
+               // console.log(this.userId+','+this.Product.userId+','+this.Product.id);
+                // this.chatprovider.getChatRef(this.userId, this.Product.userId,this.Product.id)
+                //       .then((chatRef:any)=>{
+                //         console.log(chatRef);
+                //         this.chatprovider.DeleteAllChatItems(chatRef);
+                // });
               //cancellation fee applied
                this.cancelRequestWithCancellationFee();
             }else{
+               //console.log(this.userId+','+this.Product.userId+','+this.Product.id);
+                // this.chatprovider.getChatRef(this.userId, this.Product.userId,this.Product.id)
+                //       .then((chatRef:any)=>{
+                //         console.log(chatRef);
+                //         this.chatprovider.DeleteAllChatItems(chatRef);
+                // });
               //no cancellation fee applied
               this.sendCancelRequest();
             }

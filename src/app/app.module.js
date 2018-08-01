@@ -4,6 +4,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+// import { MbscModule } from '@mobiscroll/angular';
+import { MbscModule } from '../lib/mobiscroll/js/mobiscroll.angular.min';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -45,10 +47,13 @@ import { CalendarModule } from "ion2-calendar";
 import { Stripe } from '@ionic-native/stripe';
 // import { MomentModule } from 'angular2-moment';
 import { ImageResizer } from '@ionic-native/image-resizer';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 //For Tool Tip
 import { TooltipsModule } from 'ionic-tooltips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { AppRate } from '@ionic-native/app-rate';
+import { Badge } from '@ionic-native/badge';
 var firebaseConfig = {
     apiKey: "AIzaSyDfySkoXoUcI9Ed39TNJwXnntSg8nKyt10",
     authDomain: "rental-335fb.firebaseapp.com",
@@ -71,6 +76,8 @@ var AppModule = /** @class */ (function () {
                 APP_Pages
             ],
             imports: [
+                //    FormsModule, 
+                MbscModule,
                 BrowserModule,
                 HttpModule,
                 DirectivesModule,
@@ -81,12 +88,19 @@ var AppModule = /** @class */ (function () {
                 CalendarModule,
                 TooltipsModule,
                 BrowserAnimationsModule,
+                IonicImageViewerModule,
                 // MomentModule,
                 IonicStorageModule.forRoot(),
                 IonicModule.forRoot(MyApp, {
                     backButtonText: '',
                     pageTransition: 'ios-transition',
-                    tabsPlacement: 'bottom'
+                    tabsPlacement: 'bottom',
+                    platforms: {
+                        ios: {
+                            scrollAssist: false,
+                            autoFocusAssist: false
+                        }
+                    }
                 })
             ],
             bootstrap: [IonicApp],
@@ -126,7 +140,9 @@ var AppModule = /** @class */ (function () {
                 ImageResizer,
                 Stripe,
                 AngularFireDatabase,
-                LocalNotifications
+                LocalNotifications,
+                Badge,
+                AppRate
             ]
         })
     ], AppModule);

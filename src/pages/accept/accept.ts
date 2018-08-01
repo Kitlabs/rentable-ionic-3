@@ -28,7 +28,7 @@ export class AcceptPage {
   comment:any;
   userAgree:any;
   itemOwnerId:any;
-
+  Userid:any;
   itemconditiontext:any;
 
   preRatingCondtion:any;
@@ -41,6 +41,7 @@ export class AcceptPage {
   i:number=0;
   j:number=0;
   agreewith:any;
+  tempvar:boolean = false;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -81,6 +82,7 @@ export class AcceptPage {
 
   getPickUpRating(){
     this.storage.get('userId').then((uid)=>{
+      this.Userid = uid;
       
       this.itemProvider.getPickUpAndReturnRating(uid,this.pItemId).subscribe(
         data=>{
@@ -177,7 +179,9 @@ export class AcceptPage {
 
   toggleChange(){
     console.log(this.agreewith);
+
     if(this.agreewith){
+      this.tempvar = true;
       this.submitBtnStatus=true;
       this.yesStatus="assets/icon/yes_tick.png";
       this.noStatus="assets/icon/no_tick.png"; 
@@ -186,6 +190,7 @@ export class AcceptPage {
       this.i=1;
       this.j=0;
     }else{
+      this.tempvar = false;
       this.submitBtnStatus=false;
       this.yesStatus="assets/icon/yes_tick.png";
       this.noStatus="assets/icon/no_tick.png"; 
@@ -263,7 +268,8 @@ noChange(){
     console.log(this.agree);
     rentermsg="Return request pending approval";
     ownermsg="Please confirm return request, click here";
-
+    
+   // return false;
     if(this.agreewith){
         //both party are not agree with item condition
         //rentermsg="Product Returned. Both parties did not agree with the product conditions.";
@@ -282,17 +288,13 @@ noChange(){
           //ownermsg="Product returned in different conditions when rented. To make a claim click here";
           this.newItemRating=this.newItemRating;
         }
-
     }
 
     this.loading=this.loadingCtrl.create({
         spinner:'bubbles',
         content:`Please wait..`
       });
-
-
-      console.log(this.newItemRating);
-
+    console.log(this.newItemRating);
     this.loading.present();
     this.storage.get('userId').then((uid)=>{
       this.itemProvider.sendReturnedRequest(uid,this.pItemId,this.comment,this.newItemRating,this.agreewith,this.agree).subscribe(
@@ -314,8 +316,6 @@ noChange(){
         );
 
     });
-
-
   }
 
   markMessageAsUnRead(uid){

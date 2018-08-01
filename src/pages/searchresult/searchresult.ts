@@ -143,13 +143,25 @@ export class SearchresultPage {
       //6.sortby 
       //if sortby contain first then we need to include location
       if(this.selectedFilterOption.sortedBy){
+        console.log('sorted by');
         this.sortedByStatus=true;
         this.sortedBy=this.selectedFilterOption.sortedBy;
-
         if(this.selectedFilterOption.sortedBy=="Closest first"){
          this.lat=this.selectedFilterOption.lat;
          this.lng=this.selectedFilterOption.lng;
         }
+        if(this.selectedFilterOption.sortedBy=="Price:low to high"){
+          this.lat=this.selectedFilterOption.lat;
+          this.lng=this.selectedFilterOption.lng;
+         }
+         if(this.selectedFilterOption.sortedBy=="Price:high to low"){
+          this.lat=this.selectedFilterOption.lat;
+          this.lng=this.selectedFilterOption.lng;
+         }
+         if(this.selectedFilterOption.sortedBy=="Newest first"){
+          this.lat=this.selectedFilterOption.lat;
+          this.lng=this.selectedFilterOption.lng;
+         }
       }else{
         this.sortedByStatus=false;
       }
@@ -278,12 +290,14 @@ export class SearchresultPage {
         (data)=>{
           
           //{"msg":"error","msg_details":"Error in Query."}
-          console.log(data);
+          console.log(data.json());
           if(data.json().msg=="success"){
             this.itemlist=data.json().data;
             this.addFavUnFav();  
           }else{
+            console.log('No data found!');
             this.itemlist=[];
+            console.log(this.itemlist.length);
           }
 
         },

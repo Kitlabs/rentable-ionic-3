@@ -10,12 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 var CONFIG = {
     //apiUrl: 'http://112.196.92.142/patrick-app/api.php'
-    apiUrl: 'http://54.79.124.187/api/api.php'
+    apiUrl: 'http://54.79.124.187/api/api.php',
+    paymentUrl: 'http://54.79.124.187/api/payment.php'
 };
 var AppSetting = /** @class */ (function () {
     function AppSetting() {
         // code...
     }
+    AppSetting.prototype.getPaymentApiUrl = function () {
+        return CONFIG.paymentUrl;
+    };
     AppSetting.prototype.getApiURL = function () {
         return CONFIG.apiUrl;
     };

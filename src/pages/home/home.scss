@@ -3,6 +3,19 @@
   [menuToggle]{
       display: inline-block !important;
   }
+  .nodata{
+            position: fixed;
+    top: 42%;
+    text-align: center;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    }
+   
+    .nodata span{
+            color: grey;
+            font-weight: 700;
+    }
   .icon-col{
     font-size: 1.4rem;
     color:white;
@@ -10,7 +23,12 @@
       line-height: 10vw;
     }
   }
-
+ .active{
+    color: #ffffff;
+  }
+  .deactive{
+    color: #666a71;
+  }
   .image-item{
     position: relative;
     display: inline-block;

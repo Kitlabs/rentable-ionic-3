@@ -1,8 +1,10 @@
 page-contact {
 
     .root_div {
-        padding-left: 10%;
-        padding-right: 10%;
+            position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     }
     
     .child_title {

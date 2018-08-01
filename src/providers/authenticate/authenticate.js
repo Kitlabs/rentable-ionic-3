@@ -24,6 +24,7 @@ var AuthenticateProvider = /** @class */ (function () {
         this.fcm = fcm;
         this.device = device;
         this.apiUrl = this.appSettings.getApiURL();
+        this.paymentApiUrl = this.appSettings.getPaymentApiUrl();
         this.http = http;
         // code...
     }
@@ -40,6 +41,7 @@ var AuthenticateProvider = /** @class */ (function () {
             action: 'SendSMSVerification',
             phoneNumber: smsnumber
         };
+        console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
@@ -91,34 +93,8 @@ var AuthenticateProvider = /** @class */ (function () {
     Input=finishsign.ts
     */
     AuthenticateProvider.prototype.signup = function (Usersignup) {
-        console.log("sign up");
-        if (this.platform.is('ios')) {
-            this.deviceType = 'ios';
-        }
-        else if (this.platform.is('android')) {
-            this.deviceType = 'android';
-        }
-        //uncomment when running on real device
-        //  this.fcm.getToken().then(token=>{
-        //   let body={
-        //     action:'SignUp',
-        //     email:Usersignup.email,
-        //     emailVerified:"false",
-        //     phoneNumber:Usersignup.phonenumber,
-        //     password:Usersignup.password,
-        //     firstName:Usersignup.firstname,
-        //     lastName:Usersignup.lastname,
-        //     postalCode:Usersignup.postalcode,
-        //     deviceToken:token,
-        //     deviceType:this.deviceType,
-        //     fbId:Usersignup.fbId
-        //   }
-        //   console.log(JSON.stringify(body));
-        //   return this.http.post(this.apiUrl,JSON.stringify(body));
-        // });
-        console.log(Usersignup);
         var body = {
-            action: 'SignUp',
+            action: 'CreateAccountOnStripe',
             email: Usersignup.email,
             emailVerified: "false",
             phoneNumber: Usersignup.phonenumber,
@@ -131,10 +107,15 @@ var AuthenticateProvider = /** @class */ (function () {
             lat: Usersignup.lat,
             lng: Usersignup.lng,
             deviceType: this.device.platform,
-            fbId: Usersignup.fbId
+            fbId: Usersignup.fbId,
+            Country: Usersignup.Country,
+            City: Usersignup.City,
+            day: Usersignup.day,
+            month: Usersignup.month,
+            year: Usersignup.year
         };
         console.log(JSON.stringify(body));
-        return this.http.post(this.apiUrl, JSON.stringify(body));
+        return this.http.post(this.paymentApiUrl, JSON.stringify(body));
     };
     /*
     Check phone number exist or not
@@ -205,7 +186,8 @@ var AuthenticateProvider = /** @class */ (function () {
             action: 'GetUserDetails',
             userId: userId
         };
-        return this.http.post(this.apiUrl, body);
+        console.log(JSON.stringify(body));
+        return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     /*
       Function to change password
@@ -226,7 +208,8 @@ var AuthenticateProvider = /** @class */ (function () {
       function to get address from postal code
     */
     AuthenticateProvider.prototype.getAddressFromPostalCode = function (postalcode) {
-        var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + postalcode + '&key=AIzaSyCTSsYgSHTpb9d6-o5qYQm8yQ9b8O81MYc';
+        //var url='https://maps.googleapis.com/maps/api/geocode/json?address='+postalcode+'&key=AIzaSyCTSsYgSHTpb9d6-o5qYQm8yQ9b8O81MYc';
+        var url = 'https://maps.googleapis.com/maps/api/geocode/json?components=country:Au&address=' + postalcode + '&key=AIzaSyCTSsYgSHTpb9d6-o5qYQm8yQ9b8O81MYc';
         console.log(url);
         return this.http.get(url);
     };
@@ -240,6 +223,7 @@ var AuthenticateProvider = /** @class */ (function () {
             id: userId,
             deviceToken: token
         };
+        console.log(JSON.stringify(body));
         return this.http.post(this.apiUrl, JSON.stringify(body));
     };
     AuthenticateProvider = __decorate([

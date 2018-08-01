@@ -27,6 +27,7 @@ export class ChatPage {
   basePath:string;
   postId:any;
   dataToSend:any;
+  NotAgree: any = null;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public itemprovider: ItemsProvider,
@@ -36,7 +37,8 @@ export class ChatPage {
               public af:AngularFireDatabase,
               public ev:Events,
               public storage:Storage) {
-
+              // alert('chat ggj');
+              
     this.rentalRequestList=[];
     this.ownlist=[];
     this.rentlist=[];
@@ -86,12 +88,8 @@ export class ChatPage {
 
   ionViewDidEnter() {
     this.rentalRequestList=[];
-
-    this.ownlist=[];
-    this.rentlist=[];
-    
     this.ev.publish("message","");
-    this.ev.publish("rentalCount",0)
+    //this.ev.publish("rentalCount",0)
 
     this.getUserId().then(
       uid=>{
@@ -100,6 +98,12 @@ export class ChatPage {
         this.getChatListRent();
       }
       );
+      if(localStorage.getItem('bothNotAgree')){
+        console.log(localStorage.getItem('bothNotAgree'));
+        this.NotAgree = JSON.parse(localStorage.getItem('bothNotAgree'));
+     }else{
+      this.NotAgree = null;
+     }
       this.clearPostDetails();
   }
 
@@ -117,7 +121,7 @@ export class ChatPage {
 				this.storage.set("dailyPrice",null); 
 				this.storage.set("fairPrice",null);
 				this.storage.set("distance",null);
-				console.log("adfadsfasdfasdf");
+				//console.log("adfadsfasdfasdf");
 			}
     });
   }
@@ -127,8 +131,27 @@ export class ChatPage {
     this.itemprovider.getChatListOwn(this.uid).subscribe(data =>{
       if(data.json().msg=="success"){
           console.log(data.json());
+          console.log(data.json().IsRead);
+          if(data.json().IsRead != undefined){
+            this.ev.publish("messageCount",0);
+           }else{
+            this.ev.publish("messageCount",1);
+           }
           this.basePath=data.json().base_path;
-          this.ownlist=data.json().PostData;
+          this.ownlist = null;
+          this.ownlist = [];
+          data.json().PostData.forEach(element => {
+            console.log(element);
+            console.log(element.IsDeletedFromId);
+            if(element.IsDeletedToId == "No"){
+              this.ownlist.push(element);
+            }
+          });
+         // this.ownlist=data.json().PostData;
+       }else{
+        this.ownlist = null;
+        this.ownlist = [];
+        console.log(this.ownlist.length);
        }
     },
     err=>{
@@ -141,21 +164,59 @@ export class ChatPage {
     this.itemprovider.getChatListRent(this.uid).subscribe(data =>{
       if(data.json().msg=="success"){
           console.log(data.json());
+          console.log(data.json().IsRead);
+           if(data.json().IsRead != undefined){
+            this.ev.publish("rentalCount",0);
+           }else{
+            this.ev.publish("rentalCount",1);
+           }
           this.basePath=data.json().base_path;
-          this.rentlist=data.json().PostData;
+          console.log(data.json().PostData);
+          this.rentlist = null;
+          this.rentlist = [];
+          data.json().PostData.forEach(element => {
+            console.log(element);
+            console.log(element.IsDeletedFromId);
+            if(element.IsDeletedFromId == "No"){
+              
+              this.rentlist.push(element);
+            }
+          });
+          //this.rentlist=data.json().PostData;
+        }else{
+          this.rentlist = null;
+          this.rentlist = [];
         }
     },
     err=>{
       console.log("error");
     });
-    
   }
 
 
-  deleteIownChatList(renterId,itemStatus,itemId){
+  deleteIownChatList(renterId,itemStatus,itemId,fromid,toid,ReturnAgreeWithRating){
+    console.log(fromid);
+    console.log(toid);
+    console.log(itemStatus);
+    console.log(ReturnAgreeWithRating);
     console.log("Call is received to delete item from own chat list"+renterId+"|"+itemStatus);
-
-    if(itemStatus == '' || itemStatus =='Pending' || itemStatus =='Rejected' || itemStatus == 'Returned' || itemStatus == 'Cancel'){
+    if(ReturnAgreeWithRating == "none"){
+      let alert = this.alertCtrl.create({
+        title: 'Sorry',
+        message: "You can not delete the chat list at this stage, as the product might be rented or there is a pending action",
+        buttons: [
+          {
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      alert.present();
+    }else{
+// if(itemStatus == '' || itemStatus =="Pending" || itemStatus =='Rejected' || itemStatus == 'Returned' || itemStatus == 'Cancel'){
+    if(itemStatus =='Rejected' || itemStatus == 'Returned' || itemStatus == 'Cancel'){
       //can delete item
       let alert = this.alertCtrl.create({
         title: 'Confirm',
@@ -165,15 +226,14 @@ export class ChatPage {
             text: 'No',
             role: 'cancel',
             handler: () => {
-   
             }
           },
           {
             text: 'Yes',
             handler: () => {
-               this.itemprovider.deleteChatList(renterId,this.uid,itemId).subscribe(data =>{
+               this.itemprovider.DeleteChatItem(renterId,this.uid,itemId,fromid,toid).subscribe(data =>{
                if(data.json().msg=="success"){
-                 this.chatprovider.deleteChats(this.uid,renterId,itemId);
+                 //this.DeletePreviousChat(this.uid,renterId,itemId);
                  this.getChatListOwn();
                }
              },
@@ -189,7 +249,7 @@ export class ChatPage {
     }else{
       let alert = this.alertCtrl.create({
         title: 'Sorry',
-        message: "You cannot delete the chat list at this stage, as the product might be rented or there is a pending action",
+        message: "You can not delete the chat list at this stage, as the product might be rented or there is a pending action",
         buttons: [
           {
             text: 'OK',
@@ -201,14 +261,32 @@ export class ChatPage {
       });
       alert.present();
     }
+  }
    
-
   }
 
-  deleteIrentChatList(ownerId,itemStatus,itemId){
+  deleteIrentChatList(ownerId,itemStatus,itemId,fromid,toid,ReturnAgreeWithRating){
+    console.log(fromid);
+    console.log(toid);
+   console.log(ReturnAgreeWithRating);
     console.log("Call is received to delete item from rent chat list"+ownerId+"|"+itemStatus);
-
-    if(itemStatus == '' || itemStatus =='Pending' || itemStatus =='Rejected' || itemStatus == 'Returned' || itemStatus == 'Cancel'){
+    if(ReturnAgreeWithRating == "none"){
+      let alert = this.alertCtrl.create({
+        title: 'Sorry',
+        message: "You can not delete the chat list at this stage, as the product might be rented or there is a pending action",
+        buttons: [
+          {
+            text: 'OK',
+            role: 'cancel',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      alert.present();
+    }else{
+//if(itemStatus == '' || itemStatus =='Pending' || itemStatus =='Rejected' || itemStatus == 'Returned' || itemStatus == 'Cancel'){
+    if(itemStatus =='Rejected' || itemStatus == 'Returned' || itemStatus == 'Cancel'){
       //can delete item
       let alert = this.alertCtrl.create({
         title: 'Confirm',
@@ -224,9 +302,9 @@ export class ChatPage {
           {
             text: 'Yes',
             handler: () => {
-               this.itemprovider.deleteChatList(this.uid,ownerId,itemId).subscribe(data =>{
+               this.itemprovider.DeleteChatItemRent(this.uid,ownerId,itemId,fromid,toid).subscribe(data =>{
                if(data.json().msg=="success"){
-                this.chatprovider.deleteChats(this.uid,ownerId,itemId);
+                //this.DeletePreviousChat(this.uid,ownerId,itemId);
                  this.getChatListRent();
                }
              },
@@ -242,7 +320,7 @@ export class ChatPage {
     }else{
       let alert = this.alertCtrl.create({
         title: 'Sorry',
-        message: "You cannot delete the chat list at this stage, as the product might be rented or there is a pending action",
+        message: "You can not delete the chat list at this stage, as the product might be rented or there is a pending action",
         buttons: [
           {
             text: 'OK',
@@ -254,8 +332,7 @@ export class ChatPage {
       });
       alert.present();
     }
-
-
+  }
   }
 
   getUserId():any{
@@ -299,30 +376,78 @@ export class ChatPage {
   }
 
   //item.FromDate,item.ToDate,item.Amount,item.itemOwnerFee,item.AdminFee,item.rentableServiceFee,item.needDelivery
-  goToIOwnChatDetails(reqUserId,itemId,itemTitle,itemImage,reqUserImage,dailyRentPrice,oItemStatus,rItemStatus,fromDate,toDate,amount,itemOwnerFee,adminFee,rentableServiceFee,rentalCostWithoutFee,needDelivery){
+  goToIOwnChatDetails(reqUserId,itemId,itemTitle,itemImage,reqUserImage,dailyRentPrice,oItemStatus,rItemStatus,fromDate,toDate,amount,itemOwnerFee,adminFee,rentableServiceFee,rentalCostWithoutFee,needDelivery,IsDeletedFromId,IsDeletedToId){
     console.log("Call is received to switch to own chat details");
-    this.dataToSend={uid:this.uid,reqUserId:reqUserId,itemId:itemId,itemTitle:itemTitle,itemImage:itemImage,reqUserImage:reqUserImage,
-    basePath:this.basePath,rentPrice:dailyRentPrice,status:'iown',oItemStatus:oItemStatus,rItemStatus:rItemStatus,fromDate:fromDate,toDate:toDate,amount:amount,itemOwnerFee:itemOwnerFee,adminFee:adminFee,rentableServiceFee:rentableServiceFee,rentalCostWithoutFee:rentalCostWithoutFee,needDelivery:needDelivery};    
+
+    this.dataToSend={
+      uid:this.uid,
+      reqUserId:reqUserId,
+      itemId:itemId,
+      itemTitle:itemTitle,
+      itemImage:itemImage,
+      reqUserImage:reqUserImage,
+      basePath:this.basePath,
+      rentPrice:dailyRentPrice,
+      status:'iown',
+      oItemStatus:oItemStatus,
+      rItemStatus:rItemStatus,
+      fromDate:fromDate,
+      toDate:toDate,
+      amount:amount,
+      itemOwnerFee:itemOwnerFee,
+      adminFee:adminFee,
+      rentableServiceFee:rentableServiceFee,
+      rentalCostWithoutFee:rentalCostWithoutFee,
+      needDelivery:needDelivery,
+      DeletedFromId:IsDeletedFromId,
+      DeletedToId:IsDeletedToId
+    };    
     this.navCtrl.push(ChatdetailPage,{param:JSON.stringify(this.dataToSend)});
   }
 
 
-  goToIRentChatDetails(reqUserId,itemId,itemTitle,itemImage,reqUserImage,dailyRentPrice,oItemStatus,rItemStatus,fromDate,toDate,amount,itemOwnerFee,adminFee,rentableServiceFee,rentalCostWithoutFee,needDelivery){
+  goToIRentChatDetails(reqUserId,itemId,itemTitle,itemImage,reqUserImage,dailyRentPrice,oItemStatus,rItemStatus,fromDate,toDate,amount,itemOwnerFee,adminFee,rentableServiceFee,rentalCostWithoutFee,needDelivery,IsDeletedFromId,IsDeletedToId){
     console.log("Call is received to switch to rent chat details");
-    this.dataToSend={uid:this.uid,reqUserId:reqUserId,itemId:itemId,itemTitle:itemTitle,itemImage:itemImage,reqUserImage:reqUserImage,basePath:this.basePath,rentPrice:dailyRentPrice,status:'irent',
-    oItemStatus:oItemStatus,rItemStatus:rItemStatus,fromDate:fromDate,toDate:toDate,amount:amount,itemOwnerFee:itemOwnerFee,adminFee:adminFee,rentableServiceFee:rentableServiceFee,rentalCostWithoutFee:rentalCostWithoutFee,needDelivery:needDelivery};    
+    this.dataToSend={
+      uid:this.uid,
+      reqUserId:reqUserId,
+      itemId:itemId,
+      itemTitle:itemTitle,
+      itemImage:itemImage,
+      reqUserImage:reqUserImage,
+      basePath:this.basePath,
+      rentPrice:dailyRentPrice,
+      status:'irent',
+      oItemStatus:oItemStatus,
+      rItemStatus:rItemStatus,
+      fromDate:fromDate,
+      toDate:toDate,
+      amount:amount,
+      itemOwnerFee:itemOwnerFee,
+      adminFee:adminFee,
+      rentableServiceFee:rentableServiceFee,
+      rentalCostWithoutFee:rentalCostWithoutFee,
+      needDelivery:needDelivery,
+      DeletedFromId:IsDeletedFromId,
+      DeletedToId:IsDeletedToId
+
+  };    
     this.navCtrl.push(ChatdetailPage,{param:JSON.stringify(this.dataToSend)});
   }
 
   chatdetail(key){
-
     let param = {uid: this.uid, interlocutor: key}; 
     this.navCtrl.push(ChatdetailPage, param);
-
-    /*if (this.itemdelete==false) {
-      this.navCtrl.push(ChatdetailPage, param);
-    }*/
-
   }
+    DeletePreviousChat(userId,renterid,itemid){
+     console.log(userId+','+renterid+','+itemid);
+     
+     this.chatprovider.getChatRef(userId, renterid,itemid)
+    .then((chatRef:any)=>{
+      console.log(chatRef);
+      //return false;
+      this.chatprovider.DeleteAllChatItems(chatRef);
+    });
+   }
 
 }

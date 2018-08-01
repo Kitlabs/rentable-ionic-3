@@ -35,4 +35,9 @@
       <img *ngIf="item.Favourite=='1'" class="cover_image" (click)="DeactiveFavourite(item.id)" src="assets/icon/like-full.png"> -->
     </div>
   </ion-card>
+  <div class="nodata" no-lines *ngIf="categorylist.length == 0"> 
+      <img src="assets/img/heart.png" width="50px">
+      <p>No favourites yet</p>
+      <span>Favourite things you love so you can always find them here!</span>
+    </div>
 </ion-content>

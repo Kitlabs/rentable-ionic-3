@@ -147,9 +147,10 @@ export class ReviewPickReturnPage {
         data =>{
         console.log(data.json());
         loading.dismiss();
-        if(data.json().msg=="success"){
-  
+        if(data.json().msg == "success"){
+        
         this.rentalRequestDetails=data.json().data[0];
+        console.log(this.rentalRequestDetails);
         let fromDateStr = this.rentalRequestDetails.FromDate;
         let toDateStr = this.rentalRequestDetails.ToDate;
         let fromDateRes = fromDateStr.split("-");
@@ -158,8 +159,6 @@ export class ReviewPickReturnPage {
         this.toDate=toDateRes[2]+"/"+toDateRes[1]+"/"+toDateRes[0].slice(2);
         this.basePath=this.rentalRequestDetails.base_path;
         this.priceBreakDown();
-        
-
          //Rating given by owner to item while posting
         for (var i=0; i < this.rentalRequestDetails.currentcondition;  i++) {
             this.ownerItemRatingPos[i]=i;
@@ -168,9 +167,6 @@ export class ReviewPickReturnPage {
         for (var j=0; j < 5-this.rentalRequestDetails.currentcondition;  j++) {
             this.ownerItemRatingNeg[j]=j;
           }
-
-          
-
          //Rating given by renter during picked
         if(this.rentalRequestDetails.Status == "PickedUpPending"){
             this.status=true;
@@ -327,10 +323,10 @@ export class ReviewPickReturnPage {
 
     //delivery fee not applied
     if(this.rentalRequestDetails.needDelivery==0){
-        this.toolTip="Rental Cost = $"+this.rentalRequestDetails.rentalCostWithoutFee+ "                   Service Fee = $"+this.rentalRequestDetails.rentableServiceFee;
+        this.toolTip="Rental Cost = $"+this.rentalRequestDetails.rentalCostWithoutFee+ " Service Fee = $"+this.rentalRequestDetails.rentableServiceFee;
     }else{
       //delivery fee applied
-       this.toolTip="Rental Cost = $"+this.rentalRequestDetails.rentalCostWithoutFee+ "                    Service Fee = $"+this.rentalRequestDetails.rentableServiceFee+"                      Delivery Fee = $"+this.rentalRequestDetails.deliveryfee;
+       this.toolTip="Rental Cost = $"+this.rentalRequestDetails.rentalCostWithoutFee+ " Service Fee = $"+this.rentalRequestDetails.rentableServiceFee+" Delivery Fee = $"+this.rentalRequestDetails.deliveryfee;
     }
     
   }

@@ -84,7 +84,7 @@ export class Details implements OnInit {
   sharingInfo:any;
   productTitle:string;
   productDescription:string;
-  productDailyRentalCost:any;
+  productDailyRentalCost:any = null;
   productRentCost:any;
   productRentalCostWithoutFee:any;
   productImage:string;
@@ -146,6 +146,8 @@ export class Details implements OnInit {
     public socialSharing: SocialSharing
     )  {
 
+
+     // alert('detail');
     // this.Product ={
     //   img: 'assets/img/11.png', ownerimage:'assets/img/profile-img.png', ownername: 'John', item_title:'house', price:'25', description:'this is good rentalable book please use this Thanks', selectdate:'', total_cost:'100'}
     
@@ -175,7 +177,7 @@ export class Details implements OnInit {
     this.deliveryStatus=false;
     this.btnSendMessage=false;
 
-
+localStorage.removeItem('redirection');
   }
 
   ionViewDidLoad(){
@@ -189,9 +191,12 @@ export class Details implements OnInit {
   }
 
   ionViewDidEnter(){
+    //alert('enter');
    console.log("Detail Page ionViewDidEnter");
    this.storage.get('CARD_STATUS').then((data)=>{
-     this.cardStatus=data;
+     console.log(typeof(data));
+     this.cardStatus=parseInt(data);
+     console.log(typeof(this.cardStatus));
     });
   }
 
@@ -199,7 +204,7 @@ export class Details implements OnInit {
    * Not Used
    */
   openCalendar() {
-
+    console.log('here');
           this.isDelivery=false;
           const options: CalendarModalOptions = {
             pickMode: 'range',
@@ -265,13 +270,15 @@ export class Details implements OnInit {
     this.itemprovider.getTotalRentalCost(this.productRentCost,withOrWithoutDelivery,withOrWithoutDelivery==1?this.deliveryFee:0).subscribe(
       data=>{
           this.productDailyRentalCost=data.json().Renter.Total;
+          console.log(this.productDailyRentalCost);
+          this.btnSendRentalReq = true;
           this.itemOwnerFee=data.json().Owner.Total;
           this.AdminFee=data.json().Admin.ServiceFee;
           this.rentableServiceFee =data.json().Renter.RenterServiceFee;
           this.productRentalCostWithoutFee=data.json().Renter.RentalCost;
          if(withOrWithoutDelivery==1){
            //include delivery fee
-           this.toolTip="Rental Cost = $"+data.json().Renter.RentalCost+ "                    Service Fee = $"+data.json().Renter.RenterServiceFee+"                    Delivery Fee = $"+data.json().Renter.DeliveryPickUpFee;
+           this.toolTip="Rental Cost = $"+data.json().Renter.RentalCost+ " Service Fee = $"+data.json().Renter.RenterServiceFee+" Delivery Fee = $"+data.json().Renter.DeliveryPickUpFee;
          }else{
           this.toolTip="Rental Cost = $"+data.json().Renter.RentalCost+"  Service Fee = $"+data.json().Renter.RenterServiceFee;
          }
@@ -368,10 +375,12 @@ export class Details implements OnInit {
       this.userId=uid;
       this.itemprovider.getItemDetailWithBookedDates(this.itemId,uid).subscribe(
       data=>{
+        console.log(data);
           this.loading.dismiss();  
          if(data.json().msg=="success"){
            this.Product=data.json().PostData[0];
            //splitting images to array
+
            this.sliderImages=data.json().PostData[0].image.split('|');
            this.productDailyRentalPrice=this.Product.dailyrentalPrice.split('.');
            //Info to share via facebook or twitter
@@ -721,6 +730,7 @@ export class Details implements OnInit {
   }
 
   checker(){
+    console.log('checker');
       var date1 = new Date(this.pickUpDate);
       var monthp = date1.getUTCMonth() + 1; //months from 1-12
       var dayp = date1.getUTCDate();
@@ -758,7 +768,6 @@ export class Details implements OnInit {
    * function to send rental request
    */
   sendrental(){
-     
      console.log("send rental request");
      this.loading=this.loadingCtrl.create({
         spinner:'bubbles',
@@ -766,21 +775,24 @@ export class Details implements OnInit {
       });
 
     this.loading.present();
-    //sendRentalRequest(userId,postId,pickUpDate,returnDate,amount,itemOwnerFee,AdminFee,needDelivery,rentableServiceFee)
-    this.itemprovider.sendRentalRequest(this.userId, this.itemId, this.pickUpDate,this.returnDate, this.productDailyRentalCost,this.itemOwnerFee,this.AdminFee,this.isDelivery==true?1:0,this.rentableServiceFee,this.productRentalCostWithoutFee )
-    .subscribe(data =>{
-      this.loading.dismiss();
-      if(data.json().msg=="success"){
-            this.sendmessage();
-            this.markMessageAsUnRead(); 
-            this.showToast("Request has been sent successfully");
-      }else{
-           this.showToast("You can rent this product again, once you return it");
-      }
-    }, 
-    err =>{
-      this.loading.dismiss();
-    });
+          //sendRentalRequest(userId,postId,pickUpDate,returnDate,amount,itemOwnerFee,AdminFee,needDelivery,rentableServiceFee)
+        this.itemprovider.sendRentalRequest(this.userId, this.itemId, this.pickUpDate,this.returnDate, this.productDailyRentalCost,this.itemOwnerFee,this.AdminFee,this.isDelivery==true?1:0,this.rentableServiceFee,this.productRentalCostWithoutFee )
+        .subscribe(data =>{
+          this.loading.dismiss();
+          console.log(data);
+          if(data.json().msg=="success"){
+                this.DeletePreviousChat();
+                this.sendmessage();
+                this.UpdateChatStatus();
+                this.markMessageAsUnRead(); 
+                this.showToast("Request has been sent successfully");
+          }else{
+               this.showToast("You can rent this product again, once you return it");
+          }
+        }, 
+        err =>{
+          this.loading.dismiss();
+        });
   }
 
 
@@ -1031,7 +1043,12 @@ export class Details implements OnInit {
   }
   rentalshow(){
     console.log("show");
-    this.rentalstatus = true
+    if(this.cardStatus == 1){
+      this.rentalstatus = true
+    }else{
+      this.showToastClaim('Please add a payment method in order to rent a product.');
+    }
+    
   }
 
   locationhide(){
@@ -1161,6 +1178,54 @@ export class Details implements OnInit {
         
        });
       toast.present();
+   }
+
+   showToastClaim(msg:string){
+     let toast = this.toastCtrl.create({
+        message: msg,
+        //duration: 5000,
+        position:"top",
+        showCloseButton: true,
+        closeButtonText: "Ok"
+    });
+   
+        toast.onDidDismiss(() => {
+            console.log("Toast buton clicked");
+
+            ///undo operation
+        });
+    toast.present();
+   }
+
+   DeletePreviousChat(){
+     console.log(this.userId+','+this.Product.userId+','+this.Product.id);
+     
+     this.chatprovider.getChatRef(this.userId, this.Product.userId,this.Product.id)
+    .then((chatRef:any)=>{
+      console.log(chatRef);
+      //return false;
+      this.chatprovider.DeleteAllChatItems(chatRef);
+    });
+   }
+
+   UpdateChatStatus(){
+      this.itemprovider.UpdateChatItemOwn(this.userId, this.Product.userId,this.Product.id,'No','No').subscribe(data =>{
+               if(data.json().msg=="success"){
+                 //this.chatprovider.deleteChats(this.uid,renterId,itemId);
+               }
+             },
+             err=>{
+               console.log("error");
+             });
+       this.itemprovider.UpdateChatItemRent(this.userId, this.Product.userId,this.Product.id,'No','No').subscribe(data =>{
+            if(data.json().msg=="success"){
+              //this.chatprovider.deleteChats(this.uid,renterId,itemId);
+              
+            }
+          },
+          err=>{
+            console.log("error");
+          });
    }
    
 }

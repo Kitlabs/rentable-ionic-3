@@ -11,23 +11,25 @@ import { Component, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, ModalController, NavParams, Content, ViewController, LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { RentPage } from '../rent/rent';
 import { MapModal } from '../modal-page/modal-page';
-import { ShareModal } from '../share-modal/share-modal';
 import { Home } from '../home/home';
 import { ItemsProvider } from '../../providers/items/items';
 import { Geolocation } from 'ionic-native';
 import { ChatProvider } from '../../providers/chat/chat';
 import { AuthenticateProvider } from '../../providers/authenticate/authenticate';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { ProfileProvider } from '../../providers/payment/profile';
 import { AcceptPage } from '../accept/accept';
 import { PickupPage } from '../pickup/pickup';
 import { ClaimownerPage } from '../claimowner/claimowner';
 import { OtherprofilePage } from '../otherprofile/otherprofile';
 import { Storage } from '@ionic/storage';
-import { CalendarModal } from "ion2-calendar";
+import { PaymentProvider } from '../../providers/payment/payment';
+import { AngularFireDatabase } from 'angularfire2/database';
 /**
  *It will show the details of items rent by me
  */
 var DetailsRentPage = /** @class */ (function () {
-    function DetailsRentPage(navCtrl, navParams, myElement, modalCtrl, zone, viewCtrl, itemprovider, chatprovider, loadingCtrl, storage, authProvider, toastCtrl, alertCtrl) {
+    function DetailsRentPage(navCtrl, navParams, myElement, modalCtrl, zone, viewCtrl, itemprovider, chatProvider, loadingCtrl, storage, af, chatprovider, authProvider, paymentProvider, toastCtrl, alertCtrl, socialSharing, profileProvider) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.myElement = myElement;
@@ -35,12 +37,17 @@ var DetailsRentPage = /** @class */ (function () {
         this.zone = zone;
         this.viewCtrl = viewCtrl;
         this.itemprovider = itemprovider;
-        this.chatprovider = chatprovider;
+        this.chatProvider = chatProvider;
         this.loadingCtrl = loadingCtrl;
         this.storage = storage;
+        this.af = af;
+        this.chatprovider = chatprovider;
         this.authProvider = authProvider;
+        this.paymentProvider = paymentProvider;
         this.toastCtrl = toastCtrl;
         this.alertCtrl = alertCtrl;
+        this.socialSharing = socialSharing;
+        this.profileProvider = profileProvider;
         this.showFooter = false;
         this.rentPage = RentPage;
         this.home = Home;
@@ -67,60 +74,20 @@ var DetailsRentPage = /** @class */ (function () {
         this.userRatingNeg = [];
         this.userRatingPos = [];
     }
-    DetailsRentPage.prototype.ionViewDidEnter = function () {
+    DetailsRentPage.prototype.ionViewDidLoad = function () {
         console.log("details renta page");
         this.itemId = this.navParams.get("itemId");
         this.pAmount = this.navParams.get("amount");
-        this.pFromDate = this.navParams.get("fromDate");
-        this.pToDate = this.navParams.get("toDate");
         this.pStatus = this.navParams.get("status");
+        this.pRentleCostWithoutFee = this.navParams.get("rentalCostWithoutFee");
+        this.pRentableServiceFee = this.navParams.get("rentableServiceFee");
+        this.pItemOwnerFee = this.navParams.get("itemOwnerFee");
         this.getItemDetails();
         this.goto();
     };
-    DetailsRentPage.prototype.openCalendar = function () {
-        var _this = this;
-        var options = {
-            pickMode: 'range',
-            title: 'Select Date',
-            color: 'dark'
-        };
-        var myCalendar = this.modalCtrl.create(CalendarModal, {
-            options: options
-        });
-        myCalendar.present();
-        myCalendar.onDidDismiss(function (date, type) {
-            if (type == 'done') {
-                _this.pickUpDate = date.from.string;
-                _this.returnDate = date.to.string;
-                var date1 = new Date(date.from.string);
-                var date2 = new Date(date.to.string);
-                var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-                var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                console.log(diffDays);
-                if (diffDays != null) {
-                    _this.pickReturnDateStatus = true;
-                    if (diffDays == 0) {
-                        _this.productDailyRentalCost = _this.productDailyRentalPriceSecond;
-                        _this.btnSendRentalReq = false;
-                    }
-                    else {
-                        _this.btnSendRentalReq = true;
-                        _this.productDailyRentalCost = _this.productDailyRentalPriceSecond * diffDays;
-                        console.log(_this.productDailyRentalCost);
-                    }
-                }
-                else {
-                    _this.productDailyRentalCost = _this.productDailyRentalPriceSecond;
-                    _this.pickReturnDateStatus = false;
-                    _this.btnSendRentalReq = false;
-                }
-            }
-            else {
-                //no
-                _this.pickReturnDateStatus = false;
-                _this.btnSendRentalReq = false;
-            }
-        });
+    DetailsRentPage.prototype.number = function () {
+        var n = this.messagetext.length;
+        this.messagenumber = 350 - n;
     };
     DetailsRentPage.prototype.ActiveFavourite = function () {
         this.favourite = true;
@@ -137,6 +104,7 @@ var DetailsRentPage = /** @class */ (function () {
     */
     DetailsRentPage.prototype.getItemDetails = function () {
         var _this = this;
+        console.log('rahul');
         this.loading = this.loadingCtrl.create({
             spinner: 'bubbles',
             content: "Please wait.."
@@ -146,13 +114,13 @@ var DetailsRentPage = /** @class */ (function () {
         this.storage.get('userId').then(function (uid) {
             console.log("DetailsId=" + uid);
             _this.userId = uid;
-            _this.itemprovider.getItemDetail(_this.itemId, uid).subscribe(function (data) {
+            _this.itemprovider.getItemDetailWithBookedDates(_this.itemId, uid).subscribe(function (data) {
                 _this.loading.dismiss();
                 console.log(data.json());
                 if (data.json().msg == "success") {
-                    _this.Product = data.json().data[0];
+                    _this.Product = data.json().PostData[0];
                     //splitting images to array
-                    _this.sliderImages = data.json().data[0].image.split('|');
+                    _this.sliderImages = _this.Product.image.split('|');
                     _this.productDailyRentalPrice = _this.Product.dailyrentalPrice.split('.');
                     //Info to share via facebook or twitter
                     _this.productTitle = _this.Product.title;
@@ -162,31 +130,69 @@ var DetailsRentPage = /** @class */ (function () {
                     _this.productImage = _this.Product.image_single;
                     _this.postedLocationLat = _this.Product.lat;
                     _this.postedLocationLng = _this.Product.lng;
-                    _this.basePath = _this.Product.base_path;
+                    _this.basePath = data.json().base_path;
                     //favourite or not
-                    _this.favourite = _this.Product.favourites == 0 ? false : true;
+                    _this.favourite = _this.Product.favourite == 0 ? false : true;
                     //username
                     _this.fullname = _this.Product.user_details.firstName + " " + _this.Product.user_details.lastName;
                     //base url
-                    _this.profilePic = _this.Product.base_path + _this.Product.user_details.photoURL;
+                    _this.profilePic = _this.basePath + _this.Product.user_details.photoURL;
                     _this.nItemRating = _this.Product.currentcondition;
+                    //product owner id
+                    _this.productOwnerId = _this.Product.user_details.id;
+                    _this.pNeedDelivery = _this.Product.needDelivery;
+                    _this.pDeliveryFee = _this.Product.deliveryfee;
                     if (_this.productDailyRentalPrice[1] == "00") {
                         _this.dailyPrice = _this.productDailyRentalPrice[0];
                     }
                     else {
                         _this.dailyPrice = _this.Product.dailyrentalPrice;
                     }
-                    _this.setUserRating(_this.Product.rating);
+                    _this.setUserRating(_this.Product.userId);
                     _this.setItemRating(_this.Product.currentcondition);
                     //this.hideOrShowOptionBasedOnItemStatus(this.Product.status);
                     _this.hideOrShowOptionBasedOnItemStatus(_this.pStatus);
+                    //from and to date
+                    var fromDateStr = _this.navParams.get("fromDate");
+                    var toDateStr = _this.navParams.get("toDate");
+                    var fromDateRes = fromDateStr.split("-");
+                    var toDateRes = toDateStr.split("-");
+                    _this.pFromDate = fromDateRes[2] + "/" + fromDateRes[1] + "/" + fromDateRes[0].slice(2);
+                    _this.pToDate = toDateRes[2] + "/" + toDateRes[1] + "/" + toDateRes[0].slice(2);
+                    //date format month/day/year
+                    var fromDateSecond = fromDateRes[1] + "/" + fromDateRes[2] + "/" + fromDateRes[0].slice(2);
+                    _this.checkCancelOption(fromDateSecond);
                 }
             }, function (err) {
+                _this.showToast("Unable to fetch data, please try again later");
                 _this.loading.dismiss();
+                _this.navCtrl.pop();
                 console.log();
             }, function () {
             });
         }); //end of storage
+    };
+    /**
+     * Function to cancellation period, if user cance within 48 hours then there will be a cancellation fee
+     */
+    DetailsRentPage.prototype.checkCancelOption = function (fromDatee) {
+        console.log('FromDatee--->' + fromDatee);
+        this.todayDate = new Date();
+        var dd = this.todayDate.getDate();
+        var mm = this.todayDate.getMonth() + 1; //January is 0!
+        var yyyy = this.todayDate.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        this.todayDate = mm + '/' + dd + '/' + yyyy;
+        var d1 = new Date(this.todayDate);
+        var d2 = new Date(fromDatee);
+        var timeDiff = d2.getTime() - d1.getTime();
+        var DaysDiff = timeDiff / (1000 * 3600 * 24);
+        this.chargeCancelFeeStatus = DaysDiff <= 2 && this.pStatus != 'Pending' ? true : false;
     };
     /*
     Function to set item rating
@@ -203,13 +209,48 @@ var DetailsRentPage = /** @class */ (function () {
     /*
     Function to set user rating
     */
-    DetailsRentPage.prototype.setUserRating = function (rating) {
-        for (var i = 0; i < rating; i++) {
-            this.userRatingPos[i] = i;
-        }
-        for (var j = 0; j < 5 - this.Product.rating; j++) {
-            this.userRatingNeg[j] = j;
-        }
+    DetailsRentPage.prototype.setUserRating = function (userId) {
+        var _this = this;
+        var rating;
+        //product rating
+        this.profileProvider.getRating(userId).subscribe(function (data) {
+            rating = data.json().AverageRating;
+            console.log(rating);
+            if (data.json().msg == "success") {
+                if (rating > 0 && rating < 1) {
+                    rating = 0;
+                }
+                if (rating >= 1 && rating < 2) {
+                    rating = 1;
+                }
+                if (rating >= 2 && rating < 3) {
+                    rating = 2;
+                }
+                if (rating >= 3 && rating < 4) {
+                    rating = 3;
+                }
+                if (rating >= 4 && rating < 5) {
+                    rating = 4;
+                }
+                if (rating >= 5) {
+                    rating = 5;
+                }
+                console.log("Rating=", rating);
+                for (var i = 0; i < rating; i++) {
+                    _this.userRatingPos[i] = i;
+                }
+                for (var j = 0; j < 5 - rating; j++) {
+                    _this.userRatingNeg[j] = j;
+                }
+            }
+        }, function (err) {
+        });
+        //  for (var i=0; i < rating;  i++) {
+        //           this.userRatingPos[i]=i;
+        //       }  
+        //   for (var j=0; j < 5-this.Product.rating;  j++) {
+        //     this.userRatingNeg[j]=j;
+        //   } 
     };
     /*
      Method to hide or show option based on item status
@@ -221,7 +262,7 @@ var DetailsRentPage = /** @class */ (function () {
      5.returned
     */
     DetailsRentPage.prototype.hideOrShowOptionBasedOnItemStatus = function (status) {
-        console.log(status);
+        console.log("DETAIL-RENT-STATUS=", status);
         switch (status) {
             case "Pending":
                 /*
@@ -236,27 +277,29 @@ var DetailsRentPage = /** @class */ (function () {
                 this.btnReturn = false;
                 this.btnCancel = true;
                 this.btnDateSelection = false;
-                this.pickReturnDateStatus = false;
+                this.setToolTipInfo();
+                // this.pickReturnDateStatus=false;
                 break;
             case "Rented":
                 /*
-                 1 - Send rental request button text is now "Extend Rental" and it must be disabled
-                 2 - "Pick Up" button is enabled
-                 3 - Return button is disabled
-                 4 - Cancel button is enabled
+                     1 - Send rental request button text is now "Extend Rental" and it must be disabled
+                     2 - "Pick Up" button is enabled
+                     3 - Return button is disabled
+                     4 - Cancel button is enabled
                 */
                 this.btnSendRentalReq = false;
                 this.btnPickUp = true;
                 this.btnReturn = false;
                 this.btnCancel = true;
                 this.btnDateSelection = false;
+                this.setToolTipInfo();
                 break;
             case "PickedUp":
                 /*
-                1 - Send rental request button text is now "Extend Rental" and it must be disabled
-                2 - "Pick Up" button is disabled
-                3 - Return button is enabled
-                4 - Cancel button is disabled
+                    1 - Send rental request button text is now "Extend Rental" and it must be disabled
+                    2 - "Pick Up" button is disabled
+                    3 - Return button is enabled
+                    4 - Cancel button is disabled
                 */
                 console.log("pickedUp");
                 this.btnSendRentalReq = false;
@@ -264,8 +307,13 @@ var DetailsRentPage = /** @class */ (function () {
                 this.btnReturn = true;
                 this.btnCancel = false;
                 this.btnDateSelection = false;
+                this.setToolTipInfo();
                 break;
+            case "PickedUpPending":
+            case "ReturnedPending":
             case "returned":
+                this.setToolTipInfo();
+                //by default all option are disable so we dont' need to do anything here with these returned status
                 break;
             default:
                 console.log("default");
@@ -273,27 +321,50 @@ var DetailsRentPage = /** @class */ (function () {
                 break;
         }
     };
+    DetailsRentPage.prototype.setToolTipInfo = function () {
+        console.log("setToolTipInfo");
+        if (this.pNeedDelivery == 1) {
+            this.toolTip = "Rental Cost = $" + this.pRentleCostWithoutFee + " Service Fee = $" + this.pRentableServiceFee + " Delivery Fee = $" + this.pDeliveryFee;
+        }
+        else {
+            this.toolTip = "Rental Cost = $" + this.pRentleCostWithoutFee + " Service Fee = $" + this.pRentableServiceFee;
+        }
+    };
     DetailsRentPage.prototype.goToPickUpScreen = function () {
-        console.log("Go to pick up screen=" + this.nItemRating);
         this.navCtrl.push(this.pickupPage, {
             itemId: this.itemId,
-            itemRating: this.nItemRating
+            itemRating: this.nItemRating,
+            itemOwnerId: this.productOwnerId
         });
     };
     DetailsRentPage.prototype.goToReturnScreen = function () {
-        console.log("Go to return screen");
+        console.log(this.Product.PickupRating);
         this.navCtrl.push(this.returnPage, {
             itemId: this.itemId,
-            itemRating: this.nItemRating
+            itemRating: this.Product.PickupRating,
+            itemOwnerId: this.productOwnerId
         });
     };
     DetailsRentPage.prototype.goToCancelScreen = function () {
         console.log("Go to cancel screen");
-        this.presentCancelRequestPrompt();
+        if (this.chargeCancelFeeStatus) {
+            //we need to charge cancellation fee from user
+            this.presentCancelRequestPrompt("There will be a 1 day fee for the cancellation", 0);
+        }
+        else {
+            // no need to charge the cancellation fee
+            this.presentCancelRequestPrompt("Are you sure you want to cancel the rental request", 1);
+        }
+        // if(this.pStatus== "Rented"){
+        //   this.presentCancelRequestPrompt("There will be a 1 day fee for the cancellation");
+        // }else{
+        //   this.presentCancelRequestPrompt("Are you sure you want to cancel the rental request");
+        // }
     };
     DetailsRentPage.prototype.goToOtherProfile = function () {
+        console.log();
         this.navCtrl.push(OtherprofilePage, {
-            userId: this.userId,
+            userId: this.productOwnerId,
             itemId: this.itemId
         });
     };
@@ -324,30 +395,87 @@ var DetailsRentPage = /** @class */ (function () {
             this.btnSendRentalReq = false;
         }
     };
-    DetailsRentPage.prototype.sendrental = function () {
-        var _this = this;
-        this.loading = this.loadingCtrl.create({
-            spinner: 'bubbles',
-            content: "Please wait.."
-        });
-        this.loading.present();
-        this.itemprovider.sendRentalRequest(this.userId, this.itemId, this.pickUpDate, this.returnDate, this.productDailyRentalCost)
-            .subscribe(function (data) {
-            _this.loading.dismiss();
-            if (data.json().msg == "success") {
-                _this.showToast("Request has been sent successfully");
-            }
-            else {
-                _this.showToast("You are not able send request again");
-            }
-        }, function (err) {
-        });
-    };
     DetailsRentPage.prototype.sendmessage = function () {
-        // this.chatprovider.addChats(this.uid, this.itemowner._id);
-        // console.log('id-----',this.itemowner._id);
-        // let param = {uid: this.uid, interlocutor: this.itemowner._id, message: this.messagetext};
-        // this.navCtrl.push(ChatdetailPage,param);
+        var _this = this;
+        if (this.messagetext) {
+            console.log("true msg");
+            this.messagetext = "";
+            //{"msg":"success","inserted_id":12}
+            //{"msg":"error","data":"already added!"}
+            this.chatProvider.getChatRef(this.userId, this.productOwnerId, this.itemId)
+                .then(function (chatRef) {
+                console.log(chatRef);
+                _this.af.list(chatRef).push({
+                    from: _this.userId,
+                    message: _this.messagetext,
+                    type: "normal",
+                    time: Date()
+                }).then(function () {
+                    console.log("message sent successfully");
+                    _this.showToast("Message sent");
+                    // message is sent
+                }).catch(function () {
+                    // some error. maybe firebase is unreachable
+                    console.log("firebase unreachable");
+                });
+            });
+        }
+    };
+    DetailsRentPage.prototype.sendCommonMessage = function () {
+        var _this = this;
+        console.log("Call is received to send message");
+        if (this.messagetext) {
+            this.loading = this.loadingCtrl.create({
+                spinner: 'bubbles',
+                content: "Sending..."
+            });
+            this.loading.present();
+            this.itemprovider.insertChatList(this.userId, this.productOwnerId, this.itemId)
+                .subscribe(function (data) {
+                //{"msg":"success","inserted_id":12}
+                //{"msg":"error","data":"already added!"}
+                console.log(data.json());
+                if (data.json().msg == "success" || data.json().msg == "error") {
+                    _this.chatprovider.getChatRef(_this.userId, _this.productOwnerId, _this.itemId)
+                        .then(function (chatRef) {
+                        console.log(chatRef);
+                        _this.af.list(chatRef).push({
+                            from: _this.userId,
+                            message: _this.messagetext,
+                            type: "normal",
+                            time: Date()
+                        }).then(function () {
+                            _this.messagetext = "";
+                            _this.loading.dismiss();
+                            _this.notifyReceiver();
+                            _this.showToastSimple("Message sent");
+                            // message is sent
+                        }).catch(function () {
+                            // some error. maybe firebase is unreachable
+                            _this.loading.dismiss();
+                            console.log("firebase unreachable");
+                        });
+                    });
+                }
+                else {
+                    _this.loading.dismiss();
+                }
+            });
+        }
+        else {
+            console.log("false msg");
+        }
+    };
+    /**
+  * Method to used send notifcation
+  */
+    DetailsRentPage.prototype.notifyReceiver = function () {
+        console.log("Call is received to send message notification to user");
+        this.chatprovider.sendMessageNotification(this.userId, this.productOwnerId).subscribe(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
+        });
     };
     DetailsRentPage.prototype.addMarker = function () {
         var marker = new google.maps.Marker({
@@ -375,13 +503,21 @@ var DetailsRentPage = /** @class */ (function () {
         modal.present();
     };
     DetailsRentPage.prototype.presentShare = function () {
-        var Share = this.modalCtrl.create(ShareModal, {
-            productTitle: this.productTitle,
-            productDescription: this.productDescription,
-            productDailyRentalCost: this.productDailyRentalCost,
-            productImage: this.productImage
+        // let Share = this.modalCtrl.create(ShareModal,{
+        //   productTitle:this.productTitle,
+        //   productDescription:this.productDescription,
+        //   productDailyRentalCost:this.productDailyRentalCost,
+        //   productImage:this.productImage});
+        //  Share.present();
+        var message = this.productDescription + " and daily rental price is $" + this.productDailyRentalCost;
+        var subject = this.productTitle;
+        this.socialSharing.share(message, subject, this.basePath + this.productImage, this.basePath + this.productImage).
+            then(function () {
+            //this.showToast("Sharing success");
+        }).catch(function () {
+            //Error!
+            //this.showToast("Share failed");
         });
-        Share.present();
     };
     DetailsRentPage.prototype.ActiveLike = function () {
         this.like = !this.like;
@@ -440,16 +576,29 @@ var DetailsRentPage = /** @class */ (function () {
             content: "Please wait.."
         });
         this.loading.present();
-        this.itemprovider.cancelItemRequest(this.userId, this.itemId)
+        this.itemprovider.cancelItemRequest(this.userId, this.itemId, "renter")
             .subscribe(function (data) {
             _this.loading.dismiss();
             if (data.json().msg == "success") {
                 _this.showToast("Request has been cancel successfully");
+                // this.chatProvider.sendMessage(this.userId,this.productOwnerId,this.itemId,"Rental request to the item has been cancelled","cancel")
+                _this.chatProvider.sendMessageRental(_this.userId, _this.productOwnerId, _this.itemId, "cancel_req_by_renter", "The rental request has been cancelled by the renter", "You have cancelled the rental");
+                _this.markMessageAsUnRead();
             }
             else {
                 _this.showToast("You are not able send request again");
             }
         }, function (err) {
+            _this.loading.dismiss();
+            _this.showToast("Please try again later");
+        });
+    };
+    DetailsRentPage.prototype.markMessageAsUnRead = function () {
+        console.log("markMessageAsUnRead");
+        this.chatprovider.markMessageAsUnread(this.userId, this.productOwnerId, this.itemId).subscribe(function (data) {
+            console.log(data);
+        }, function (err) {
+            console.log(err);
         });
     };
     DetailsRentPage.prototype.showToast = function (msg) {
@@ -464,11 +613,21 @@ var DetailsRentPage = /** @class */ (function () {
         });
         toast.present();
     };
-    DetailsRentPage.prototype.presentCancelRequestPrompt = function () {
+    DetailsRentPage.prototype.showToastSimple = function (msg) {
+        var toast = this.toastCtrl.create({
+            message: msg,
+            position: "top",
+            duration: 2000
+        });
+        toast.onDidDismiss(function () {
+        });
+        toast.present();
+    };
+    DetailsRentPage.prototype.presentCancelRequestPrompt = function (msg, id) {
         var _this = this;
         var alert = this.alertCtrl.create({
             title: 'Confirm',
-            message: 'Are you sure you want to cancel this rental ?',
+            message: msg,
             buttons: [
                 {
                     text: 'No',
@@ -479,12 +638,41 @@ var DetailsRentPage = /** @class */ (function () {
                 {
                     text: 'Yes',
                     handler: function () {
-                        _this.sendCancelRequest();
+                        if (id == 0) {
+                            //cancellation fee applied
+                            _this.cancelRequestWithCancellationFee();
+                        }
+                        else {
+                            //no cancellation fee applied
+                            _this.sendCancelRequest();
+                        }
                     }
                 }
             ]
         });
         alert.present();
+    };
+    DetailsRentPage.prototype.cancelRequestWithCancellationFee = function () {
+        var _this = this;
+        this.loading = this.loadingCtrl.create({
+            spinner: 'bubbles',
+            content: "Please wait.."
+        });
+        this.loading.present();
+        this.paymentProvider.captureCancellationAmount(this.userId, this.itemId, this.dailyPrice)
+            .subscribe(function (data) {
+            _this.loading.dismiss();
+            console.log(data.json());
+            if (data.json().msg == "succeeded") {
+                _this.sendCancelRequest();
+            }
+            else {
+                _this.showToast(data.json().msg_details);
+            }
+        }, function (err) {
+            _this.loading.dismiss();
+            _this.showToast("Please try again later");
+        });
     };
     __decorate([
         ViewChild(Content),
@@ -514,9 +702,14 @@ var DetailsRentPage = /** @class */ (function () {
             ChatProvider,
             LoadingController,
             Storage,
+            AngularFireDatabase,
+            ChatProvider,
             AuthenticateProvider,
+            PaymentProvider,
             ToastController,
-            AlertController])
+            AlertController,
+            SocialSharing,
+            ProfileProvider])
     ], DetailsRentPage);
     return DetailsRentPage;
 }());

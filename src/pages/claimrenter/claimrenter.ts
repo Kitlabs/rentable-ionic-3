@@ -64,7 +64,7 @@ export class ClaimrenterPage {
     private alertCtrl:AlertController,
     private paymentProvider:PaymentProvider,
     private chatProvider:ChatProvider) {
-
+// alert('claim renter');
   	// this.Product ={
     //   img: 'assets/img/11.png', ownerimage:'assets/img/profile-img.png', ownername: 'John', item_title:'house', price:'25', description:'this is good rentalable book', selectdate:'19/7/2017', total_cost:'100'
     // }
@@ -135,7 +135,6 @@ export class ClaimrenterPage {
    * 0/null = agree
    */
   hideShowAgreeSection(){
-
     if(this.data.ReturnBothPartyAgree=="1"){
       //both party didn't agree
       this.agree="No";
@@ -151,11 +150,9 @@ export class ClaimrenterPage {
   setReturnRating(){
   if(this.data.Status == "ReturnedPending" || this.data.Status == "Returned" )
   {
-
   for (var i=0; i < this.data.ReturnRating;  i++) {
       this.returnRatingPos[i]=i;
     }  
-
     for (var j=0; j < 5-this.data.ReturnRating;  j++) {
         this.returnRatingNeg[j]=j;
       }
@@ -165,8 +162,7 @@ export class ClaimrenterPage {
   setPickUpRating(){
     for (var i=0; i < this.data.PickupRating;  i++) {
           this.pickUpRatingPos[i]=i;
-      }  
-
+      }
       for (var j=0; j < 5-this.data.PickupRating;  j++) {
           this.pickUpRatingNeg[j]=j;
         }
@@ -251,6 +247,7 @@ export class ClaimrenterPage {
       this.i=0;
       this.j=0; 
     }
+    console.log(this.agree);
 }
 
 noChange(){
@@ -268,31 +265,39 @@ noChange(){
     this.i=0; 
     this.submitBtnStatus=false;
   }
+  console.log(this.agree);
 }
 
 submit(){
-
+  console.log(this.agree);
   let msgOwner,msgRenter;
-
- 
-
+  
   if(this.agree=="Yes"){
     msgRenter="You have accepted the claim and $"+ this.data.ClaimBondAmount +" will be deducted from the security deposit";
     msgOwner="The renter accepted your claim";
+    // this function will update value of ReturnAgreeWithRating in post_like table
+  this.itemprovider.UpdateReturnAgreeWithRating(this.userId,this.itemId).subscribe(
+    data =>{
+      console.log(data);
+    });
     this.hitApiWithCaptureAuth(msgOwner,msgRenter,this.data.ClaimBondAmount);
   }
   if(this.agree=="No"){
     msgRenter="You have rejected the claim; the owner might contact Rentable team to solve this claim";
     msgOwner="The renter rejected your claim. If you are not satisfied with this action please lodge a claim with us, claim@rentableapp.com";
+    // this function will update value of ReturnAgreeWithRating in post_like table
+    this.itemprovider.UpdateReturnAgreeWithRating(this.userId,this.itemId).subscribe(
+    data =>{
+      console.log(data);
+    });
     this.hitApiWithoutCaptureAuth(msgOwner,msgRenter);
   }
-
- 
-  
 }
 
 hitApiWithCaptureAuth(msgOwner,msgRenter,captureBondAmount){
+  //alert('Agree value=='+this.agree);
   console.log("hitApiWithCaptureAuth");
+ // return false;
   this.loading=this.loadingCtrl.create({
     spinner:'bubbles',
     content:`Please wait..`
@@ -302,6 +307,7 @@ hitApiWithCaptureAuth(msgOwner,msgRenter,captureBondAmount){
     data=>{
       console.log("CAPTURE_PAYMENT=",data);
       if(data.json().msg=="succeeded" || data.json().msg=="pending"){
+        
         this.itemprovider.replyToClaim(this.userId,this.itemId,this.agree).subscribe(
           data=>{      
               this.loading.dismiss();
@@ -330,7 +336,6 @@ hitApiWithCaptureAuth(msgOwner,msgRenter,captureBondAmount){
           this.presentAlert(data.json().msg_details);
         }
       }
-
     },
     err=>{
       this.loading.dismiss();
@@ -342,15 +347,17 @@ hitApiWithCaptureAuth(msgOwner,msgRenter,captureBondAmount){
 
 hitApiWithoutCaptureAuth(msgOwner,msgRenter){
   console.log("hitApiWithoutCaptureAuth");
+ // alert('Agree value=='+this.agree);
+  //return false;
   this.loading=this.loadingCtrl.create({
     spinner:'bubbles',
     content:`Please wait..`
   });
   this.loading.present();
-  
   this.itemprovider.replyToClaim(this.userId,this.itemId,this.agree).subscribe(
     data=>{
         this.loading.dismiss();
+       
         console.log(data);
         if(data.json().msg=="success"){
           this.af.list(this.chatRef).update(this.msgKey,{ 

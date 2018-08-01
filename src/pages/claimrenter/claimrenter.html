@@ -111,10 +111,7 @@
     </ion-row>
   </div>
 
-  <button ion-button block   
-	[ngClass]="{disabled : !submitBtnStatus,
-	'search-btn-valid':submitBtnStatus,
+  <button ion-button block [ngClass]="{disabled : !submitBtnStatus,'search-btn-valid':submitBtnStatus,
 	'search-btn-invalid':!submitBtnStatus }"  
-	(click)="submitBtnStatus && submit()"
->Ok</button>
+	(click)="submitBtnStatus && submit()">Ok</button>
 </ion-content>

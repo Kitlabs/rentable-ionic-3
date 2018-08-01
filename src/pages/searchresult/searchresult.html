@@ -79,5 +79,9 @@
      
       </div>
     </ion-card>
+    <div class="nodata" no-lines *ngIf="itemlist.length == 0"> 
+      <img src="assets/img/nodata.png" width="60px" style="margin-bottom: 15px;"><br>
+      <span>Sorry, we couldn't find any matches.<br>Please try again.</span>
+    </div>
 
 </ion-content>

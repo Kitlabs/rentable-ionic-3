@@ -276,7 +276,6 @@ ionViewWillEnter(){
 
    //2.category
   this.storage.get("categorySelectedFilter").then((res)=>{
-   
     if(res){  
       if(res.catStatus=="true"){
         console.log(res);
@@ -293,9 +292,6 @@ ionViewWillEnter(){
         }
       }                       
   });
-
-
-
 
   //3.distance
    if(option.distance!=0){
@@ -580,37 +576,18 @@ ionViewWillEnter(){
         }
       }else{
         console.log("closest first or distance options  not selected but location selected");
-        this.goToFilterResultPage();
+        this.storage.get('location').then((location) => {
+          console.log(location);
+          this.lat = location.lat;
+          this.lng = location.lng;
+          this.goToFilterResultPage();
+        })
+        
       }
     }else{
         console.log("location selected by user");
         this.goToFilterResultPage();
     }
-
-
-
-   
-   
-
-    //  this.filteredOptionList=
-    //  {
-    //    locationData:[{
-    //     lat:this.lat,lng:this.lng,location:this.location
-    //    }],
-    //    categoryData:[{
-    //     catName:this.category,catImage:this.categoryImg
-    //    }],
-    //    distance:this.distance,
-    //    priceRange:[{
-    //     fromPrice:this.fromprice,toPrice:this.toprice
-    //    }],
-    //    postedWithin:this.within,
-    //    sortedBy:this.sortBy
-    //  }
-
-
- 
-
   }
 
   goToFilterResultPage(){

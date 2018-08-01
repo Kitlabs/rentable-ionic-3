@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { RentPage } from '../rent/rent';
 import { Details } from '../details/details';
+import { ProfileProvider } from '../../providers/payment/profile';
 import { ItemsProvider } from '../../providers/items/items';
 import { AuthenticateProvider } from '../../providers/authenticate/authenticate';
 import { Storage } from '@ionic/storage';
@@ -21,12 +22,13 @@ import { Storage } from '@ionic/storage';
   Ionic pages and navigation.
 */
 var OtherprofilePage = /** @class */ (function () {
-    function OtherprofilePage(navCtrl, navParams, storage, authprovier, itemprovider) {
+    function OtherprofilePage(navCtrl, navParams, storage, authprovier, itemprovider, profileProvider) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.storage = storage;
         this.authprovier = authprovier;
         this.itemprovider = itemprovider;
+        this.profileProvider = profileProvider;
         this.rent = RentPage;
         this.productdetail = Details;
         this.like = [];
@@ -57,13 +59,13 @@ var OtherprofilePage = /** @class */ (function () {
                 { img: 'assets/img/33.png', title: 'John', view: '10', favourity: '20', id: '5' },
             ];
         this.userId = this.navParams.get("userId");
-        this.itemId = this.navParams.get("itemId");
         this.basePath = "http://54.79.124.187/api/uploads/";
     }
     OtherprofilePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad OtherprofilePagePage');
         this.isavailable = "available";
         this.getUserDetails();
+        this.setUserRating();
         this.getItemWithStatus("available");
     };
     OtherprofilePage.prototype.ActiveLike = function (i) {
@@ -77,7 +79,6 @@ var OtherprofilePage = /** @class */ (function () {
             _this.userInfo = data.json().userDetails;
             _this.name = _this.userInfo[0].firstName + " " + _this.userInfo[0].lastName;
             _this.profilePic = _this.basePath + _this.userInfo[0].photoURL;
-            _this.setUserRating(0);
         });
     };
     /*
@@ -85,34 +86,20 @@ var OtherprofilePage = /** @class */ (function () {
       status can be available,rented,pending,returned
       */
     OtherprofilePage.prototype.getItemWithStatus = function (status) {
-        // this.loading=this.loadingCtrl.create({
-        //   spinner:'bubbles',
-        //   content:`Please wait..`
-        // });
         var _this = this;
-        // this.loading.present();
-        this.itemprovider.getItemsWithStatus(this.userId, status).subscribe(function (data) {
+        this.itemprovider.getIOwnAvailableItemsSecond(this.userId, "IownAvailable").subscribe(function (data) {
+            console.log("I OWN AVAILABEL");
+            console.log(data.json());
             if (data.json().msg == "success") {
-                if (status = "available") {
-                    _this.own_avaiablelist = data.json().data;
-                    console.log(_this.own_avaiablelist);
-                }
+                _this.own_avaiablelist = data.json().data;
             }
-            else if (data.json().msg == "error") {
-                console.log("error");
-            }
-        }, function (err) {
-            //this.loading.dismiss();
-            console.log();
-        }, function () {
-            //this.loading.dismiss();
         });
     };
     OtherprofilePage.prototype.goToProductDetail = function (itemId) {
-        // this.navCtrl.push(Details,{
-        //   itemId:itemId
-        // })
-        this.navCtrl.pop();
+        this.navCtrl.push(Details, {
+            itemId: itemId
+        });
+        //this.navCtrl.pop();
     };
     OtherprofilePage.prototype.goPreviousPage = function () {
         /*this.navCtrl.push(Details,{
@@ -121,16 +108,43 @@ var OtherprofilePage = /** @class */ (function () {
         this.navCtrl.pop();
     };
     /*
-    Function to set user rating
+      Function to set user rating
     */
-    OtherprofilePage.prototype.setUserRating = function (rating) {
-        console.log("set user rating" + rating);
-        for (var i = 0; i < rating; i++) {
-            this.userRatingPos[i] = i;
-        }
-        for (var j = 0; j < 5 - rating; j++) {
-            this.userRatingNeg[j] = j;
-        }
+    OtherprofilePage.prototype.setUserRating = function () {
+        var _this = this;
+        var rating;
+        //product rating
+        this.profileProvider.getRating(this.userId).subscribe(function (data) {
+            rating = data.json().AverageRating;
+            console.log(rating);
+            if (data.json().msg == "success") {
+                if (rating > 0 && rating < 1) {
+                    rating = 0;
+                }
+                if (rating >= 1 && rating < 2) {
+                    rating = 1;
+                }
+                if (rating >= 2 && rating < 3) {
+                    rating = 2;
+                }
+                if (rating >= 3 && rating < 4) {
+                    rating = 3;
+                }
+                if (rating >= 4 && rating < 5) {
+                    rating = 4;
+                }
+                if (rating >= 5) {
+                    rating = 5;
+                }
+                for (var i = 0; i < rating; i++) {
+                    _this.userRatingPos[i] = i;
+                }
+                for (var j = 0; j < 5 - rating; j++) {
+                    _this.userRatingNeg[j] = j;
+                }
+            }
+        }, function (err) {
+        });
     };
     OtherprofilePage = __decorate([
         Component({
@@ -141,7 +155,8 @@ var OtherprofilePage = /** @class */ (function () {
             NavParams,
             Storage,
             AuthenticateProvider,
-            ItemsProvider])
+            ItemsProvider,
+            ProfileProvider])
     ], OtherprofilePage);
     return OtherprofilePage;
 }());

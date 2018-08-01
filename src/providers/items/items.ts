@@ -164,23 +164,23 @@ export class ItemsProvider {
   /*
   Get list of item by category name
   */
-  public getItemByCategoryName(categoryName,userId,status){
+  public getItemByCategoryName(categoryName,userId,status,lat,long){
   //{"action":"ListofAllItemsByCategoryAndStatus","userId":"1", "category":"Electronics", "status":"available"}
 
     let body={
        action:'ItemsByCategoryAndStatus',
+       user_lat:lat,
+       user_lng:long,
        category:categoryName,
        userId:userId,
        status:status
     }
-    
     console.log(JSON.stringify(body));
     return this.http.post(this.apiUrl,JSON.stringify(body));
   }
 
   public getNearbyItems(userId,lat,lng){
     //{"action":"NearByItems", "user_lat":"30.709315", "user_lng":"76.690514","userId":"3"}
-
     let body={
       action:'NearByItems',
       user_lat:lat,
@@ -439,8 +439,10 @@ export class ItemsProvider {
   */
  public replyToClaim(userId,itemId,status){
   //{"action":"ClaimStatus","UserId":"45","PostId":"182","ClaimStatus":"Yes"}
+  //alert('Item alert=='+status);
+ 
   let body;
-  if(status= "Yes"){ 
+  if(status=="Yes"){ 
     body={
       action:'ClaimStatus',
       UserId:userId,
@@ -459,6 +461,7 @@ export class ItemsProvider {
     }
   }
   console.log(JSON.stringify(body));
+  //return JSON.stringify(body);
   return this.http.post(this.apiUrl,JSON.stringify(body));
 }
 
@@ -535,6 +538,7 @@ export class ItemsProvider {
  /**
     * Accept reject return rating by item owner
     */
+
    public acceptRejectReturnRating(userId,postId,status:number,claimBondAmount?,totalAmountBond?,claimComment?){
     //Accepted= {"action":"AcceptRejectReturnedRating", "UserId":"49","PostId":"155","ReturnStatus":"Accepted"}
     //Rejected= {"action":"AcceptRejectReturnedRating", "UserId":"49","PostId":"155","ReturnStatus":"Rejected","ClaimBondAmount":"50","TotalAmountBond":"100","ClaimComment":"Tuneya"}
@@ -580,7 +584,7 @@ export class ItemsProvider {
         Status:"Returned",
         FinalDone:"Yes"
         }
-        break;  
+        break; 
       default:
         break;
     }
@@ -750,8 +754,22 @@ export class ItemsProvider {
       }
       
       console.log(JSON.stringify(body));
+      //return JSON.stringify(body);
       return this.http.post(this.apiUrl,JSON.stringify(body));
 
+  }
+
+  public UpdateReturnAgreeWithRating(userId,itemId){
+    let body={  
+      action:'UpdatePostRequestStatusChange',
+      UserId:userId,
+      PostId:itemId,
+      ReturnBothPartyAgree:"0",
+      ReturnAgreeWithRating:"NULL",
+    }
+    console.log(JSON.stringify(body));
+      //return JSON.stringify(body);
+      return this.http.post(this.apiUrl,JSON.stringify(body));
   }
 
   /* 
@@ -761,9 +779,6 @@ export class ItemsProvider {
   //{{"action":"GetItemsByFilters", "Category":"Electronics", "PostedWithin":"The last 24 hrs",
   //"PriceFrom":"05","PriceTo":"280","Lat":"38.682437","Long":"-77.3646313",
   //"Range":"1500","userId":"01","SortBy":"Closest first"}
-  
-   
-  
   let body={  
       action:'GetItemsByFilters',
       UserId:userId,
@@ -781,9 +796,85 @@ export class ItemsProvider {
     return this.http.post(this.apiUrl,JSON.stringify(body));
 
 }
-
-
-
-
-
+public DeleteChatItem(fromId,toId,postId,fromstat,tostat){
+  let body;
+  console.log(fromstat,tostat);
+  if(fromstat == 'Yes'){
+    body={
+      action:'UserListUpdate',
+      FromId:fromId,
+      ToId:toId,
+      PostId:postId,
+      IsDeletedFromId:"Yes",
+      IsDeletedToId:"Yes"
+    }
+  }else{
+    body={
+      action:'UserListUpdate',
+      FromId:fromId,
+      ToId:toId,
+      PostId:postId,
+      IsDeletedFromId:"No",
+      IsDeletedToId:"Yes"
+    }
+  }
+             
+    console.log(JSON.stringify(body));
+   // return JSON.stringify(body);
+   // return this.http.get(JSON.stringify(body));
+    return this.http.post(this.apiUrl,JSON.stringify(body));
+  }
+public DeleteChatItemRent(fromId,toId,postId,fromstat,tostat){
+  console.log(fromstat,tostat);
+  let body;
+  if(tostat == 'Yes'){
+    body={
+      action:'UserListUpdate',
+      FromId:fromId,
+      ToId:toId,
+      PostId:postId,
+      IsDeletedFromId:"Yes",
+      IsDeletedToId:"Yes"
+    }
+  }else{
+    body={
+      action:'UserListUpdate',
+      FromId:fromId,
+      ToId:toId,
+      PostId:postId,
+      IsDeletedFromId:"Yes",
+      IsDeletedToId:"No"
+    }
+  }   
+    console.log(JSON.stringify(body));
+   // return JSON.stringify(body);
+   // return this.http.get(JSON.stringify(body));
+    return this.http.post(this.apiUrl,JSON.stringify(body));
+  }
+public UpdateChatItemOwn(Ownerid,rentalId,postId,fromstat,tostat){
+  console.log(Ownerid,rentalId,postId,fromstat,tostat)
+        let body={
+                action:'UserListUpdate',
+                FromId:rentalId,
+                ToId:Ownerid,
+                PostId:postId,
+                IsDeletedFromId:fromstat,
+                IsDeletedToId:tostat
+              }
+    console.log(JSON.stringify(body));
+    return this.http.post(this.apiUrl,JSON.stringify(body));
+}
+public UpdateChatItemRent(Ownerid,rentalId,postId,fromstat,tostat){
+  console.log(Ownerid,rentalId,postId,fromstat,tostat)
+        let body={
+                action:'UserListUpdate',
+                FromId:Ownerid,
+                ToId:rentalId,
+                PostId:postId,
+                IsDeletedFromId:fromstat,
+                IsDeletedToId:tostat
+              } 
+    console.log(JSON.stringify(body));
+    return this.http.post(this.apiUrl,JSON.stringify(body));
+}
 }
